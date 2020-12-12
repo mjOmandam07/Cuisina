@@ -1,0 +1,114 @@
+:root {
+  --alpha: 33%;
+  --primary-color: #581b98;
+  --primary-hover: #321850;
+  --primary-shade: #b075ef;
+  --secondary-color: white;
+  --secondary-hover: rgb(218, 218, 218);
+  --primary-font: "Montserrat", sans-serif;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: #e5e5e5;
+}
+
+.navbar {
+  font-family: var(--primary-font);
+  font-weight: 600;
+  box-shadow: 1px 1px #888888a9;
+}
+.navbar input {
+  border-radius: 20px;
+}
+.navbar input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
+.navbar .collapse .navbar-nav .nav-item a {
+  color: var(--primary-color);
+}
+
+.navbar .collapse .navbar-nav .nav-item a:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+.navbar .collapse .navbar-nav .nav-item .fas {
+  font-size: 20px;
+}
+
+.navbar .collapse .navbar-nav .nav-item a:hover .fas {
+  color: var(--secondary-color);
+}
+
+.navbar .collapse .navbar-nav .nav-item a:active {
+  background-color: var(--primary-color);
+  color: var(--secondary-color) !important;
+}
+
+.active {
+  background-color: var(--primary-color);
+  color: var(--secondary-color) !important;
+}
+
+/* BODY SECT */
+body-sect {
+  background-color: #e5e5e5 !important;
+}
+/*
+ SIDEBAR
+*/
+
+.body-sect .sidebar {
+  position: fixed;
+  border-left: 1em solid var(--primary-color);
+  padding: 0 0 1em 0.5em;
+  width: fit-content;
+  height: fit-content;
+  color: var(--primary-color);
+  font-size: 24px;
+}
+.body-sect .sidebar .sidebar-info-sect .sidebar-top img {
+  height: 50px;
+  width: 50px;
+}
+.body-sect .sidebar .sidebar-info-sect .sidebar-info {
+  font-weight: 400;
+  font-size: 0.8em;
+  color: var(--primary-color);
+}
+.body-sect .sidebar .sidebar-info-sect a {
+  border-radius: 7px;
+  padding: 0.5em;
+  margin: 0 0 0.5em 0;
+}
+.body-sect .sidebar .sidebar-info-sect a:hover {
+  background-color: #c5c5c5 !important;
+  text-decoration: none;
+}
+.body-sect .sidebar .sidebar-info-sect .sidebar-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em 1em 1em 0;
+}
+
+.body-sect .sidebar .sidebar-info-sect .suggested-chef {
+  box-shadow: 1px 1px #888888a9;
+  margin-top: 0.5em;
+  width: 300px;
+  border-radius: 0.3em;
+  padding: 1em;
+  text-align: center;
+}
+.body-sect .sidebar .sidebar-info-sect .suggested-chef img {
+  height: 5em;
+  width: 5em;
+}
+
+/*POST SECT*/
+.body-sect .post-sect {
+  margin-left: 25em;
+}

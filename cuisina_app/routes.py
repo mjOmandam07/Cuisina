@@ -4,6 +4,18 @@ from cuisina_app import app
 import cuisina_app.models as models
 
 
+
+recipe = [
+	{'recipe_id': '1',
+	'user_name':'sampleUser',
+	'description':'My first Recipe',
+	'status':'public',
+	'cuisine':'Filipino',
+	'timeDate':'December 2020',
+	'comment':'sample comment',
+	'rate':5}
+]
+
 ##### SAMPLE ROUTE ###########
 @app.route('/')
 def sample():
