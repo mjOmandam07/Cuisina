@@ -7,7 +7,7 @@ import cuisina_app.models as models
 ##### SAMPLE ROUTE ###########
 @app.route('/')
 def sample():
-	return ("<h1>Hello CUISINA World</h1>")
+	return render_template('layout.html', active='home', user='sampleUser07', suggested_chef='sampleChef07')
 
 
 ## ADD THE ROUTE/ROUTES OF/FOR YOUR FEATURE
