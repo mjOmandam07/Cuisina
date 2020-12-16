@@ -7,4 +7,4 @@ DB_HOST = "127.0.0.1"
 DB_USERNAME = "user"
 DB_PASSWORD = "userpassword123"
 
-SECRET_KEY="cuisinaDB"
+SECRET_KEY = "cuisinaDB"

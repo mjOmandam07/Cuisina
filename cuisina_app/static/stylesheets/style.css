@@ -54,12 +54,11 @@ body {
 }
 
 /* BODY SECT */
-body-sect {
+.body-sect {
   background-color: #e5e5e5 !important;
 }
 /*
  SIDEBAR
-
 */
 
 .body-sect .sidebar {
@@ -111,5 +110,156 @@ body-sect {
 
 /*POST SECT*/
 .body-sect .post-sect {
-  margin-left: 25em;
+  margin: 25em;
 }
+.body-sect .post-sect .profile-sect {
+  padding-top: 0.1em;
+  border-radius: 10px;
+  box-shadow: 1px 1px #888888a9;
+}
+.body-sect .post-sect .profile-sect .account-head .account-username {
+  font-weight: 600;
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-username a {
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-head {
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-head .profile-img {
+  height: 10em;
+  width: 10em;
+}
+.body-sect .profile-sect .account-head .medal {
+  text-align: center;
+}
+
+.body-sect .profile-sect .account-head .medal .btn img {
+  height: 7em;
+  width: 7em;
+  margin: 0;
+}
+.body-sect .profile-sect .account-head .medal .btn img:hover {
+  opacity: 0.7 !important;
+  filter: alpha(opacity=70);
+}
+
+.body-sect .profile-sect .account-head .account-detail {
+  padding-top: 1em;
+  text-align: center;
+  justify-content: center;
+}
+.body-sect .profile-sect .account-head .account-detail a {
+  font-size: 2em;
+}
+.body-sect .profile-sect .account-head .account-detail .account-motto {
+  -webkit-font-weight: light;
+  font-size: 1em;
+  color: var(--primary-color);
+}
+
+.body-sect .profile-sect .account-head .account-detail .btn {
+  font-size: 0.8em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-head .account-detail .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+
+.body-sect .profile-sect .account-info .form-group {
+  padding: 1em 0 1em 0;
+}
+.body-sect .profile-sect .account-info .form-group input {
+  border-radius: 5px;
+  height: 2.5em;
+  width: 80%;
+}
+.body-sect .profile-sect .account-info .age-gender .form-group select {
+  width: 70%;
+}
+.body-sect .profile-sect .account-info .age-gender .form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+.body-sect .profile-sect .account-info .form-group label {
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+
+.body-sect .profile-sect input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+.body-sect .post {
+  border-radius: 10px;
+  box-shadow: 1px 1px #888888a9;
+}
+.body-sect .post a {
+  color: var(--primary-color);
+}
+.body-sect .post .article-metadata .btn {
+  float: right;
+  color: var(--primary-color);
+}
+.body-sect .post .article-metadata .btn:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.body-sect .post .article-metadata .btn i {
+  font-size: 25px;
+}
+
+.body-sect .post .media-body .article-img {
+  height: 1em;
+  width: 1em;
+}
+
+.body-sect .post .media-body a {
+  font-size: 1.2em;
+}
+
+.body-sect .post .rate {
+  padding: 0;
+  height: 46px;
+}
+.body-sect .post .rate:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+}
+.body-sect .post .rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 25px;
+  color: #ccc;
+}
+.body-sect .post .rate:not(:checked) > label:before {
+  content: "★ ";
+}
+.body-sect .post .rate > input:checked ~ label {
+  color: var(--primary-color);
+}
+.body-sect .post .rate:not(:checked) > label:hover,
+.body-sect .post .rate:not(:checked) > label:hover ~ label {
+  color: var(--primary-hover);
+}
+.body-sect .post .rate > input:checked + label:hover,
+.body-sect .post .rate > input:checked + label:hover ~ label,
+.body-sect .post .rate > input:checked ~ label:hover,
+.body-sect .post .rate > input:checked ~ label:hover ~ label,
+.body-sect .post .rate > label:hover ~ input:checked ~ label {
+  color: var(--primary-hover);
+}
+

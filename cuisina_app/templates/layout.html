@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	{% if title %}
 		<title>Cuisina | {{title}}</title>
@@ -20,21 +20,20 @@
 	 <header class="mb-5">
         <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 fixed-top">
             <form class="form-inline col-6 ml-5">
-                <img src="{{url_for('static', filename='images/icons/search.png')}}" class="mr-3">
-                <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search" aria-label="Search">   
+                <img src="{{url_for('static', filename='images/icons/search.png')}}" alt="default" class="mr-3">
+                <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search" aria-label="Search">
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-          
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav pl-5">
                 <li class="nav-item">
                 	{% if active == 'home' %}
                 		<a class="nav-link active p-4" href="#">FOOD FEED</a>
                 	{% else %}
-                  		<a class="nav-link  p-4" href="#">FOOD FEED</a>
-                  	{% endif %}
+                  		<a class="nav-link  p-4" href="#">FOOD FEED</a>                  	{% endif %}
                 </li>
                 <li class="nav-item">
                 	{% if active == 'hot' %}
@@ -49,42 +48,216 @@
                   	{% else %}
                   		<a class="nav-link p-4" href="#">ORDERS FEED</a>
                   	{% endif %}
-                	
+
                 </li>
               </ul>
-              
+
             </div>
           </nav>
     </header>
-     <div class="body-sect row m-0 pt-4">
-        <div class="article sidebar">
+     <div class="body-sect row pt-4">
+        <div class="col-4 article sidebar">
             <div class="sidebar-info-sect">
               <div class="sidebar-top">
                 <a class="sidebar-info " href="#">
-                  	<img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}"style=" height: 50px;swidth: 50px;">
+                  	<img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename='images/default.jpg')}}" style=" height: 50px;width: 50px;">
                   	{{user}}
                 </a>
                 <a class="sidebar-info" href="#">Master Chef's</a>
                 <a class="sidebar-info" href="#">Saved Recipes</a>
                 <a class="sidebar-info" href="#">Friend's List</a>
-              </div> 
+              </div>
               <div class="article article-metadata">
                     <div class="suggested-chef bg-light">
                         <h1 class="sidebar-info mb-4">Suggested Chef</h1>
                         <div>
-                            <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                            <img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename='images/default.jpg')}}">
                         </div>
-                        <div class="article-metadata mt-2">                     
+                        <div class="article-metadata mt-2">
                             <a class="sidebar-info " href="#">{{suggested_chef}}</a>
                         </div>
                     </div>
               </div>
             </div>
         </div>
-        <div class="col post-sect bg-dark">
-        	{% block content %}{% endblock content %}
-        </div>
-      </div>
+        <div class="col-8 post-sect">
+            <div class="article profile-sect bg-light w-100 m-3">
+                <div class="article-metadata account-head row m-3">
+                  <img class = "rounded-circle article-img profile-img" src="{{url_for('static', filename='images/default.jpg')}}" style=>
+                    <div class="d-flex flex-column account-detail  ml-2 align-self-center">
+                        <a class="account-username" href="#">@Kakyle69</a>
+                        <p class="account-motto ml-2 mb-0" href="#">Pancit Canton Lord</p>
+                        <p><button type="submit" class="btn m-0 mt-2">Log out</button></p>
+                    </div>
+                    <div class="align-self-center ml-auto medal">
+                      <h6 class="m-1">Executive Chef</h6>
+                      <button class="btn" data-toggle="modal" data-target=".rank-modal">
+                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                      </button>
+
+                      <div class="modal fade rank-modal" tabindex="-1" role="dialog"
+                          aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              ...
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="article account-info m-4">
+                    <form id="form-demo m-4">
+                          <div class="form-group">
+                              <div class="container-fluid fname m-0">
+                                  <label for="fname">First Name:</label><br>
+                                  <input name="fname" class="form-control" value="Kyle">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="container-fluid fname m-0">
+                                  <label for="lname">Last Name:</label><br>
+                                  <input name="lname"class="form-control" value="Ondiano">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="container-fluid fname m-0">
+                                  <label for="email">Email Address:</label><br>
+                                  <input name="email" type="email" class="form-control" value="kyle.ondiano@g.msuiit.edu.ph">
+                              </div>
+                          </div>
+                          <div class="age-gender">
+                              <div class="row m-0">
+                                <div class="form-group col-4">
+                                  <div class="container-fluid fname">
+                                      <label for="age">Age:</label><br>
+                                      <input name="age" class="form-control w-100" value="16">
+                                  </div>
+                              </div>
+                              <div class="form-group col-8">
+                                <div class="container-fluid fname">
+                                    <label>Gender:</label><br>
+                                    <select class="custom-select">
+                                      <option selected>Select Gender</option>
+                                      <option value="1">Male</option>
+                                      <option value="2">Female</option>
+                                      <option value="3">Kyle</option>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div>
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div>
+                </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                            <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                            <small class="text-muted">September 30, 2020</small>
+                            <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                        </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <div class="col mb-3 d-flex justify-content-center">
+                          <button type="button" class="btn" data-toggle="modal" data-target="#img-modal">
+                            <img src="{{url_for('static', filename='images/default.jpg')}}" alt="" class="article-content align-self-center">
+                          </button>
+                        </div>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div>
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+                  <div class="modal fade bd-example-modal-lg" id="img-modal" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                      <div class="modal-content">
+                        <img src="{{url_for('static', filename='images/default.jpg')}}" alt="" class="article-content align-self-center" style="height: 100%;">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            </div>
+            </div>
 
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
