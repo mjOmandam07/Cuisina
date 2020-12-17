@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./static/login.css"/>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+         <title>Cuisina</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <div class="container">
+        <a href="#" class="navbar-brand"><h1 class="welcome">CUISINA</h1></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navCollapse"
+        >
+          <span class="navbar-toggler-icon mr-auto"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navCollapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="navbar-item">
+              <a href="signUp.html#sign-up-form" class="nav-link"> Sign Up </a>
+            </li>
+            <li class="navbar-item">
+              <a href="#about" class="nav-link"> About </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid p-0 hero">
+      <div class="hero-bg">
+        <div class="continer-fluid m-0 hero-brand">
+          <h1 class="display-1">CUISINA</h1>
+          <h2>Be the best Chef you can be.</h2>
+        </div>
+
+        <div class="container-fluid m-0 hero-login">
+          <div class="login">
+            <fieldset class="form-group">
+            <form method="POST" action="">
+              {{ form.hidden_tag() }}
+              <div class="form-group">
+                {% include 'messages.html' %}
+                {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+              </div>
+              <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+              </fieldset>
+              <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            </form>
+
+            <div class="pt-3">
+              <small>
+                Dont have an account yet? |<a class="ml-2" href="#"
+                  >Sign Up Now!</a
+                >
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-sect" id="about">
+      <div class="about-us">
+        <h1 class="display-1">About Us</h1>
+        <p class="lead">
+          &nbsp &nbsp &nbsp<b><em>CUISINA</em></b> is for home cooks, and for
+          those “feeling chef”. It displays a variety of recipes from different
+          parts of the globe all posted by different users. Cuisina are for
+          those aspiring home cooks or for cooking enthusiast, Cuisina is the
+          app that can help us satisfy our cravings.<br /><b
+            >This app was developed by :</b
+          >
+        </p>
+      </div>
+      <div class="cards">
+        <div class="card border-none mt-3">
+          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Mark Joshua Omandam</h5>
+          </div>
+        </div>
+        <div class="card border-none mt-3">
+          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Kyle Ondiano</h5>
+          </div>
+        </div>
+        <div class="card border-none mt-3">
+          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Joey Abbe Abonitalla</h5>
+          </div>
+        </div>
+        <div class="card border-none mt-3">
+          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Audrey Turno</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../static/js/login.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+</body>

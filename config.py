@@ -2,8 +2,8 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-DB_NAME = "Cuisina"
-DB_HOST = "127.0.0.1"
+DB_NAME = "cuisina_db"
+DB_HOST = "localhost"
 DB_USERNAME = "user"
 DB_PASSWORD = "userpassword123"
 

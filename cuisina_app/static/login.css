@@ -1,0 +1,370 @@
+:root {
+  --alpha: 33%;
+  --primary-color: #581b98;
+  --primary-hover: #321850;
+  --primary-shade: #b075ef;
+  --secondary-color: white;
+  --secondary-hover: rgb(218, 218, 218);
+  --primary-font: "Montserrat", sans-serif;
+}
+
+html,
+body {
+  background:
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.navbar .container .navbar-brand h1 {
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-size: 1.4em;
+}
+.navbar .container .navbar-brand h1:hover {
+  color: rgb(233, 233, 233);
+  transition: 0.5s ease;
+}
+
+.navbar .collapse .navbar-nav .navbar-item {
+  padding-right: 3em;
+}
+.navbar .collapse .navbar-nav .navbar-item a {
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.navbar .collapse .navbar-nav .navbar-item a:hover {
+  color: var(--primary-shade);
+}
+
+.solid {
+  background-color: var(--secondary-color);
+  box-shadow: 2px 2px #888888a9;
+  color: none;
+  transition: 0.2s;
+}
+.not-solid {
+  background-color: none;
+  transition: 0.5s;
+}
+
+/* -------- Hero Section ---------*/
+
+.hero {
+  height: 100vh;
+  background-image: url("../static/bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.hero .hero-bg {
+  margin: 0;
+  background-image: url("../static/land.svg");
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1.3fr 1fr;
+}
+
+/* -------- Hero Brand ----------*/
+
+.hero .hero-bg .hero-brand {
+  display: grid;
+  place-items: center;
+  padding-top: 13em;
+}
+.hero .hero-bg .hero-brand h1 {
+  padding: 0;
+  font-size: 8.5em;
+  color: white;
+  font-weight: 600;
+  font-family: var(--primary-font);
+}
+.hero .hero-bg .hero-brand h2 {
+  padding-bottom: 12em;
+  margin-left: 1em;
+  color: white;
+  font-weight: 600;
+  font-family: var(--primary-font);
+}
+
+/*---------- Hero Login --------------*/
+
+.hero .hero-bg .hero-login {
+  display: grid;
+  align-content: center;
+}
+.hero .hero-bg .hero-login .login {
+  margin-bottom: 8em;
+  margin-left: 8em;
+}
+
+.hero .hero-bg .hero-login .login form button {
+  font-size: 1.3em;
+  margin-left: 3.5em;
+  width: 8em;
+  color: white;
+  background-color: var(--primary-color);
+}
+.hero .hero-bg .hero-login .login form button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transition: 0.5s ease;
+}
+.hero .hero-bg .hero-login .login .form-group {
+  padding: 1em 0 1em 0;
+}
+.hero .hero-bg .hero-login .login .form-group input {
+  height: 2.5em;
+  width: 20em;
+}
+.hero .hero-bg .hero-login .login .form-group label {
+  color: white;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: 1.5em;
+}
+.hero .hero-bg .hero-login .login .pt-3 {
+  margin-left: 1em;
+  color: white;
+  font-family: var(--primary-font);
+  font-weight: 500;
+}
+.hero .hero-bg .hero-login .login .pt-3 a {
+  color: var(--primary-shade);
+}
+
+/*------------- About Section ---------------*/
+.about-sect {
+  height: 100vh;
+  background-image: url("../static/about-bg.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: 0.5fr 1fr;
+}
+
+.about-sect .about-us {
+  padding: 0;
+  margin-top: 3em;
+  margin-bottom: 0;
+}
+.about-sect .about-us h1 {
+  margin: 0 0 0 0.2em;
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-size: 8em;
+}
+.about-sect .about-us p {
+  margin: 0;
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  padding: 0 2em 0 2em;
+}
+
+.about-sect .cards {
+  padding: 0 2em 2em 2em;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-items: space-around;
+}
+
+.about-sect .cards .card {
+  height: 42vh;
+  width: 120%;
+  margin: 0 2em 0 2em;
+
+  display: grid;
+  justify-items: center;
+}
+.about-sect .cards .card .card-img-top {
+  border-radius: 40%;
+  padding-top: 1em;
+  height: 25vh;
+  width: 10vw;
+}
+
+/* ------ Media Querries ------- */
+@media (min-width: 1200px) {
+}
+@media (max-width: 1200px) and (min-width: 993px) {
+  .hero .hero-bg .hero-brand h1 {
+    font-size: 7em;
+  }
+  .about-sect {
+    height: 100%;
+    width: 100%;
+  }
+  .about-sect .about-us {
+    margin-top: 3em;
+  }
+  .about-sect .about-us h1 {
+    font-size: 6em;
+  }
+
+  .about-sect .cards .card {
+    margin: 0 0 0 0.5em;
+    width: 22vw;
+  }
+
+  .about-sect .cards .card .card-img-top {
+    height: 20vh;
+    width: 10vw;
+  }
+}
+
+@media (max-width: 992px) and (min-width: 767px) {
+  .navbar .collapse .navbar-nav .navbar-item {
+    padding-right: 0.2em;
+  }
+  .hero .hero-bg .hero-brand h1 {
+    font-size: 5em;
+  }
+  .hero .hero-bg .hero-brand h2 {
+    font-size: 2em;
+  }
+
+  .hero .hero-bg .hero-login .login {
+    margin-bottom: 8em;
+    margin-left: 0.2em;
+  }
+  .hero .hero-bg .hero-login .login .form-group input {
+    height: 2em;
+    width: 18em;
+  }
+
+  .hero .hero-bg .hero-login .login .form-group label {
+    font-size: 1em;
+  }
+
+  .hero .hero-bg .hero-login .login form button {
+    font-size: 1.2em;
+    margin-left: 4.5em;
+    width: 5em;
+  }
+  .hero .hero-bg .hero-login .login .pt-3 {
+    margin-left: 0;
+  }
+  .about-sect {
+    width: 100%;
+  }
+  .about-sect .about-us {
+    margin-top: 4em;
+  }
+  .about-sect .about-us h1 {
+    font-size: 6em;
+  }
+
+  .about-sect .cards {
+    padding: 0;
+  }
+  .about-sect .cards .card {
+    margin: 0 0 0 1em;
+    height: 38vh;
+    width: 22vw;
+    text-align: center;
+  }
+
+  .about-sect .cards .card .card-img-top {
+    height: 18vh;
+    width: 10vw;
+  }
+  .about-sect .cards .card .card-title {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 576px) {
+  .navbar .container .navbar-toggler {
+    background-color: #32185075;
+  }
+  .navbar .collapse .navbar-nav .navbar-item {
+    padding-right: 0.2em;
+  }
+  .hero {
+    height: 100%;
+    width: 100%;
+  }
+  .hero .hero-bg {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 0fr;
+    grid-template-rows: 0.2fr 1fr;
+  }
+
+  .hero .hero-brand {
+    grid-row: 1/2;
+    height: 85vh;
+  }
+  .hero .hero-login {
+    justify-content: center;
+    grid-row: 2/3;
+  }
+  .hero .hero-bg .hero-brand h1 {
+    font-size: 5em;
+  }
+  .hero .hero-bg .hero-brand h2 {
+    font-weight: 300;
+    font-size: 2em;
+  }
+
+  .hero .hero-bg .hero-login .login {
+    margin-bottom: 8em;
+    margin-left: 0.2em;
+  }
+  .hero .hero-bg .hero-login .login .form-group input {
+    height: 2em;
+    width: 18em;
+  }
+
+  .hero .hero-bg .hero-login .login .form-group label {
+    font-size: 1em;
+  }
+
+  .hero .hero-bg .hero-login .login form button {
+    font-size: 1.2em;
+    margin-left: 4.5em;
+    width: 5em;
+  }
+  .hero .hero-bg .hero-login .login .pt-3 {
+    margin-left: 0;
+  }
+  .about-sect {
+    width: 100%;
+  }
+  .about-sect .about-us {
+    margin-top: 4em;
+  }
+  .about-sect .about-us h1 {
+    font-size: 6em;
+  }
+
+  .about-sect .cards {
+    padding: 0;
+  }
+  .about-sect .cards .card {
+    margin: 0 0 0 0.7em;
+    height: 33vh;
+    width: 22vw;
+    text-align: center;
+  }
+
+  .about-sect .cards .card .card-img-top {
+    height: 100%;
+    width: 70%;
+  }
+  .about-sect .cards .card .card-title {
+    font-size: 0.9em;
+    place-self: center;
+
+  }
+}
