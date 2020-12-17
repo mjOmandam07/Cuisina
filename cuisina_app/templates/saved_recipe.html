@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block content %}
+	{% for item in recipe %}
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="{{url_for('static', filename ='images/default.jpg')}}"style=" height: 60px;width: 60px;">
+                          <a class="ml-2 article-author" href="#">{{ item.username }}</a>
+                          <small class="text-muted">{{item.timeDate}}</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="{{ url_for('viewpost', recipe_id=item.recipe_id) }}">{{item.title}}</a></h2>
+                        <p class="article-content m-3">{{item.description}}</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="{{ url_for('viewpost', recipe_id=item.recipe_id) }}">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+    {% endfor %}
+{% endblock content %}

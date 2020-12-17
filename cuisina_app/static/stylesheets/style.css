@@ -11,7 +11,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: #e5e5e5;
+  background: #e5e5e5 !important;
 }
 
 .navbar {
@@ -155,6 +155,13 @@ CREATE POST SECT
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
 
+.body-sect .create-post .modal-dialog .content {
+  height: 12em;
+  font-size: 1em;
+}
+.body-sect .create-post .modal-dialog .upload {
+    font-size: 1em;
+}
 .body-sect .create-post .modal-dialog .btn {
   background-color: var(--primary-color);
   color: var(--secondary-color);
@@ -218,21 +225,7 @@ CREATE POST SECT
   width: 100%;
   height: 100%;
 }
-.body-sect
-  .create-post
-  .modal
-  .preview-images-zone
-  > .preview-image
-  > .tools-edit-image {
-  position: absolute;
-  z-index: 100;
-  color: #fff;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 10px;
-  display: none;
-}
+
 .body-sect
   .create-post
   .modal
@@ -253,7 +246,7 @@ CREATE POST SECT
   cursor: move;
   opacity: 0.5;
 }
-.body-sect .create-post .modal .preview-image:hover > .tools-edit-image,
+
 .body-sect .create-post .modal .preview-image:hover > .image-cancel {
   display: block;
 }
@@ -276,8 +269,12 @@ POSTS SECT
   border-radius: 10px;
   box-shadow: 1px 1px #888888a9;
 }
-.body-sect .post a {
+.body-sect .post a, small{
   color: var(--primary-color);
+}
+.body-sect .post .post-img {
+  height:90%;
+  width: 80%;
 }
 .body-sect .post .article-metadata .btn {
   float: right;
@@ -287,6 +284,11 @@ POSTS SECT
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
+.body-sect .post .article-metadata .saved {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
 
 .body-sect .post .article-metadata .btn i {
   font-size: 25px;
@@ -382,6 +384,10 @@ POSTS SECT
   border: 2px dashed var(--primary-color);
   position: relative;
 }
+.body-sect .create-post .modal-dialog select:focus {
+border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
 
 .body-sect .create-post .modal-dialog .image-dropping,
 .image-upload-wrap:hover {
@@ -437,4 +443,49 @@ POSTS SECT
 .body-sect .create-post .modal-dialog .remove-image:active {
   border: 0;
   transition: all 0.2s ease;
+}
+
+
+/*
+
+COMMENTS SECT
+
+*/
+
+
+.body-sect .post-sect .comments {
+  border:none;
+}
+ .body-sect .post-sect .comments .card-inner{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+
+.body-sect .post-sect .comments h1 {
+  color: var(--primary-color);
+}
+
+.body-sect .post-sect .comments .comment-field {
+  background-color: #e5e5e5;
+  font-size: 1em;
+  height: 2em;
+  transition: height 0.5s;
+}
+.body-sect .post-sect .comments .comment-field:focus {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+  height: 5em;
+}
+
+.body-sect .post-sect .comments .btn {
+  float: right;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+.body-sect .post-sect .comments .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
 }

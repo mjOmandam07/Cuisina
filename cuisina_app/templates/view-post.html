@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="post bg-light m-3 p-4">
+                 <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="{{url_for('static', filename ='images/default.jpg')}}"style=" height: 60px;width: 60px;">
+                          <a class="ml-2 article-author" href="#">{{ recipe.username }}</a>
+                          <small class="text-muted">{{recipe.timeDate}}</small>
+                           <small class="ml-1 font-weight-bold">{{recipe.cuisine}}</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">{{recipe.title}}</a></h2>
+                         {% if recipe.image != None %}
+                          <div class="col mb-3 d-flex justify-content-center">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#img-modal">
+                              <img src="{{ recipe.image }}" alt="" class="article-content align-self-center post-img">
+                            </button>
+                          </div>
+                          <div class="modal fade bd-example-modal-lg" id="img-modal" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                              <div class="modal-content">
+                                <img src="{{ recipe.image }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                              </div>
+                            </div>
+                          </div>
+                        {% endif %}
+                        <p class="article-content m-3">{{recipe.description}}</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                  </div>
+                  <div class="card p-2 bg-light comments">
+                      <h1>Comments</h1>
+	                    <div class="card-body">
+	                    	{% if comments %}
+	                    		{% for item in comments %}
+		                        <div class="card card-inner">
+		                            <div class="card-body bg-light">
+		                                <div class="row">
+		                                    <div class="col-md-2">
+		                                        <img src="{{url_for('static', filename ='images/default.jpg')}}" class="img rounded-circle img-fluid"/>
+		                                        <p class="text-secondary text-center">{{ item.timeDate }}</p>
+		                                    </div>
+		                                    <div class="col-md-10">
+		                                        <p><a href="#"><strong>{{ item.user }}</strong></a></p>
+		                                        <p>{{ item.content }}</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        {% endfor %}
+		                    {% else %}
+		                    	<div>
+		                    		<p class="display-4"> No Comments</p>
+		                    	</div>
+		                    {% endif %}
+	                        <form method="POST">
+	                        	{{ form.csrf_token }}
+                                {{ form.hidden_tag() }}
+	                            <div class="form-group add-comment m-2 mt-4">
+                                    {% if form.comment.errors %}
+                                        {{ form.comment(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.comment.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.comment(class="form-control form-control-lg comment-field") }}
+                                    {% endif %}
+                                     {{ form.submit(class="btn m-2 mr-auto") }}   
+	                            </div>
+	                        </form>
+	                    </div>
+                </div>
+            </div>
+         
+        </div>
+{% endblock content %}
