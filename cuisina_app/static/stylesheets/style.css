@@ -291,42 +291,67 @@ POSTS SECT
 
 
 .body-sect .post .article-metadata .btn i {
-  font-size: 25px;
+  font-size: 1em;
 }
 
-.body-sect .post .rate {
-  padding: 0;
-  height: 46px;
-}
-.body-sect .post .rate:not(:checked) > input {
-  position: absolute;
-  top: -9999px;
-}
-.body-sect .post .rate:not(:checked) > label {
+.star-widget .btn {
   float: right;
-  width: 1em;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 25px;
-  color: #ccc;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
-.body-sect .post .rate:not(:checked) > label:before {
-  content: "★ ";
+.star-widget .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
 }
-.body-sect .post .rate > input:checked ~ label {
-  color: var(--primary-color);
+
+.rate-form .btn {
+  float: right;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
-.body-sect .post .rate:not(:checked) > label:hover,
-.body-sect .post .rate:not(:checked) > label:hover ~ label {
-  color: var(--primary-hover);
+.rate-form .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
 }
-.body-sect .post .rate > input:checked + label:hover,
-.body-sect .post .rate > input:checked + label:hover ~ label,
-.body-sect .post .rate > input:checked ~ label:hover,
-.body-sect .post .rate > input:checked ~ label:hover ~ label,
-.body-sect .post .rate > label:hover ~ input:checked ~ label {
-  color: var(--primary-hover);
+
+.star-widget span{
+  color:#e5e5e5 ;
+  font-size: 1em;
+}
+
+.star-widget .checked{
+  color:var(--primary-color);
+}
+
+.star-rate{
+  list-style: none;
+  display: flex;
+  margin:none;
+}
+
+.star-rate input {
+  display: none;
+}
+
+.star-rate label {
+  font-size: 1.5em;
+  color: #e5e5e5;
+  padding: 5px;
+  float: right;
+  transition: all 0.2s ease;
+}
+
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label {
+  color: var(--primary-hover) !important;
+}
+
+input:checked ~ label {
+  color: var(--primary-color) !important;
+}
+
+input#rate-5:checked ~ label {
+  color: var(--primary-color) !important;
 }
 
 .body-sect .create-post .modal-dialog .file-upload {

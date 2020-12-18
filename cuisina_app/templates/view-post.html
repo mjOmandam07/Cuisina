@@ -29,20 +29,64 @@
                     </div> 
                   </article>
                   <div class="row ml-1">
-                    <div class="rate align-self-center">
-                      <input type="radio" id="star5" name="rate" value="5" />
-                      <label for="star5" title="text">5 stars</label>
-                      <input type="radio" id="star4" name="rate" value="4" />
-                      <label for="star4" title="text">4 stars</label>
-                      <input type="radio" id="star3" name="rate" value="3" />
-                      <label for="star3" title="text">3 stars</label>
-                      <input type="radio" id="star2" name="rate" value="2" />
-                      <label for="star2" title="text">2 stars</label>
-                      <input type="radio" id="star1" name="rate" value="1" />
-                      <label for="star1" title="text">1 star</label>
-                    </div>
+                    {% if rating %}
+                      <div class="star-widget m-0 col-12" id="starfield">
+                          <small class="ml-2 mr-auto mr-5 pr-3">Your current Rating of this Recipe</small>
+                          {% if rating == 5 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                          {% elif rating == 4 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rating == 3 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rating == 2 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rating == 1 %}
+                           <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% else %}
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% endif %}  
+                      </div>
+                    {% else %}
+                        <form method="POST" class="m-0 rate-form row col-12">
+                          {{ form.csrf_token }}
+                          {{ form_rate.hidden_tag() }}
+                          {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
+                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
+                      </form> 
+                    {% endif %}
+                    <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
+                          {{ form.csrf_token }}
+                          {{ form_rate.hidden_tag() }}
+                          {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
+                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
+                    </form>     
                   </div>
-                  <div class="card p-2 bg-light comments">
+
+                  <div class="card p-2 comments">
                       <h1>Comments</h1>
 	                    <div class="card-body">
 	                    	{% if comments %}
@@ -63,9 +107,13 @@
 		                        </div>
 		                        {% endfor %}
 		                    {% else %}
-		                    	<div>
-		                    		<p class="display-4"> No Comments</p>
-		                    	</div>
+		                    	<div class="card card-inner">
+                                <div class="card-body bg-light">
+                                    <div class="row">
+                                       <p class="display-4">No Comments</p>
+                                    </div>
+                                </div>
+                            </div>
 		                    {% endif %}
 	                        <form method="POST">
 	                        	{{ form.csrf_token }}
@@ -85,8 +133,21 @@
 	                            </div>
 	                        </form>
 	                    </div>
-                </div>
-            </div>
+                  </div>
+  </div>
          
-        </div>
+
+
+        <script type="text/javascript">
+          starWidget = document.getElementById("starfield")
+          rate = document.getElementById("rate-form")
+          function rateform(){
+            rate.style.display = "block"
+            starWidget.style.display = "None"
+
+          }
+        </script>
+
+       
+        
 {% endblock content %}
