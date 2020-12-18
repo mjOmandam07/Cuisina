@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/home.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+
+    
+</head>
+<body>
+    <header class="mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 fixed-top">
+            <form class="form-inline col-6 ml-5">
+                <img src="./static/icons/search.png" class="mr-3">
+                <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search" aria-label="Search">   
+            </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav pl-5">
+                <li class="nav-item">
+                  <a class="nav-link active p-4" href="#">FOOD FEED</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link p-4" href="#">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link p-4" href="#">ORDERS FEED</a>
+                </li>
+              </ul>
+              
+            </div>
+          </nav>
+    </header>
+    <div class="body-sect row m-0 pt-4">
+        <div class="article sidebar">
+            <div class="sidebar-info-sect">
+              <div class="sidebar-top">
+                <a class="sidebar-info " href="#">
+                  <img class = "rounded-circle article-img" src="./static/default.jpg"style=" height: 50px;swidth: 50px;">
+                  @Kakyle69
+                </a>
+                <a class="sidebar-info" href="#">Master Chef's</a>
+                <a class="sidebar-info" href="#">Saved Recipes</a>
+                <a class="sidebar-info" href="#">Friend's List</a>
+              </div> 
+              <div class="article article-metadata">
+                    <div class="suggested-chef bg-light">
+                        <h1 class="sidebar-info mb-4">Suggested Chef</h1>
+                        <div>
+                            <img class = "rounded-circle article-img" src="./static/default.jpg">
+                        </div>
+                        <div class="article-metadata mt-2">
+                            <a class="sidebar-info " href="#">@Kakayl69</a>
+                        </div>
+                    </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col post-sect">
+            <div class="article create-post bg-light m-3">
+                <div class="article-metadata p-2 m-3">
+                  {% include 'flash.html'%}
+                  <img class = "rounded-circle article-img" src="./static/default.jpg"style=" height: 50px;swidth: 50px;">
+                    <a class="account-user mr-2" href="#">@Kakyle69</a>
+                    <button class="btn col mt-3 mb-3" type="button"data-toggle="modal" data-target="#ModalScrollable">
+                        Whats on your menu chef?
+                    </button>   
+                </div>
+                <div class="modal" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title display-4 id="exampleModalCenteredLabel">New Post</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="">                                
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" name="title" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="description">Content</label>
+                                    <textarea rows="5" class="form-control" name="description" ></textarea>
+                                </div>
+                              <fieldset class="form-group">
+                                  <a href="javascript:void(0)" class="btn upload-btn"onclick="$('#pro-image').click()">Add Image</a>
+                                  <input type="file" id="pro-image" accept="image/*" name="pro-image" style="display: none;" class="form-control" multiple>
+                              </fieldset>
+                              <div class="preview-images-zone">
+                                  
+                              </div>
+                                <div class="form-group">
+                                    <button class="btn btn-light btn-outline-dark col mt-3" type="button"data-toggle="modal" data-target="#ModalScrollable">
+                                        Post
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="dropdown m-3">
+              <button class="btn dropdown-toggle"
+                      type="button" id="dropdownMenu1" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                Cuisine
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="#!">Western</a>
+                <a class="dropdown-item" href="#!">Asian</a>
+                <a class="dropdown-item" href="#!">European</a>
+                <a class="dropdown-item" href="#!">Filipino</a>
+              </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="./static/default.jpg">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="./static/default.jpg">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="./static/default.jpg">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <div class="col mb-3 d-flex justify-content-center">
+                          <button type="button" class="btn" data-toggle="modal" data-target="#img-modal">
+                            <img src="./images/default.jpg" alt="" class="article-content align-self-center">
+                          </button>
+                         
+                        </div>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+                  <div class="modal fade bd-example-modal-lg" id="img-modal" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                      <div class="modal-content">
+                        <img src="./images/default.jpg" alt="" class="article-content align-self-center" style="height: 100%;">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="post bg-light m-3 p-4">
+                <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="./static/default.jpg">
+                          <a class="ml-2 article-author" href="#">@Kakyle69</a>
+                          <small class="text-muted">September 30, 2020</small>
+                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                      </div>
+                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
+                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    <div class="rate align-self-center">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+                    <div class="col ml-4 align-self-center">
+                      <a class="article-save" href="#">View Comments</a>
+                    </div>
+                  </div>
+            </div>
+         
+        </div>
+    </div>
+
+
+
+    
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
+
+    <script>
+      $(document).ready(function() {
+    document.getElementById('pro-image').addEventListener('change', readImage, false);
+    
+
+    
+    $(document).on('click', '.image-cancel', function() {
+        let no = $(this).data('no');
+        $(".preview-image.preview-show-"+no).remove();
+    });
+});
+var num = 4;
+function readImage() {
+    if (window.File && window.FileList && window.FileReader) {
+        var files = event.target.files; //FileList object
+        var output = $(".preview-images-zone");
+
+        for (let i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (!file.type.match('image')) continue;
+            
+            var picReader = new FileReader();
+            
+            picReader.addEventListener('load', function (event) {
+                var picFile = event.target;
+                var html =  '<div class="preview-image preview-show-' + num + '">' +
+                            '<div class="image-cancel" data-no="' + num + '">x</div>' +
+                            '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '"></div>' +
+                            '</div>';
+
+                output.append(html);
+                num = num + 1;
+            });
+
+            picReader.readAsDataURL(file);
+        }
+        $("#pro-image").val('');
+    } else {
+        console.log('Browser not support');
+    }
+}
+  </script>
+
+   
+</body>
+</html>

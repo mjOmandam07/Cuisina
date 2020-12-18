@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_mysql_connector import MySQL
+from flask_mysqldb import MySQL
 from config import DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD, SECRET_KEY
 app = Flask(__name__)
 
@@ -13,3 +13,4 @@ app.config['SECRET_KEY'] = SECRET_KEY
 mysql = MySQL(app)
 
 from cuisina_app import routes
+
