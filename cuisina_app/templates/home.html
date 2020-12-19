@@ -109,8 +109,6 @@
                           <a class="ml-2 article-author" href="#">{{ item.username }}</a>
                           <small class="text-muted">{{item.timeDate}}</small>
                           <small class="ml-1 font-weight-bold">{{item.cuisine}}</small>
-
-                            <button class="btn mt-3 ml-auto" onclick="save{{ item.recipe_id | string() }}recipe()" id="{{ item.recipe_id }}" name="{{ item.recipe_id }}"><i class='far fa-bookmark'></i></button>
                       </div>
                         <h2><a class="article-title display-4" href="{{ url_for('viewpost', recipe_id=item.recipe_id) }}">{{item.title}}</a></h2>
                         {% if item.image != None %}
@@ -177,25 +175,6 @@
                     </div>
                   </div>
             </div>
-            
-
-      <script>
-          function save{{ item.recipe_id | string() }}recipe() {
-          recipe_id = document.getElementById("{{ item.recipe_id | string() }}").name;
-          
-          fetch('saved/' + recipe_id.parseInt()).then(function(response){
-            response.json().then(function(data){
-              if (document.getElementById("{{ item.recipe_id | string() }}").classList.contains('saved')) {
-                document.getElementById("{{ item.recipe_id | string() }}").classList.remove('saved');
-              }else{
-                document.getElementById("{{ item.recipe_id | string() }}").classList.add('saved');
-              }
-            });
-          });
-
-          
-        };
-      </script>
       {% endfor %}
 
 

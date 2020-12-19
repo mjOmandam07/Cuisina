@@ -55,7 +55,7 @@ recipe = [
 		'title':'My Second  Filipino Recipe',
 		'description': 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi',
 		'status':'public',
-		'saved':True,
+		'saved':False,
 		'cuisine':'Filipino',
 		'timeDate':'December 2020',
 		'rate': 2,
@@ -138,7 +138,19 @@ def home(fltr):
 		'status':'public',
 		'cuisine':'Filipino',
 		'timeDate':'December 2020',
+		'rate': 0,
 		'image':None
+
+	}
+
+	lastrate = rating[-1]
+	lastrate_id = lastrate['rate_id']
+	lastrate_recipe = lastrate['recipe_id']
+	newRate = {
+		'rate_id':lastrate_id + 1,
+		'recipe_id':lastrate_recipe + 1,
+		'rate': 0
+
 	}
 
 
@@ -151,6 +163,7 @@ def home(fltr):
 			picture_file = save_picture(form.upload_picture.data)
 			newPost['image'] = url_for('static', filename='user_images/' + picture_file)
 		recipe.append(newPost)
+		rating.append(newRate)
 		return redirect(url_for('viewpost', recipe_id=newPost['recipe_id']))
 
 	return render_template('home.html', active='home', user=user, suggested_chef=user, recipe=recipe_to_view, form=form, rating=rating)
@@ -160,6 +173,7 @@ def home(fltr):
 @app.route('/viewpost/<int:recipe_id>', methods=['GET', 'POST'])
 def viewpost(recipe_id):
 	lastpost = {}
+	rate = int
 	user = str
 	comment_to_view = []
 
@@ -175,6 +189,7 @@ def viewpost(recipe_id):
 	for i in rating:
 		if i['recipe_id'] == int(recipe_id):
 			rate = i['rate']
+
 	newComment = {
 		'user': user,
 		'recipe_id':lastpost['recipe_id'],
@@ -184,8 +199,6 @@ def viewpost(recipe_id):
 
 	form = addCommment()
 	form_rate = rateForm()
-
-	
 	
 	if form.validate_on_submit():
 		newComment['content'] = form.comment.data
@@ -199,7 +212,6 @@ def viewpost(recipe_id):
 
 @app.route('/add_rate/<recipe_id>/<rate>')
 def add_rate(recipe_id, rate):
-	test = {}
 	for item in rating:
 		if item['recipe_id'] == int(recipe_id):
 			item['rate'] = int(rate)
@@ -225,6 +237,7 @@ def save_picture(form_picture):
 
 @app.route('/savedRecipe')
 def savedRecipe():
+	saved = []
 	for i in recipe:
 		user = i['username']
 		if i['saved'] == True:
@@ -232,14 +245,17 @@ def savedRecipe():
 	return render_template('saved_recipe.html', user=user, recipe = saved)
 
 
-@app.route('/saved/<int:recipe_id>')
-def saved(recipe_id):
-
-	saved = []
-	for i in recipe:
-		if i['recipe_id'] == recipe_id:
-			saved.append(i)
-	return jsonify({'recipe' : saved})
+@app.route('/saved/<recipe_id>')
+def saveRecipe(recipe_id):
+	for item in recipe:
+		if item['recipe_id'] == int(recipe_id) and item['saved'] == False:
+			item['saved'] = True
+			print(item)
+		elif item['recipe_id'] == int(recipe_id) and item['saved'] == True:
+			item['saved'] = False
+			print(item)
+	return redirect(url_for('viewpost', recipe_id=recipe_id))
+	#return render_template('sample.html', recipe=recipe)
 
 
 

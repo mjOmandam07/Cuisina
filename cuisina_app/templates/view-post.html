@@ -8,16 +8,20 @@
                           <a class="ml-2 article-author" href="#">{{ recipe.username }}</a>
                           <small class="text-muted">{{recipe.timeDate}}</small>
                            <small class="ml-1 font-weight-bold">{{recipe.cuisine}}</small>
-                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                           {% if recipe.saved == True %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe.recipe_id) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% else %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe.recipe_id) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% endif %}
                       </div>
-                        <h2><a class="article-title display-4" href="#">{{recipe.title}}</a></h2>
+                        <h2><a class="article-title display-4" href="#">{{recipe.recipe_id}}</a></h2>
                          {% if recipe.image != None %}
                           <div class="col mb-3 d-flex justify-content-center">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#img-modal">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#{{ recipe.recipe_id }}">
                               <img src="{{ recipe.image }}" alt="" class="article-content align-self-center post-img">
                             </button>
                           </div>
-                          <div class="modal fade bd-example-modal-lg" id="img-modal" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal fade bd-example-modal-lg" id="{{recipe.recipe_id}}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
                               <div class="modal-content">
                                 <img src="{{ recipe.image }}" alt="" class="article-content align-self-center" style="height: 100%;">
@@ -70,20 +74,21 @@
                             <span class="fa fa-star"></span>
                           {% endif %}  
                       </div>
+                          <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
+                            {{ form.csrf_token }}
+                            {{ form_rate.hidden_tag() }}
+                            {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
+                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
+                      </form>  
                     {% else %}
-                        <form method="POST" class="m-0 rate-form row col-12">
+                       <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
                           {{ form.csrf_token }}
                           {{ form_rate.hidden_tag() }}
                           {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
                           <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
-                      </form> 
+                      </form>  
                     {% endif %}
-                    <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
-                          {{ form.csrf_token }}
-                          {{ form_rate.hidden_tag() }}
-                          {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
-                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
-                    </form>     
+                      
                   </div>
 
                   <div class="card p-2 comments">
