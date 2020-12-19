@@ -10,7 +10,6 @@
 
 html,
 body {
-  background:
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
@@ -54,13 +53,13 @@ body {
 
 .hero {
   height: 100vh;
-  background-image: url("../static/bg.jpg");
+  background-image: url("../images/bg.jpg");
   background-size: cover;
   background-position: center;
 }
 .hero .hero-bg {
   margin: 0;
-  background-image: url("../static/land.svg");
+  background-image: url("../images/land.svg");
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -103,14 +102,14 @@ body {
   margin-left: 8em;
 }
 
-.hero .hero-bg .hero-login .login form button {
+.hero .hero-bg .hero-login .login form .btn {
   font-size: 1.3em;
   margin-left: 3.5em;
   width: 8em;
   color: white;
   background-color: var(--primary-color);
 }
-.hero .hero-bg .hero-login .login form button:hover {
+.hero .hero-bg .hero-login .login form .btn:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
   transition: 0.5s ease;
@@ -122,6 +121,12 @@ body {
   height: 2.5em;
   width: 20em;
 }
+
+.hero .hero-bg .hero-login .login .form-group input:focus {
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
 .hero .hero-bg .hero-login .login .form-group label {
   color: white;
   font-family: var(--primary-font);
@@ -141,7 +146,7 @@ body {
 /*------------- About Section ---------------*/
 .about-sect {
   height: 100vh;
-  background-image: url("../static/about-bg.svg");
+  background-image: url("./images/about-bg.svg");
   background-repeat: no-repeat;
   background-position: bottom;
 
@@ -365,6 +370,5 @@ body {
   .about-sect .cards .card .card-title {
     font-size: 0.9em;
     place-self: center;
-
   }
 }

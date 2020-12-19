@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./static/login.css"/>
+    <title>Cuisina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/login.css') }}" />
 
     <link
       rel="stylesheet"
@@ -11,10 +12,8 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-
-         <title>Cuisina</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
       <div class="container">
         <a href="#" class="navbar-brand"><h1 class="welcome">CUISINA</h1></a>
@@ -48,43 +47,48 @@
 
         <div class="container-fluid m-0 hero-login">
           <div class="login">
-            <fieldset class="form-group">
-            <form method="POST" action="">
-              {{ form.hidden_tag() }}
+            <form method="POST">
+                {{ form.csrf_token }}
+                  {{ form.hidden_tag() }}
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class = "alert alert-{{ category }} w-75">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
               <div class="form-group">
-                {% include 'messages.html' %}
-                {{ form.username.label(class="form-control-label") }}
-                    {% if form.username.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.username.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
+                {{ form.username.label }}
+                {% if form.username.errors %}
+                  {{ form.username(class = "form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for errors in form.username.errors %}
+                          <span style="font-weight:bold; font-size:1.5em;">{{ errors }}</span>
+                      {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.username(class="form-control form-control-md") }}
+                {% endif %}
+               
               </div>
               <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-
-              </fieldset>
-              <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
+               {{ form.password.label }}
+                {% if form.password.errors %}
+                  {{ form.password(class = "form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for errors in form.password.errors %}
+                          <span style="font-weight:bold; font-size:1.5em;">{{ errors }}</span>
+                      {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.password(class="form-control form-control-md") }}
+                {% endif %}
+              </div>
+             {{ form.submit(class="btn") }}
             </form>
-
             <div class="pt-3">
               <small>
                 Dont have an account yet? |<a class="ml-2" href="#"
@@ -111,32 +115,32 @@
       </div>
       <div class="cards">
         <div class="card border-none mt-3">
-          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <img src="{{ url_for('static', filename='images/default.jpg') }}" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Mark Joshua Omandam</h5>
           </div>
         </div>
         <div class="card border-none mt-3">
-          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <img src="{{ url_for('static', filename='images/default.jpg') }}" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Kyle Ondiano</h5>
           </div>
         </div>
         <div class="card border-none mt-3">
-          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <img src="{{ url_for('static', filename='images/dev-Images/joey.jpg') }}" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Joey Abbe Abonitalla</h5>
           </div>
         </div>
         <div class="card border-none mt-3">
-          <img src="./static/default.jpg" class="card-img-top" alt="..." />
+          <img src="{{ url_for('static', filename='images/dev-Images/audrey.png') }}" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Audrey Turno</h5>
           </div>
         </div>
       </div>
     </div>
-    <script src="../static/js/login.js"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -152,4 +156,5 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-</body>
+  </body>
+</html>
