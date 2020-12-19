@@ -4,25 +4,21 @@ from cuisina_app.forms import SignUpForm
 import cuisina_app.models as models
 
 
-class User:
-    def __init__(self, email, username, password):
-        self.email = email
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f'<User: {self.username}>'
-
-
-user = (User(email='admin@okay.com', username='ADMIN', password='password'))
 
 
 @app.route('/', methods=['GET', 'POST'])
 def signUp():
+    lastUser = users[-1]
+    newUser = {}
+    db = models.chef()
     form = SignUpForm()
     if form.validate_on_submit():
-        if form.email.data == user.email and form.username.data == user.username and form.password.data == user.password:
-            return redirect(url_for('home'))
+        db = models.chef(username = form.username.data,
+                         email_address = str(form.email.data),
+                         password = form.password.data)
+        db.addNewUser()
+        flash('Welcome to Cuisina Chef!', 'success')
+        return redirect(url_for('profile', user_id=1))
     return render_template('signUp.html', form=form)
 
 
@@ -32,4 +28,10 @@ def home():
     return render_template('home.html')
 
 
-# ADD THE ROUTE/ROUTES OF/FOR YOUR FEATURE
+
+@app.route('/profile/<int:user_id>')
+def profile(user_id):
+    db = models.chef(user_id=user_id)
+    user = db.viewUser()
+    return render_template('profile.html', user = user)
+    

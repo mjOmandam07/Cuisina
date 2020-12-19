@@ -51,7 +51,7 @@ body {
 .signUp {
   color: var(--secondary-color);
   height: 100vh;
-  background-image: url("../static/signUp-bg.png");
+  background-image: url("../images/signUp-bg.png");
   background-size: cover;
   background-position: center;
 
@@ -92,14 +92,14 @@ body {
   place-items: center;
 }
 
-.signUp .fields-cont .sign-up form button {
+.signUp .fields-cont .sign-up form .btn {
   font-size: 1.3em;
   margin-left: 3.5em;
   width: 8em;
   color: white;
   background-color: var(--primary-color);
 }
-.signUp .fields-cont .sign-up form button:hover {
+.signUp .fields-cont .sign-up form .btn:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
   transition: 0.5s ease;
@@ -111,6 +111,12 @@ body {
   height: 2.5em;
   width: 20em;
 }
+
+.signUp .fields-cont .sign-up .form-group input:focus {
+  border-color: var(--primary-shade);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
 .signUp .fields-cont .sign-up .form-group label {
   color: white;
   font-family: var(--primary-font);

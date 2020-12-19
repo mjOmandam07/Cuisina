@@ -1,32 +1,4 @@
 from cuisina_app import mysql
-
-
-''' 
-
-	HERE WE CAN PUT OUR SQL QUERIES WE CAN ADD OR REMOVE A QUERY
-
-	GIVEN THAT YOU HAVE ENOUGH KNOWLEDGE OF THE OTHER FEATURES
-
-
-	YOU CAN ADD OR REMOVE QUERY ONLY BASING ON THE  FEATURE YOU ARE DOING
-
-
-	THE CURRENT VARIABLES/ATTRIBUTES ARE THE VARIABLE/ATTRIBUTE FOR
-
-
-	THE USER TABLE, YOU CAN CHANGE, ADD, REMOVE (ONLY) THE VARIABLEs/ATTRIBUTES
-
-
-	ACCORDING TO THE TABLE YOU ARE MANIPULATING CONSIDERING
-
-
-	THE FEATURE YOU ARE WORKING
-
-
-	*WE SHOULD NOT PUT ANY QUERRIES ON THE ROUTE.PY*
-
-
-'''
 class chef(object):
 	def __init__(self, user_id=None, username=None,
 				 password=None, email_address=None):
@@ -47,3 +19,31 @@ class chef(object):
 		display = cursor.fetchall()
 		return display
 ################################################
+
+
+	def addNewUser(self):
+		cursor = mysql.connection.cursor()
+		sql = """INSERT INTO user(username, email_address, password)
+					VALUES ('%s', '%s', '%s')""" % (self.username, self.email_address, self.password)
+
+		cursor.execute(sql)
+		mysql.connection.commit() 
+
+	def viewUser(self):
+		cursor = mysql.connection.cursor()
+
+		sql = "SELECT * FROM user WHERE user_id = {}".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		return display
+
+	def validateUser(self):
+		cursor = mysql.connection.cursor()
+		sql = "SELECT username FROM user WHERE username = '{}' and email_address = '{}'".format(self.username, self.email_address)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		for item in display:
+			if item[1] == self.username or item[2] == self.email_address:
+				return True 
