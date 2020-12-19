@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navCollapse">
           <ul class="navbar-nav ml-auto">
             <li class="navbar-item pr-5">
-              <a href="#sign-up-form" class="nav-link"> Sign Up </a>
+              <a href="#" class="nav-link"> Sign Up </a>
             </li>
             <li class="navbar-item pr-4">
               <a href="#" class="nav-link"> About </a>
@@ -54,10 +54,19 @@
       </div>
       <div class="container fields-cont">
         <div class="sign-up" id="sign-up-form">
-          <form method="POST">
+          <form method="POST" class="p-0">
              {{ form.csrf_token }}
              {{ form.hidden_tag() }}
-            <div class="form-group">
+             {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class = "alert alert-{{ category }} w-75 m-0">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+              {% endwith %}
+            <div class="form-group pt-2">
               {{ form.email.label }}
               {% if form.email.errors %}
                 {{ form.email(class = "form-control is-invalid") }}
@@ -70,7 +79,7 @@
                 {{ form.email(class="form-control") }}
               {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group pt-1">
               {{ form.username.label }}
               {% if form.username.errors %}
                 {{ form.username(class = "form-control is-invalid") }}
@@ -83,7 +92,7 @@
                 {{ form.username(class="form-control") }}
               {% endif %}
             </div>
-            <div class="form-group">
+            <div class="form-group pt-1">
               {{ form.password.label }}
               {% if form.password.errors %}
                 {{ form.password(class = "form-control is-invalid") }}

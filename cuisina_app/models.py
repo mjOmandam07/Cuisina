@@ -10,15 +10,14 @@ class chef(object):
 
 
 
-##############SAMPLE QUERY######################
-	def allUser(self):
+	def getUserId(self):
 		cursor = mysql.connection.cursor()
-		sql = "SELECT * FROM user"
+		sql = "SELECT user_id FROM user where username = '{}'".format(self.username)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
 		return display
-################################################
+
 
 
 	def addNewUser(self):
@@ -32,18 +31,31 @@ class chef(object):
 	def viewUser(self):
 		cursor = mysql.connection.cursor()
 
-		sql = "SELECT * FROM user WHERE user_id = {}".format(self.user_id)
+		sql = "SELECT * FROM user WHERE username = '{}'".format(self.username)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
 		return display
 
-	def validateUser(self):
+	def validateUsername(self):
 		cursor = mysql.connection.cursor()
-		sql = "SELECT username FROM user WHERE username = '{}' and email_address = '{}'".format(self.username, self.email_address)
+		sql = "SELECT * FROM user WHERE username = '{}'".format(self.username)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
-		for item in display:
-			if item[1] == self.username or item[2] == self.email_address:
-				return True 
+		
+		if display:
+			return 1
+
+	def validateEmail(self):
+		cursor = mysql.connection.cursor()
+		sql = "SELECT * FROM user WHERE email_address = '{}'".format(self.email_address)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		
+		if display:
+			return 2
+		else:
+			return 0
+		

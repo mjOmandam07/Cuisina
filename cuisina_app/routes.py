@@ -6,9 +6,8 @@ import cuisina_app.models as models
 
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/signUp', methods=['GET', 'POST'])
 def signUp():
-    lastUser = users[-1]
     newUser = {}
     db = models.chef()
     form = SignUpForm()
@@ -16,9 +15,15 @@ def signUp():
         db = models.chef(username = form.username.data,
                          email_address = str(form.email.data),
                          password = form.password.data)
-        db.addNewUser()
-        flash('Welcome to Cuisina Chef!', 'success')
-        return redirect(url_for('profile', user_id=1))
+        if db.validateUsername() == 1:
+            flash('Chef Already Exist!', 'danger')
+        elif db.validateEmail() == 2:
+            flash('Chef Email Already Exist!', 'danger')
+        else:
+            db.addNewUser()
+            user = db.viewUser()
+            flash('Welcome to Cuisina Chef!', 'success')
+            return redirect(url_for('profile', username=user[0][1]))
     return render_template('signUp.html', form=form)
 
 
@@ -29,9 +34,9 @@ def home():
 
 
 
-@app.route('/profile/<int:user_id>')
-def profile(user_id):
-    db = models.chef(user_id=user_id)
+@app.route('/profile/<username>')
+def profile(username):
+    db = models.chef(username=username)
     user = db.viewUser()
     return render_template('profile.html', user = user)
     
