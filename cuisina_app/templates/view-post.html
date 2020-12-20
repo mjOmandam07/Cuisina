@@ -14,14 +14,14 @@
                               <a href="{{ url_for('saveRecipe', recipe_id=recipe.recipe_id) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
                             {% endif %}
                       </div>
-                        <h2><a class="article-title display-4" href="#">{{recipe.recipe_id}}</a></h2>
+                        <h2><a class="article-title display-4" href="#">{{recipe.title}}</a></h2>
                          {% if recipe.image != None %}
                           <div class="col mb-3 d-flex justify-content-center">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#{{ recipe.recipe_id }}">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ recipe.recipe_id | string() }}">
                               <img src="{{ recipe.image }}" alt="" class="article-content align-self-center post-img">
                             </button>
                           </div>
-                          <div class="modal fade bd-example-modal-lg" id="{{recipe.recipe_id}}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal fade bd-example-modal-lg" id="recipe{{ recipe.recipe_id | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
                               <div class="modal-content">
                                 <img src="{{ recipe.image }}" alt="" class="article-content align-self-center" style="height: 100%;">
