@@ -1,6 +1,5 @@
 from cuisina_app import mysql
 
-
 ''' 
 
 	HERE WE CAN PUT OUR SQL QUERIES WE CAN ADD OR REMOVE A QUERY
@@ -27,23 +26,21 @@ from cuisina_app import mysql
 
 
 '''
-class chef(object):
-	def __init__(self, user_id=None, username=None,
-				 password=None, email_address=None):
 
+
+class Chef(object):
+	def __init__(self, user_id=None, username=None, password=None, email_address=None):
 		self.user_id = user_id
 		self.username = username
 		self.password = password
 		self.email_address = email_address
 
-
-
-##############SAMPLE QUERY######################
+####SAMPLE QUERY#########
 	def allUser(self):
 		cursor = mysql.connection.cursor()
 		sql = "SELECT * FROM user"
-
 		cursor.execute(sql)
 		display = cursor.fetchall()
 		return display
-################################################
+
+###########################

@@ -110,7 +110,7 @@ body {
 
 /*POST SECT*/
 .body-sect .post-sect {
-  margin: 25em;
+  margin: 2.5em 5em 5em 25em;
 }
 .body-sect .post-sect .profile-sect {
   padding-top: 0.1em;
@@ -188,6 +188,16 @@ body {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
+.body-sect .profile-sect .account-info .age-gender .btn {
+  margin: 1em;
+  font-size: 0.8em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-info .age-gender .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
 .body-sect .profile-sect .account-info .form-group label {
   font-family: var(--primary-font);
   font-weight: 500;
@@ -220,8 +230,8 @@ body {
 }
 
 .body-sect .post .media-body .article-img {
-  height: 1em;
-  width: 1em;
+  height: 3em;
+  width: 3em;
 }
 
 .body-sect .post .media-body a {
