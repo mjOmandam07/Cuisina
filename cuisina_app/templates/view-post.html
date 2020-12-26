@@ -5,62 +5,62 @@
                     <div class="media-body">
                       <div class="article-metadata">
                         <img class = "rounded-circle article-img" src="{{url_for('static', filename ='images/default.jpg')}}"style=" height: 60px;width: 60px;">
-                          <a class="ml-2 article-author" href="#">{{ recipe.username }}</a>
-                          <small class="text-muted">{{recipe.timeDate}}</small>
-                           <small class="ml-1 font-weight-bold">{{recipe.cuisine}}</small>
-                           {% if recipe.saved == True %}
-                              <a href="{{ url_for('saveRecipe', recipe_id=recipe.recipe_id) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                          <a class="ml-2 article-author" href="#">{{ recipe[0][9] }}</a>
+                          <small class="text-muted">{{recipe[0][3]}}</small>
+                           <small class="ml-1 font-weight-bold">{{recipe[0][4]}}</small>
+                           {% if recipe[0][5] == True %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0]) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
                             {% else %}
-                              <a href="{{ url_for('saveRecipe', recipe_id=recipe.recipe_id) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
-                            {% endif %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0]) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% endif %}                       
                       </div>
-                        <h2><a class="article-title display-4" href="#">{{recipe.title}}</a></h2>
-                         {% if recipe.image != None %}
+                        <h2><p class="article-title display-4" style="color:var(--primary-color);">{{recipe[0][1]}}</p></h2>
+                         {% if recipe[0][8] != None %}
                           <div class="col mb-3 d-flex justify-content-center">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ recipe.recipe_id | string() }}">
-                              <img src="{{ recipe.image }}" alt="" class="article-content align-self-center post-img">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ recipe[0][0] | string() }}">
+                              <img src="{{ recipe[0][8] }}" alt="" class="article-content align-self-center post-img">
                             </button>
                           </div>
-                          <div class="modal fade bd-example-modal-lg" id="recipe{{ recipe.recipe_id | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal fade bd-example-modal-lg" id="recipe{{ recipe[0][0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
                               <div class="modal-content">
-                                <img src="{{ recipe.image }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                                <img src="{{ recipe[0][8] }}" alt="" class="article-content align-self-center" style="height: 100%;">
                               </div>
                             </div>
                           </div>
                         {% endif %}
-                        <p class="article-content m-3">{{recipe.description}}</p>
+                        <p class="article-content m-3">{{recipe[0][2]}}</p>
                     </div> 
                   </article>
                   <div class="row ml-1">
-                    {% if rating %}
+                    {% if rate[0][0] %}
                       <div class="star-widget m-0 col-12" id="starfield">
                           <small class="ml-2 mr-auto mr-5 pr-3">Your current Rating of this Recipe</small>
-                          {% if rating == 5 %}
+                          {% if rate[0][0] == 5 %}
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
-                          {% elif rating == 4 %}
+                          {% elif rate[0][0] == 4 %}
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star"></span>
-                          {% elif rating == 3 %}
+                          {% elif rate[0][0] == 3 %}
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
-                          {% elif rating == 2 %}
+                          {% elif rate[0][0] == 2 %}
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
-                          {% elif rating == 1 %}
+                          {% elif rate[0][0] == 1 %}
                            <span class="fa fa-star checked"></span>
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
@@ -101,11 +101,11 @@
 		                                <div class="row">
 		                                    <div class="col-md-2">
 		                                        <img src="{{url_for('static', filename ='images/default.jpg')}}" class="img rounded-circle img-fluid"/>
-		                                        <p class="text-secondary text-center">{{ item.timeDate }}</p>
+		                                        <p class="text-secondary text-center">{{ item[2].strftime("%b %d %Y, %I:%M %p") }}</p>
 		                                    </div>
 		                                    <div class="col-md-10">
-		                                        <p><a href="#"><strong>{{ item.user }}</strong></a></p>
-		                                        <p>{{ item.content }}</p>
+		                                        <p><a href="#"><strong>{{ item[5] }}</strong></a></p>
+		                                        <p>{{ item[1] }}</p>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -113,9 +113,9 @@
 		                        {% endfor %}
 		                    {% else %}
 		                    	<div class="card card-inner">
-                                <div class="card-body bg-light">
+                                <div class="card-body">
                                     <div class="row">
-                                       <p class="display-4">No Comments</p>
+                                       <p class="display-4" style="color:var(--primary-color);">No Comments</p>
                                     </div>
                                 </div>
                             </div>
@@ -139,20 +139,5 @@
 	                        </form>
 	                    </div>
                   </div>
-  </div>
-         
-
-
-        <script type="text/javascript">
-          starWidget = document.getElementById("starfield")
-          rate = document.getElementById("rate-form")
-          function rateform(){
-            rate.style.display = "block"
-            starWidget.style.display = "None"
-
-          }
-        </script>
-
-       
-        
+  </div>                     
 {% endblock content %}

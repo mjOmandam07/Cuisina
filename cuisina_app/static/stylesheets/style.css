@@ -88,6 +88,13 @@ body-sect {
   background-color: #c5c5c5 !important;
   text-decoration: none;
 }
+
+.body-sect .sidebar .sidebar-info-sect .active {
+  background-color: #c5c5c5 !important;
+  color:var(--primary-shade) !important;
+  text-decoration: none;
+}
+
 .body-sect .sidebar .sidebar-info-sect .sidebar-top {
   display: flex;
   flex-direction: column;
@@ -284,6 +291,19 @@ POSTS SECT
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
+.body-sect .post .article-metadata .saved {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.body-sect .post .article-metadata .disabled-btn {
+  border-radius: 5px;
+  float: right;
+  color: var(--primary-color);
+}
+
+
+
 .body-sect .post .article-metadata .saved {
   background-color: var(--primary-color);
   color: var(--secondary-color);
