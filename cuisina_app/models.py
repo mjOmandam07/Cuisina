@@ -31,10 +31,11 @@ class chef(object):
 	def viewUser(self):
 		cursor = mysql.connection.cursor()
 
-		sql = "SELECT * FROM user WHERE username = '{}'".format(self.username)
+		sql = "SELECT * FROM user WHERE user_id = {}".format(self.user_id)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
+
 		return display
 
 	def validateUsername(self):

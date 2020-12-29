@@ -1,8 +1,7 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify
+from flask import render_template, redirect, request, url_for, flash
 from cuisina_app import app
 from cuisina_app.forms import SignUpForm
 import cuisina_app.models as models
-
 
 
 
@@ -16,27 +15,22 @@ def signUp():
                          email_address = str(form.email.data),
                          password = form.password.data)
         if db.validateUsername() == 1:
-            flash('Chef Already Exist!', 'danger')
+            flash('Chef Username Already Exist!', 'danger')
         elif db.validateEmail() == 2:
             flash('Chef Email Already Exist!', 'danger')
         else:
             db.addNewUser()
             user = db.viewUser()
             flash('Welcome to Cuisina Chef!', 'success')
-            return redirect(url_for('profile', username=user[0][1]))
+            return redirect(url_for('profile', user_id=user[0][0]))
     return render_template('signUp.html', form=form)
 
 
-@app.route('/home')
-def home():
-    flash('Welcome chef! You successfully entered the CUISINA')
-    return render_template('home.html')
 
 
-
-@app.route('/profile/<username>')
-def profile(username):
-    db = models.chef(username=username)
+@app.route('/profile/<int:user_id>')
+def profile(user_id):
+    db = models.chef(user_id=user_id)
     user = db.viewUser()
-    return render_template('profile.html', user = user)
+    return render_template('profile.html', user=user)
     
