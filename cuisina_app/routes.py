@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, session
+from flask import render_template, redirect, request, url_for, flash, session
 from cuisina_app import app
 from cuisina_app.forms import LoginForm
 import cuisina_app.models as models
