@@ -2,13 +2,16 @@ from flask import render_template, redirect, request, url_for, flash, session
 from cuisina_app import app
 from cuisina_app.forms import LoginForm
 import cuisina_app.models as models
+from datetime import timedelta
 
+app.permanent_session_lifetime = timedelta(days=2)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     db = models.chef()
     if form.validate_on_submit():
+        session.permanent = True
         db = models.chef(username=form.username.data,
                          password=form.password.data)
 
