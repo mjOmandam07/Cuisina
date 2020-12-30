@@ -186,81 +186,6 @@ CREATE POST SECT
   color: var(--secondary-color);
 }
 
-.body-sect .create-post .modal .preview-images-zone {
-  width: 100%;
-  border: 1px solid #ddd;
-  min-height: 180px;
-  /* display: flex; */
-  padding: 5px 5px 0px 5px;
-  position: relative;
-  overflow: auto;
-}
-.body-sect
-  .create-post
-  .modal
-  .preview-images-zone
-  > .preview-image:first-child {
-  height: 185px;
-  width: 185px;
-  position: relative;
-  margin-right: 5px;
-}
-.body-sect .create-post .modal .preview-images-zone > .preview-image {
-  height: 90px;
-  width: 90px;
-  position: relative;
-  margin-right: 5px;
-  float: left;
-  margin-bottom: 5px;
-}
-.body-sect
-  .create-post
-  .modal
-  .preview-images-zone
-  > .preview-image
-  > .image-zone {
-  width: 100%;
-  height: 100%;
-}
-.body-sect
-  .create-post
-  .modal
-  .preview-images-zone
-  > .preview-image
-  > .image-zone
-  > img {
-  width: 100%;
-  height: 100%;
-}
-
-.body-sect
-  .create-post
-  .modal
-  .preview-images-zone
-  > .preview-image
-  > .image-cancel {
-  font-size: 18px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-weight: bold;
-  margin-right: 10px;
-  cursor: pointer;
-  display: none;
-  z-index: 100;
-}
-.body-sect .create-post .modal .preview-image:hover > .image-zone {
-  cursor: move;
-  opacity: 0.5;
-}
-
-.body-sect .create-post .modal .preview-image:hover > .image-cancel {
-  display: block;
-}
-.body-sect .create-post .modal .ui-sortable-helper {
-  width: 90px !important;
-  height: 90px !important;
-}
 
 .body-sect .create-post .modal .container {
   padding-top: 50px;
@@ -434,11 +359,6 @@ border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
 
-.body-sect .create-post .modal-dialog .image-dropping,
-.image-upload-wrap:hover {
-  background-color: var(--primary-shade);
-  border: 2px dashed #ffffff;
-}
 
 .body-sect .create-post .modal-dialog .image-title-wrap {
   padding: 0 15px 15px 15px;
@@ -457,8 +377,8 @@ border-color: var(--primary-color);
 }
 
 .body-sect .create-post .modal-dialog .file-upload-image {
-  max-height: 200px;
-  max-width: 200px;
+  max-height: 40%;
+  max-width: 60%;
   margin: auto;
   padding: 20px;
 }

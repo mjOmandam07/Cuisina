@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<div class="article create-post bg-light m-3">
+  <div class="article create-post bg-light m-3">
                 <div class="article-metadata p-2 m-3">
                   <img class = "rounded-circle article-img" src="{{url_for('static', filename ='images/default.jpg')}}"style=" height: 50px;width: 50px;">
                     <a class="account-user mr-2" href="#">{{ user[0][1] }}</a>
@@ -64,20 +64,28 @@
                                         {{ form.content(class="form-control form-control-lg content") }}
                                     {% endif %}
                                 </div>
-                              
-                              <div class="form-group">
-                                <a href="javascript:void(0)" class="btn upload"onclick="$('#upload_picture').click()">Add Image</a>
-                                  {{ form.upload_picture(class="form-control-file", style="display:none;") }}
-                                  {% if form.upload_picture.errors %}
-                                    {% for error in form.upload_picture.errors %}
-                                          <span class="text-danger">{{ error }}</span></br>
-                                      {% endfor %}
-                                  {% endif %}
-                              </div>
-                              
-                              <div class="preview-images-zone">
-                                  
-                              </div>
+                                <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                  <div class="file-upload">
+                                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+                                    <div class="image-upload-wrap">
+                                      {{ form.upload_picture(class="form-control-file file-upload-input", onchange="readURL(this);", style="display:none;") }}
+                                      {% if form.upload_picture.errors %}
+                                        {% for error in form.upload_picture.errors %}
+                                              <span class="text-danger">{{ error }}</span></br>
+                                          {% endfor %}
+                                      {% endif %}
+                                      <div class="drag-text">
+                                        <h3>Select Image</h3>
+                                      </div>
+                                    </div>
+                                    <div class="file-upload-content">
+                                      <img class="file-upload-image" src="#" alt="your image" />
+                                      <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Cancel</button>
+                                      </div>
+                                    </div>
+                                  </div>
+    
                                 <div class="form-group">
                                     {{ form.submit(class="btn btn-light btn-outline-dark col mt-3") }}
                                 </div>
@@ -101,7 +109,7 @@
                 <a class="dropdown-item" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
               </div>
             </div>
-           	{% for item in recipe %}
+            {% for item in recipe %}
               <div class="post bg-light m-3 p-4">
                   <article class="media content-section">
                       <div class="media-body">
@@ -187,44 +195,38 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 
     <script>
-      $(document).ready(function() {
-    document.getElementById('upload_picture').addEventListener('change', readImage, false);
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
     
-
-    
-    $(document).on('click', '.image-cancel', function() {
-        let no = $(this).data('no');
-        $(".preview-image.preview-show-"+no).remove();
-    });
-});
-var num = 4;
-function readImage() {
-    if (window.File && window.FileList && window.FileReader) {
-        var files = event.target.files;
-        var output = $(".preview-images-zone");
-
-        for (let i = 0; i < files.length; i++) {
-            var file = files[i];
-            if (!file.type.match('image')) continue;
-            
-            var picReader = new FileReader();
-            
-            picReader.addEventListener('load', function (event) {
-                var picFile = event.target;
-                var html =  '<div class="preview-image preview-show-' + num + '">' +
-                            '<div class="image-cancel" data-no="' + num + '">x</div>' +
-                            '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '"></div>' +
-                            '</div>';
-
-                output.append(html);
-                num = num + 1;
-            });
-
-            picReader.readAsDataURL(file);
-        }
-    } else {
-        console.log('Browser not support');
-    }
-}
-  </script>
+    </script>
 {% endblock content %}
