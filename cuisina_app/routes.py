@@ -3,7 +3,6 @@ from cuisina_app import app
 from PIL import Image
 import sqlite3
 import os
-import secrets
 from cuisina_app.forms import ProfileForm
 import cuisina_app.models as models
 
@@ -11,13 +10,19 @@ import cuisina_app.models as models
 ##### SAMPLE ROUTE ###########
 @app.route('/')
 def sample():
-    return render_template('layout.html', active='home', user='sampleUser07', suggested_chef='sampleChef07')
+    return render_template('layout.html', active='home', user='sampleUser07', suggested_chef='sampleChef07', image_file='images/profile_pics/default.jpg')
 
 
 ## ADD THE ROUTE/ROUTES OF/FOR YOUR FEATURE
 @app.route('/profile')
 def profile():
     form = ProfileForm()
+    if form.picture.data:
+        picture_file = save_picture(form.picture.data)
+        image_file = picture_file
+    else:
+        image_file = 'images/profile_pics/default.jpg'
+
     return render_template('profile.html',
                            user='sampleUser07',
                            fname='Kyle',
@@ -26,31 +31,22 @@ def profile():
                            age='16',
                            gender='Male',
                            suggested_chef='sampleChef07',
+                           suggested_img='images/profile_pics/default.jpg',
+                           image_file=image_file,
                            form=form)
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
 
 @app.route('/updateProfile', methods=["POST", "GET"])
 def updateProfile():
     global first_name, last_name, email_add, aget
     form = ProfileForm()
     image_file = 'images/profile_pics/default.jpg'
-    if form.picture.data:
-        picture_file = save_picture(form.picture.data)
-        image_file = picture_file
-    else:
-        image_file = 'images/profile_pics/default.jpg'
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            image_file = picture_file
+        else:
+            image_file = 'images/profile_pics/default.jpg'
     if request.method == "POST":
         try:
             first_name = request.form["fname"]
@@ -72,9 +68,22 @@ def updateProfile():
                                    email=email_add,
                                    age=aget,
                                    suggested_chef='sampleChef07',
+                                   suggested_img='images/profile_pics/default.jpg',
                                    image_file=image_file,
                                    form=form)
             conn.close()
+
+
+def save_picture(form_picture):
+    file_name, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = file_name + f_ext
+    picture_path = os.path.join(app.root_path, 'static/images/profile_pics', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_fn
 
 
 @app.route('/userProfile')

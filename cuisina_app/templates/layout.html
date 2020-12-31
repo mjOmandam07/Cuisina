@@ -62,7 +62,7 @@
             <div class="sidebar-info-sect">
               <div class="sidebar-top">
                 <a class="sidebar-info " href='/profile'>
-                  	<img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename='images/default.jpg')}}" style=" height: 50px;width: 50px;">
+                  	<img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename=image_file)}}" style=" height: 50px;width: 50px;">
                   	{{user}}
                 </a>
                 <a class="sidebar-info" href="#">Master Chef's</a>
@@ -73,7 +73,7 @@
                     <div class="suggested-chef bg-light">
                         <h1 class="sidebar-info mb-4">Suggested Chef</h1>
                         <div>
-                            <img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename='images/default.jpg')}}">
+                            <img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename=suggested_img)}}">
                         </div>
                         <div class="article-metadata mt-2">
                             <a class="sidebar-info " href='/userProfile'>{{suggested_chef}}</a>

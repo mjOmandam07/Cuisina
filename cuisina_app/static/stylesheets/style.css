@@ -204,6 +204,16 @@ body {
   font-size: 1.5em;
   color: var(--primary-color);
 }
+.body-sect .profile-sect .account-info .form-group .pic-button .btn {
+  margin: 1em;
+  font-size: 0.8em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-info .form-gourp .pic-button .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
 
 .body-sect .profile-sect input:focus {
   border-color: var(--primary-color);

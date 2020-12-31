@@ -19,3 +19,4 @@ class ProfileForm(FlaskForm):
                                   validators=[DataRequired()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Save')
+    submit2 = SubmitField('Save Profile Pic')
