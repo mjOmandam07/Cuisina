@@ -1,8 +1,8 @@
 from flask import render_template, redirect, request, url_for, flash, session
+from datetime import timedelta
 from cuisina_app import app
 from cuisina_app.forms import LoginForm
 import cuisina_app.models as models
-from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(days=2)
 
@@ -42,7 +42,6 @@ def profile(user_id):
     if 'user' in session:
         db = models.chef(user_id=user_id)
         user = db.viewUser()
-        session['user'] = user
         return render_template('profile.html', user=user)
     else:
         return redirect(url_for('login'))
