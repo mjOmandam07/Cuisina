@@ -20,9 +20,13 @@ def signUp():
             flash('Chef Email Already Exist!', 'danger')
         else:
             db.addNewUser()
-            user = db.viewUser()
-            flash('Welcome to Cuisina Chef!', 'success')
+            session.permanent = True
+            login = models.chef(username=form.username.data,
+                            password=form.password.data)
+            user = login.login()
+            session['user'] = user
             return redirect(url_for('profile', user_id=user[0][0]))
+            flash('Welcome to Cuisina Chef!', 'success')
     return render_template('signUp.html', form=form)
 
 
