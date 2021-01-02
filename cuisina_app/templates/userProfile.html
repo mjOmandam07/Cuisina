@@ -2,15 +2,15 @@
 {% block content %}
 <div class="article profile-sect bg-light w-100 m-3">
                 <div class="article-metadata account-head row m-3">
-                  <img class = "rounded-circle article-img profile-img" src="{{url_for('static', filename='images/default.jpg')}}" style=>
+                  <img class = "rounded-circle article-img profile-img" src="{{other_user[0][4]}}" style=>
                     <div class="d-flex flex-column account-detail  ml-2 align-self-center">
-                        <a class="account-username" href="#">{{ user }}</a>
-                        <p class="account-motto ml-2 mb-0" href="#">Odong nga Lami</p>
+                        <a class="account-username" href="" disabled>{{ other_user[0][1] }}</a>
                     </div>
                     <div class="align-self-center ml-auto medal">
                       <h6 class="m-1">Executive Chef</h6>
                       <button class="btn" data-toggle="modal" data-target=".rank-modal">
-                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
+                        <img class = "rounded-circle article-img" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                          style="height:8em; width: 10em;">
                       </button>
 
                       <div class="modal fade rank-modal" tabindex="-1" role="dialog"
@@ -28,19 +28,19 @@
                           <div class="form-group">
                               <div class="container-fluid fname m-0">
                                   <label for="fname">First Name:</label><br>
-                                  <input name="value" class="form-control" value={{ fname }} disabled>
+                                  <input name="value" class="form-control" value={{ profile[0][1] }} disabled>
                               </div>
                           </div>
                           <div class="form-group">
                               <div class="container-fluid lname m-0">
                                   <label for="lname">Last Name:</label><br>
-                                  <input name="value" class="form-control" value={{ lname }} disabled>
+                                  <input name="value" class="form-control" value={{ profile[0][2] }} disabled>
                               </div>
                           </div>
                           <div class="form-group">
                               <div class="container-fluid email m-0">
                                   <label for="email">Email Address:</label><br>
-                                  <input name="value" type="email" class="form-control" value={{ email }} disabled>
+                                  <input name="value" type="email" class="form-control" value={{ other_user[0][2] }} disabled>
                               </div>
                           </div>
                           <div class="age-gender">
@@ -48,17 +48,16 @@
                                 <div class="form-group col-4">
                                   <div class="container-fluid age">
                                       <label for="age">Age:</label><br>
-                                      <input name="value" class="form-control w-100" value={{ age }} disabled>
+                                      <input name="value" class="form-control w-100" value={{ profile[0][2] }} disabled>
                                   </div>
                               </div>
                               <div class="form-group col-8">
                                 <div class="container-fluid gender">
                                     <label>Gender:</label><br>
                                     <select class="custom-select" disabled>
-                                      <option selected>Select Gender</option>
+                                      <option selected>{{ profile[0][4] }}</option>
                                       <option value="1">Male</option>
                                       <option value="2">Female</option>
-                                      <option value="3">Kyle</option>
                                     </select>
                                 </div>
                               </div>
@@ -67,110 +66,86 @@
                     </form>
                 </div>
             </div>
-            <div class="post bg-light m-3 p-4">
-                <article class="media content-section">
-                    <div class="media-body">
-                      <div class="article-metadata">
-                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
-                          <a class="ml-2 article-author" href="#">{{ user }}</a>
-                          <small class="text-muted">September 30, 2020</small>
-                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
-                      </div>
-                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
-                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-                    </div>
-                  </article>
-                  <div class="row ml-1">
-                    <div class="rate align-self-center">
-                      <input type="radio" id="star5" name="rate" value="5" />
-                      <label for="star5" title="text">5 stars</label>
-                      <input type="radio" id="star4" name="rate" value="4" />
-                      <label for="star4" title="text">4 stars</label>
-                      <input type="radio" id="star3" name="rate" value="3" />
-                      <label for="star3" title="text">3 stars</label>
-                      <input type="radio" id="star2" name="rate" value="2" />
-                      <label for="star2" title="text">2 stars</label>
-                      <input type="radio" id="star1" name="rate" value="1" />
-                      <label for="star1" title="text">1 star</label>
-                    </div>
-                    <div class="col ml-4 align-self-center">
-                      <a class="article-save" href="#">View Comments</a>
-                    </div>
-                  </div>
-            </div>
-            <div class="post bg-light m-3 p-4">
-                <article class="media content-section">
-                    <div class="media-body">
-                      <div class="article-metadata">
-                        <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
-                          <a class="ml-2 article-author" href="#">{{ user }}</a>
-                          <small class="text-muted">September 30, 2020</small>
-                          <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
-                      </div>
-                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
-                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-                    </div>
-                </article>
-                  <div class="row ml-1">
-                    <div class="rate align-self-center">
-                      <input type="radio" id="star5" name="rate" value="5" />
-                      <label for="star5" title="text">5 stars</label>
-                      <input type="radio" id="star4" name="rate" value="4" />
-                      <label for="star4" title="text">4 stars</label>
-                      <input type="radio" id="star3" name="rate" value="3" />
-                      <label for="star3" title="text">3 stars</label>
-                      <input type="radio" id="star2" name="rate" value="2" />
-                      <label for="star2" title="text">2 stars</label>
-                      <input type="radio" id="star1" name="rate" value="1" />
-                      <label for="star1" title="text">1 star</label>
-                    </div>
-                    <div class="col ml-4 align-self-center">
-                      <a class="article-save" href="#">View Comments</a>
-                    </div>
-                  </div>
-            </div>
-            <div class="post bg-light m-3 p-4">
-                <article class="media content-section">
-                    <div class="media-body">
+            {% for item in recipe %}
+              <div class="post bg-light m-3 p-4">
+                  <article class="media content-section">
+                      <div class="media-body">
                         <div class="article-metadata">
-                            <img class = "rounded-circle article-img" src="{{url_for('static', filename='images/default.jpg')}}">
-                            <a class="ml-2 article-author" href="#">{{ user }}</a>
-                            <small class="text-muted">September 30, 2020</small>
-                            <button class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></button>
+                          <img class = "rounded-circle article-img" src="{{other_user[0][4]}}"style=" height: 60px;width: 60px;">
+                            <a class="ml-2 article-author" href="#">{{ item[9] }}</a>
+                            <small class="text-muted">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                            <small class="ml-1 font-weight-bold">{{item[4]}}</small>
+                            {% if item[5] == True %}
+                              <p  class="disabled-btn saved mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
+                            {% else %}
+                              <p  class="disabled-btn mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
+                            {% endif %} 
                         </div>
-                        <h2><a class="article-title display-4" href="#">Sinigang na makahigugma</a></h2>
-                        <div class="col mb-3 d-flex justify-content-center">
-                          <button type="button" class="btn" data-toggle="modal" data-target="#img-modal">
-                            <img src="{{url_for('static', filename='images/default.jpg')}}" alt="" class="article-content align-self-center">
-                          </button>
-                        </div>
-                        <p class="article-content">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-                    </div>
-                  </article>
-                  <div class="row ml-1">
-                    <div class="rate align-self-center">
-                      <input type="radio" id="star5" name="rate" value="5" />
-                      <label for="star5" title="text">5 stars</label>
-                      <input type="radio" id="star4" name="rate" value="4" />
-                      <label for="star4" title="text">4 stars</label>
-                      <input type="radio" id="star3" name="rate" value="3" />
-                      <label for="star3" title="text">3 stars</label>
-                      <input type="radio" id="star2" name="rate" value="2" />
-                      <label for="star2" title="text">2 stars</label>
-                      <input type="radio" id="star1" name="rate" value="1" />
-                      <label for="star1" title="text">1 star</label>
-                    </div>
-                    <div class="col ml-4 align-self-center">
-                      <a class="article-save" href="#">View Comments</a>
-                    </div>
-                  </div>
-                  <div class="modal fade bd-example-modal-lg" id="img-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
-                      <div class="modal-content">
-                        <img src="{{url_for('static', filename='images/default.jpg')}}" alt="" class="article-content align-self-center" style="height: 100%;">
+                          <h2><a class="article-title display-4" href="#">{{ item[1] }}</a></h2>
+                          {% if item[8] != None %}
+                            <div class="col mb-3 d-flex justify-content-center">
+                              <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ item[0] | string()}}">
+                                <img src="{{ item[8] }}" alt="" class="article-content align-self-center post-img">
+                              </button>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id="recipe{{ item[0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                                <div class="modal-content">
+                                  <img src="{{ item[8] }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                          <p class="article-content m-3">{{ item[2] | truncate(100) }}</p>
+                      </div> 
+                    </article>
+                    <div class="row ml-1">
+                      <div class="star-widget">
+                        {% if item[6] == 5 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                        {% elif item[6] == 4 %}
+                         <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 3 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 2 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 1 %}
+                         <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% else %}
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% endif %} 
+                        <small class="ml-2">Average Rating</small>
+                      </div>
+
+                      <div class="col ml-4 align-self-center">
+                        <a class="article-save" href="#">View Comments</a>
                       </div>
                     </div>
-                  </div>
-            </div>
+              </div>
+            {% endfor %}
 
 {% endblock %}

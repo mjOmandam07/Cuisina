@@ -61,9 +61,9 @@
         <div class="col-4 article sidebar">
             <div class="sidebar-info-sect">
               <div class="sidebar-top">
-                <a class="sidebar-info " href='/profile'>
-                  	<img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename=image_file)}}" style=" height: 50px;width: 50px;">
-                  	{{user}}
+                <a class="sidebar-info " href="{{ url_for('profile', user_id=user[0][0]) }}">
+                  	<img class = "rounded-circle article-img mr-2" src="{{user[0][4]}}" style=" height: 50px;width: 50px;">
+                  	{{user[0][1]}}
                 </a>
                 <a class="sidebar-info" href="#">Master Chef's</a>
                 <a class="sidebar-info" href="#">Saved Recipes</a>
@@ -72,21 +72,23 @@
               <div class="article article-metadata">
                     <div class="suggested-chef bg-light">
                         <h1 class="sidebar-info mb-4">Suggested Chef</h1>
+                        {% for item in suggested_chef %}
                         <div>
-                            <img class = "rounded-circle article-img" alt="default" src="{{url_for('static', filename=suggested_img)}}">
+                            <img class = "rounded-circle article-img" src="{{item[4]}}">
                         </div>
                         <div class="article-metadata mt-2">
-                            <a class="sidebar-info " href='/userProfile'>{{suggested_chef}}</a>
+                            <a class="sidebar-info " href="{{ url_for('viewProfile', user_id=item[0]) }}">{{item[1]}}</a>
                         </div>
+                        {% endfor %}
                     </div>
               </div>
             </div>
         </div>
-        <div class="col-8 post-sect">
+        <div class="col-8 post-sect mt-2">
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
-                  <div class="alert alert-{{ category }}">
+                  <div class="alert alert-{{ category }} ml-3 col">
                     {{ message }}
                   </div>
                 {% endfor %}
