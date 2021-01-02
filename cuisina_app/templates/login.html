@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
       <div class="container">
-        <a href="#" class="navbar-brand"><h1 class="welcome">CUISINA</h1></a>
+        <a href="/login" class="navbar-brand"><h1 class="welcome">CUISINA</h1></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navCollapse">
           <ul class="navbar-nav ml-auto">
             <li class="navbar-item">
-              <a href="signUp.html#sign-up-form" class="nav-link"> Sign Up </a>
+              <a href="{{ url_for('signUp') }}" class="nav-link"> Sign Up </a>
             </li>
             <li class="navbar-item">
               <a href="#about" class="nav-link"> About </a>
@@ -91,7 +91,7 @@
             </form>
             <div class="pt-3">
               <small>
-                Dont have an account yet? |<a class="ml-2" href="#"
+                Dont have an account yet? |<a class="ml-2" href="{{ url_for('signUp') }}"
                   >Sign Up Now!</a
                 >
               </small>
