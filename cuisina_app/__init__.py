@@ -13,3 +13,4 @@ app.config['SECRET_KEY'] = SECRET_KEY
 mysql = MySQL(app)
 
 from cuisina_app import routes
+

@@ -1,0 +1,219 @@
+:root {
+  --alpha: 33%;
+  --primary-color: #581b98;
+  --primary-hover: #321850;
+  --primary-shade: #b075ef;
+  --secondary-color: white;
+  --secondary-hover: rgb(218, 218, 218);
+  --primary-font: "Montserrat", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.navbar .container .navbar-brand h1 {
+  color: var(--secondary-hover);
+  font-family: var(--primary-font);
+  font-size: 1.4em;
+}
+.navbar .container .navbar-brand h1:hover {
+  color: var(--primary-shade);
+  transition: 0.3s ease;
+}
+
+.navbar .collapse .navbar-nav .navbar-item a {
+  color: var(--secondary-color);
+  font-family: var(--primary-font);
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.navbar .collapse .navbar-nav .navbar-item a:hover {
+  color: var(--primary-shade);
+}
+
+.solid {
+  background-color: var(--primary-color);
+  color: none;
+  transition: 0.2s;
+}
+.not-solid {
+  background-color: none;
+  transition: 0.5s;
+}
+
+/*------------- Sign Up -----------------*/
+
+.signUp {
+  color: var(--secondary-color);
+  height: 100vh;
+  background-image: url("../images/signUp-bg.png");
+  background-size: cover;
+  background-position: center;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+}
+
+.signUp .quote {
+  font-family: var(--primary-font);
+}
+
+.signUp .quote .lead {
+  text-align: center;
+  font-weight: 300;
+  margin: 2.5em 0 0 2.5em;
+  width: 10.5em;
+  font-size: 2.5em;
+}
+
+.signUp .quote .sign-now h1 {
+  margin: 0.3em 0 0 2.4em;
+  font-size: 4.5em;
+  font-weight: 600;
+}
+
+.signUp .fields-cont {
+  display: grid;
+  align-content: center;
+}
+.signUp .fields-cont .sign-up {
+  border-radius: 10px;
+  padding: 2em 0 2em 0;
+  margin: 5.4em 5em 2em 5em;
+  background-color: #321850af;
+
+  display: grid;
+  place-items: center;
+}
+
+.signUp .fields-cont .sign-up form .btn {
+  font-size: 1.3em;
+  margin-left: 3.5em;
+  width: 8em;
+  color: white;
+  background-color: var(--primary-color);
+}
+.signUp .fields-cont .sign-up form .btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transition: 0.5s ease;
+}
+.signUp .fields-cont .sign-up .form-group {
+  padding: 1em 0 1em 0;
+}
+.signUp .fields-cont .sign-up .form-group input {
+  height: 2.5em;
+  width: 20em;
+}
+
+.signUp .fields-cont .sign-up .form-group input:focus {
+  border-color: var(--primary-shade);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
+.signUp .fields-cont .sign-up .form-group label {
+  color: white;
+  font-family: var(--primary-font);
+  font-weight: 300;
+  font-size: 1em;
+}
+.signUp .fields-cont .sign-up .pt-3 {
+  margin-left: 1em;
+  color: white;
+  font-family: var(--primary-font);
+  font-weight: 500;
+}
+.signUp .fields-cont .sign-up .pt-3 a {
+  color: var(--primary-shade);
+}
+
+/* ------ Media Querries ------- */
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 1200px) and (min-width: 993px) {
+  .signUp .quote .lead {
+    margin: 4.5em 0 0 3.5em;
+    font-size: 2em;
+  }
+  .signUp .quote .sign-now h1 {
+    margin: 0.3em 0 0 2em;
+  }
+
+  .signUp .fields-cont .sign-up {
+    padding: 2em 0 2em 0;
+    margin: 5em 0 0 0;
+  }
+
+  .signUp .fields-cont .sign-up .form-group label {
+    color: white;
+    font-family: var(--primary-font);
+    font-weight: 300;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 992px) and (min-width: 767px) {
+  .signUp .quote .lead {
+    margin: 4.5em 0 0 0.5em;
+    font-size: 2em;
+  }
+  .signUp .quote .sign-now h1 {
+    margin: 0.3em 0 0 0.5em;
+  }
+
+  .signUp .fields-cont .sign-up {
+    padding: 2em 3em 2em 3em;
+    margin: 5em 0 0 0;
+  }
+
+  .signUp .fields-cont .sign-up .form-group label {
+    color: white;
+    font-family: var(--primary-font);
+    font-weight: 300;
+    font-size: 1em;
+  }
+
+  .signUp .fields-cont .sign-up form button {
+    font-size: 1em;
+    margin-left: 5.2em;
+    width: 7em;
+  }
+
+  .signUp .fields-cont .sign-up .form-group input {
+    height: 2.5em;
+    width: 18em;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 576px) {
+  .signUp {
+    height: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .signUp .quote .lead {
+    margin: 3em 0 0 3em;
+    font-size: 2em;
+  }
+  .signUp .quote .sign-now h1 {
+    margin: 0.3em 0 0 1.8em;
+  }
+
+  .signUp .fields-cont .sign-up {
+    padding: 2em 3em 2em 3em;
+    margin: 4em 0 3em 0;
+  }
+  .navbar .container .navbar-toggler {
+    background-color: #32185075;
+  }
+}
