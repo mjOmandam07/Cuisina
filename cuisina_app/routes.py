@@ -6,6 +6,11 @@ from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(days=2)
 
+
+@app.route('/')
+def toLogin():
+    return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
