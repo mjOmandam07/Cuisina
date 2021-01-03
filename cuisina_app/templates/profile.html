@@ -1,18 +1,259 @@
- <div class>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class = "alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
- </div>
-<h1> AFTER LOGIN<h1>
-<h2>current datas:</h2>
-{% for item in user %}
-  <p>user id: {{ item[0] }}<p>
-  <p>username: {{ item[1] }}</p>
-  <p>email: {{ item[2] }}</p>
-{% endfor %}
+{% extends "layout.html" %}
+{% block content %}
+           <div class="article profile-sect bg-light w-100 m-3">
+                <form method='POST' enctype="multipart/form-data">
+                  {{ form.csrf_token }}
+                  {{ form.hidden_tag() }}
+                  <div class="article-metadata account-head row m-3 ">
+                      <div class="file-upload mt-5">
+                        <div class="image-upload-wrap rounded-circle article-img profile-img">
+                          <img class="file-upload-image rounded-circle article-img profile-img" src="{{ user[0][4] }}"  />                        
+                        </div>
+                        <div class="file-upload-content">
+                          <img class="file-upload-image rounded-circle article-img profile-img" src="#" alt="your image" />
+                        </div>
+                        <button class="file-upload-btn mt-1" type="button">
+                          {{ form.upload_picture(class="form-control-file file-upload-input m-0 p-0 col-2", onchange="readURL(this);") }}
+                          Select Profile Picture
+                        </button>                        
+                      </div>
+                      <div class="d-flex flex-column account-detail  ml-0 align-self-center">
+                          <a class="account-username" disabled>{{ user[0][1] }}</a>
+                          <p><a href="/logout" class="btn m-0 mt-2">Log out</a></p>
+                      </div>
+                      <div class="align-self-center ml-auto medal mb-5">
+                        <h6 class="m-1">Executive Chef</h6>
+                        <button class="btn" data-toggle="modal" data-target=".rank-modal">
+                          <img class = "rounded-circle article-img" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                          style="height:8em; width: 10em;">
+                        </button>
+
+                        <div class="modal fade rank-modal" tabindex="-1" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                ...
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="article account-info m-4">
+                            <div class="form-group">
+                              {{ form.username.label(class="form-control-label") }}
+                              {% if form.username.errors %}
+                                  {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                  <div class="invalid-feedback">
+                                      {% for error in form.username.errors %}
+                                          <span>{{ error }}</span>
+                                      {% endfor %}
+                                  </div>
+                              {% else %}
+                                  {{ form.username(class="form-control form-control-lg") }}
+                              {% endif %}
+                            </div>
+                            <div class="form-group">
+                              {{ form.fname.label(class="form-control-label") }}
+                              {% if form.fname.errors %}
+                                  {{ form.fname(class="form-control form-control-lg is-invalid") }}
+                                  <div class="invalid-feedback">
+                                      {% for error in form.fname.errors %}
+                                          <span>{{ error }}</span>
+                                      {% endfor %}
+                                  </div>
+                              {% else %}
+                                  {{ form.fname(class="form-control form-control-lg") }}
+                              {% endif %}
+                            </div>
+                            <div class="form-group">
+                              {{ form.lname.label(class="form-control-label") }}
+                              {% if form.lname.errors %}
+                                  {{ form.lname(class="form-control form-control-lg is-invalid") }}
+                                  <div class="invalid-feedback">
+                                      {% for error in form.lname.errors %}
+                                          <span>{{ error }}</span>
+                                      {% endfor %}
+                                  </div>
+                              {% else %}
+                                  {{ form.lname(class="form-control form-control-lg") }}
+                              {% endif %}
+                            </div>
+                            <div class="form-group">
+                              {{ form.email.label(class="form-control-label") }}
+                              {% if form.email.errors %}
+                                  {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                  <div class="invalid-feedback">
+                                      {% for error in form.email.errors %}
+                                          <span>{{ error }}</span>
+                                      {% endfor %}
+                                  </div>
+                              {% else %}
+                                  {{ form.email(class="form-control form-control-lg") }}
+                              {% endif %}
+                            </div>
+                            <div class="age-gender">
+                                <div class="row m-0">
+                                  <div class="form-group col-4">
+                                      {{ form.age.label(class="form-control-label") }}
+                                      {% if form.age.errors %}
+                                          {{ form.age(class="form-control form-control-lg is-invalid") }}
+                                          <div class="invalid-feedback">
+                                              {% for error in form.age.errors %}
+                                                  <span>{{ error }}</span>
+                                              {% endfor %}
+                                          </div>
+                                      {% else %}
+                                          {{ form.age(class="form-control form-control-lg") }}
+                                      {% endif %}
+                                </div>
+                                <div class="form-group col-8">
+                                  {{ form.register_gender.label(class="form-control-label") }}
+                                  {% if form.register_gender.errors %}
+                                    {{ form.register_gender(class = "form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for errors in form.register_gender.errors %}
+                                            <span>{{ errors }}</span>
+                                        {% endfor %}
+                                    </div>
+                                  {% else %}
+                                    {{ form.register_gender(class="form-control form-control-md") }}
+                                  {% endif %}
+                                </div>
+
+
+                                <div class="form-group row col">
+                                    <div class="col mr-auto">
+                                      {{ form.submit(class="btn", style="font-size:1em; height:fit-content; ") }}
+                                    </div>
+                                    
+                                </div>
+                               
+                              </div>
+                            </div>
+                  </div>
+                </form>
+            </div>
+            {% for item in recipe %}
+              <div class="post bg-light m-3 p-4">
+                  <article class="media content-section">
+                      <div class="media-body">
+                        <div class="article-metadata">
+                          <img class = "rounded-circle article-img" src="{{user[0][4]}}"style=" height: 60px;width: 60px;">
+                            <a class="ml-2 article-author" href="#">{{ item[9] }}</a>
+                            <small class="text-muted">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                            <small class="ml-1 font-weight-bold">{{item[4]}}</small>
+                            {% if item[5] == True %}
+                              <p  class="disabled-btn saved mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
+                            {% else %}
+                              <p  class="disabled-btn mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
+                            {% endif %} 
+                        </div>
+                          <h2><a class="article-title display-4" href="#">{{ item[1] }}</a></h2>
+                          {% if item[8] != None %}
+                            <div class="col mb-3 d-flex justify-content-center">
+                              <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ item[0] | string()}}">
+                                <img src="{{ item[8] }}" alt="" class="article-content align-self-center post-img">
+                              </button>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id="recipe{{ item[0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                                <div class="modal-content">
+                                  <img src="{{ item[8] }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                          <p class="article-content m-3">{{ item[2] | truncate(100) }}</p>
+                      </div> 
+                    </article>
+                    <div class="row ml-1">
+                      <div class="star-widget">
+                        {% if item[6] == 5 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                        {% elif item[6] == 4 %}
+                         <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 3 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 2 %}
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% elif item[6] == 1 %}
+                         <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% else %}
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        {% endif %} 
+                        <small class="ml-2">Average Rating</small>
+                      </div>
+
+                      <div class="col ml-4 align-self-center">
+                        <a class="article-save" href="#">View Comments</a>
+                      </div>
+                    </div>
+              </div>
+            {% endfor %}
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
+    
+    </script>
+               
+                
+{% endblock %}
+
