@@ -45,16 +45,12 @@ class chef(object):
 ##############SAMPLE QUERY######################
 	def sampleCurrentUser(self):
 		cursor = mysql.connection.cursor()
-		sql = "SELECT * FROM user WHERE user_id = 1"
+		sql = "SELECT * FROM user WHERE user_id = 15"
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
 		return display
 ################################################
-
-
-
-
 
 
 	def viewRecipes(self):
@@ -65,31 +61,31 @@ class chef(object):
 			sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	 ORDER BY r.time_date"""
+					 	 	 ORDER BY r.time_date DESC"""
 
 		elif self.filter == 'Western':
 			sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Western' ORDER BY r.time_date"""
+					 	 	WHERE cuisine = 'Western' ORDER BY r.time_date DESC"""
 
 		elif self.filter == 'Asian':
 			sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Asian' ORDER BY r.time_date"""
+					 	 	WHERE cuisine = 'Asian' ORDER BY r.time_date DESC"""
 
 		elif self.filter == 'European':
 			sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'European' ORDER BY r.time_date"""
+					 	 	WHERE cuisine = 'European' ORDER BY r.time_date DESC"""
 
 		elif self.filter == 'Filipino':
 			sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Filipino' ORDER BY r.time_date"""
+					 	 	WHERE cuisine = 'Filipino' ORDER BY r.time_date DESC"""
 
 
 
@@ -100,7 +96,8 @@ class chef(object):
 
 	def viewSelectRecipe(self):
 		cursor = mysql.connection.cursor()
-		sql = """SELECT r.*,i.filename, u.username FROM ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id ) JOIN user AS u ON u.user_id = r.user_id) WHERE r.recipe_id = '{}'""".format(self.recipe_id)
+		sql = """SELECT r.*,i.filename, u.username FROM ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 JOIN user AS u ON u.user_id = r.user_id) WHERE r.recipe_id = '{}'""".format(self.recipe_id)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
@@ -142,18 +139,28 @@ class chef(object):
 
 		return display[0][0]
 
+	def deleteRecipe(self):
+		cursor = mysql.connection.cursor()
+
+		sql = """DELETE FROM recipe WHERE recipe_id = {}""".format(self.recipe_id)
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+
 
 
 	def saveRecipe(self):
 		cursor = mysql.connection.cursor()
 
 		if self.saved == 0:
-			print(self.saved, "True before")
 			sql = """ UPDATE recipe SET saved = TRUE WHERE recipe_id = '{}' """.format(self.recipe_id)
+			sql2 = """ INSERT INTO can_save(recipe_id, saved_by) VALUES ({}, {})""".format(self.recipe_id, self.user_id)
 		else:
 			sql = """ UPDATE recipe SET saved = FALSE WHERE recipe_id = '{}' """.format(self.recipe_id)
+			sql2 = """DELETE FROM can_save WHERE recipe_id = {} AND saved_by = {}""".format(self.recipe_id, self.user_id)
 
 		cursor.execute(sql)
+		cursor.execute(sql2)
 		mysql.connection.commit()
 
 
@@ -164,33 +171,33 @@ class chef(object):
 
 		if self.filter == 'All':
 			sql = """SELECT r.*,i.filename, u.username FROM
-					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
-					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	 WHERE saved = TRUE ORDER BY r.time_date"""
+					 (((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) JOIN can_save AS s ON r.recipe_id = s.recipe_id)
+					 	 	 WHERE saved = TRUE  AND s.saved_by = {} ORDER BY r.time_date DESC""".format(self.user_id)
 
 		elif self.filter == 'Western':
 			sql = """SELECT r.*,i.filename, u.username FROM
-					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
-					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Western' AND saved = TRUE ORDER BY r.time_date"""
+					 (((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) JOIN can_save AS s ON r.recipe_id = s.recipe_id)
+					 	 	WHERE cuisine = 'Western' AND saved = TRUE AND s.saved_by = {} ORDER BY r.time_date DESC""".format(self.user_id)
 
 		elif self.filter == 'Asian':
 			sql = """SELECT r.*,i.filename, u.username FROM
-					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
-					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Asian' AND saved = TRUE ORDER BY r.time_date"""
+					 (((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) JOIN can_save AS s ON r.recipe_id = s.recipe_id)
+					 	 	WHERE cuisine = 'Asian' AND saved = TRUE AND s.saved_by = {} ORDER BY r.time_date DESC""".format(self.user_id)
 
 		elif self.filter == 'European':
 			sql = """SELECT r.*,i.filename, u.username FROM
-					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
-					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'European' AND saved = TRUE ORDER BY r.time_date"""
+					 (((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) JOIN can_save AS s ON r.recipe_id = s.recipe_id)
+					 	 	WHERE cuisine = 'European' AND saved = TRUE AND s.saved_by = {} ORDER BY r.time_date DESC""".format(self.user_id)
 
 		elif self.filter == 'Filipino':
 			sql = """SELECT r.*,i.filename, u.username FROM
-					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
-					 	 JOIN user AS u ON u.user_id = r.user_id)
-					 	 	WHERE cuisine = 'Filipino' AND saved = TRUE ORDER BY r.time_date"""
+					 (((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) JOIN can_save AS s ON r.recipe_id = s.recipe_id)
+					 	 	WHERE cuisine = 'Filipino' AND saved = TRUE AND s.saved_by = {} ORDER BY r.time_date DESC""".format(self.user_id)
 
 
 
@@ -212,7 +219,7 @@ class chef(object):
 		cursor = mysql.connection.cursor()
 
 		sql = """ INSERT INTO can_comment(content, time_date, user_id, recipe_id)
-					VALUES('%s', '%s', %d, %d) """ % (self.content, self.time_date, self.user_id, self.recipe_id)
+					VALUES('{}', '{}', {}, {}) """.format(self.content, self.time_date, self.user_id, self.recipe_id)
 
 
 		cursor.execute(sql)
@@ -239,7 +246,7 @@ class chef(object):
 	def yourCurrentRate(self):
 		cursor = mysql.connection.cursor()
 
-		sql = """SELECT rating FROM can_rate WHERE rate_id = '{}' AND user_id = '{}'""".format(self.recipe_id,self.user_id)
+		sql = """SELECT rating FROM can_rate WHERE recipe_id = '{}' AND user_id = '{}'""".format(self.recipe_id,self.user_id)
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
@@ -276,6 +283,7 @@ class chef(object):
 
 				cursor.execute(sql3)
 				mysql.connection.commit()
+				rates.clear()
 
 
 		

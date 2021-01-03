@@ -74,9 +74,9 @@
                 {% endif %}
 
                 {% if active == 'saved' %}
-                  <a class="sidebar-info active" href="/saved_filter">Saved Recipes</a>
+                  <a class="sidebar-info active" href="{{ url_for('saved_filter', user_id = user[0][0]) }}">Saved Recipes</a>
                 {% else %}
-                  <a class="sidebar-info" href="/saved_filter">Saved Recipes</a>
+                  <a class="sidebar-info" href="{{ url_for('saved_filter', user_id = user[0][0]) }}">Saved Recipes</a>
                 {% endif %}
 
                 {% if active == 'friends' %}
@@ -99,7 +99,16 @@
               </div>
             </div>
         </div>
-        <div class="col post-sect">
+        <div class="col post-sect mt-2">
+           {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} ml-3 col">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
         	{% block content %}{% endblock content %}
         </div>
       </div>

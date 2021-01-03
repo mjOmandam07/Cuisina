@@ -9,35 +9,6 @@ import cuisina_app.models as models
 
 
 
-rating = [
-		{
-			'rate_id': 1,
-			'recipe_id': 1,
-			'rate': 5
-		},
-
-		{
-			'rate_id': 2,
-			'recipe_id': 2,
-			'rate': 4
-		},
-
-		{
-			'rate_id': 3,
-			'recipe_id': 3,
-			'rate': 3
-		},
-
-		{
-			'rate_id': 4,
-			'recipe_id': 4,
-			'rate': 2
-		}
-		
-]
-
-
-
 
 @app.route('/')
 def filter():
@@ -93,13 +64,6 @@ def viewpost(recipe_id):
 	return render_template('view-post.html',  active='home', user=user, suggested_chef=user, recipe=recipe, comments=comments, form=form, form_rate=form_rate, rate = currentRating)
 
 
-
-@app.route('/add_rate/<recipe_id>/<rate>')
-def add_rate(recipe_id, rate):
-	for item in rating:
-		if item['recipe_id'] == int(recipe_id):
-			item['rate'] = int(rate)
-	return redirect(url_for('viewpost', recipe_id=recipe_id))
 	
 
 
@@ -118,25 +82,32 @@ def save_picture(form_picture):
 	return picture_fn
 
 
-@app.route('/saved_filter')
-def saved_filter():
-	return redirect(url_for('savedRecipe', fltr='All'))
+@app.route('/saved_filter/<int:user_id>')
+def saved_filter(user_id):
+	return redirect(url_for('savedRecipe', user_id=user_id, fltr='All'))
 
-@app.route('/savedRecipe/<string:fltr>')
-def savedRecipe(fltr):
-	db = models.chef(filter=fltr)
+@app.route('/savedRecipe/<int:user_id>/<string:fltr>')
+def savedRecipe(user_id, fltr):
+	db = models.chef(user_id=user_id, filter=fltr)
 	recipe = db.viewSavedRecipes()
 	user = db.sampleCurrentUser()
 	return render_template('saved_recipe.html', recipe = recipe, user=user, active='saved')
 
 
-@app.route('/saved/<recipe_id>')
-def saveRecipe(recipe_id):
+@app.route('/saved/<recipe_id>/<user_id>')
+def saveRecipe(recipe_id, user_id):
 	db = models.chef(recipe_id=recipe_id)
 	recipe = db.viewSelectRecipe()
-	save = models.chef(saved = recipe[0][5], recipe_id=recipe_id)
+	save = models.chef(saved = recipe[0][5], recipe_id=recipe_id, user_id=user_id)
 	save.saveRecipe()
 	return redirect(url_for('viewpost', recipe_id=recipe_id))
+
+@app.route('/delete/<recipe_id>')
+def deletePost(recipe_id):
+	db = models.chef(recipe_id = recipe_id)
+	db.deleteRecipe()
+	flash('Posted Recipe Deleted Successfully!', 'success')
+	return redirect(url_for('home', fltr='All'))
 
 
 

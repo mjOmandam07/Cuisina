@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField, SelectField, TextAreaField, Select
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 import cuisina_app.models as models
 
-##### HERE WE PUT OUR FORMS USED FOR THE FEATURE YOU ARE WORKING ##
+
 
 
 class CreatePost(FlaskForm):
@@ -15,7 +15,7 @@ class CreatePost(FlaskForm):
 	submit = SubmitField('Post')
 
 class rateForm(FlaskForm):
-    rate = RadioField('rate', choices=[('1','★'),('2','★'),('3','★'),('4','★'),('5','★')])
+    rate = RadioField('rate', choices=[('5',''),('4',''),('3',''),('2',''),('1','')],validators=[DataRequired()])
     submit = SubmitField('Rate it')
 
 class addCommment(FlaskForm):

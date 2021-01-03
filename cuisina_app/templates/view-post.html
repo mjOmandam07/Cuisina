@@ -8,10 +8,14 @@
                           <a class="ml-2 article-author" href="#">{{ recipe[0][9] }}</a>
                           <small class="text-muted">{{recipe[0][3]}}</small>
                            <small class="ml-1 font-weight-bold">{{recipe[0][4]}}</small>
+
                            {% if recipe[0][5] == True %}
-                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0]) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0], user_id=user[0][0] ) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
                             {% else %}
-                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0]) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0], user_id=user[0][0]) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% endif %}
+                            {% if user[0][0] == recipe[0][7] %}
+                              <a href="{{ url_for('deletePost', recipe_id=recipe[0][0])}}" class="btn mt-3 ml-auto">Delete Post</a>
                             {% endif %}                       
                       </div>
                         <h2><p class="article-title display-4" style="color:var(--primary-color);">{{recipe[0][1]}}</p></h2>
@@ -77,15 +81,30 @@
                           <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
                             {{ form.csrf_token }}
                             {{ form_rate.hidden_tag() }}
-                            {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
+                            <fieldset class="star-rate p-0">
+                             {% for subfield in form_rate.rate %}
+                              <tr>
+                                  <td>{{ subfield }}</td>
+                                  <td>{{ subfield.label }}</td>
+                              </tr>
+                          {% endfor %}
+                          </fieldset>
                           <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
                       </form>  
                     {% else %}
-                       <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
+                       <form method="POST" class="m-0 rate-form row col-12 mb-2" id="rate-form">
                           {{ form.csrf_token }}
                           {{ form_rate.hidden_tag() }}
-                          {{ form_rate.rate(class="star-rate p-0", onload="addClass()") }}
-                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
+                          <fieldset class="star-rate p-0">
+                             {% for subfield in form_rate.rate %}
+                              <tr>
+                                  <td>{{ subfield }}</td>
+                                  <td>{{ subfield.label }}</td>
+                              </tr>
+                          {% endfor %}
+                          </fieldset>
+                         
+                          <div class="ml-2 align-self-center">{{form_rate.submit(class="btn btn-sm")}}</div>
                       </form>  
                     {% endif %}
                       
