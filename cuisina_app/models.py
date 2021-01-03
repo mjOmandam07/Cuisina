@@ -102,7 +102,7 @@ class chef(object):
 
         sql2 = """SELECT filename FROM images WHERE profile_id = {}""".format(display[0][0])
 
-        
+        cursor.execute(sql2)
         filename = cursor.fetchall()
 
         if len(filename) == 0:
