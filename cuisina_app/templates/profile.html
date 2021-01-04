@@ -134,36 +134,41 @@
                 </form>
             </div>
             {% for item in recipe %}
-              <div class="post bg-light m-3 p-4">
+              <div class="post bg-light m-3 p-4 mt-5">
                   <article class="media content-section">
                       <div class="media-body">
                         <div class="article-metadata">
-                          <img class = "rounded-circle article-img" src="{{user[0][4]}}"style=" height: 60px;width: 60px;">
-                            <a class="ml-2 article-author" href="#">{{ item[9] }}</a>
+                          <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height: 60px;width: 60px;">
+                            {% if item[7] == user[0][0] %}
+                            <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7]) }}">{{ item[10] }}</a>
+                            {% else %}
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7]) }}">{{ item[10] }}</a>
+                            {% endif %}
                             <small class="text-muted">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
                             <small class="ml-1 font-weight-bold">{{item[4]}}</small>
-                            {% if item[5] == True %}
+                            {% if item[8] == user[0][0] %}
                               <p  class="disabled-btn saved mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
                             {% else %}
                               <p  class="disabled-btn mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
                             {% endif %} 
                         </div>
-                          <h2><a class="article-title display-4" href="#">{{ item[1] }}</a></h2>
-                          {% if item[8] != None %}
+                          <h2><a class="article-title display-4" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a></h2>
+                          {% if item[9] != None %}
                             <div class="col mb-3 d-flex justify-content-center">
                               <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ item[0] | string()}}">
-                                <img src="{{ item[8] }}" alt="" class="article-content align-self-center post-img">
+                                <img src="{{ item[9] }}" alt="" class="article-content align-self-center post-img">
                               </button>
                             </div>
                             <div class="modal fade bd-example-modal-lg" id="recipe{{ item[0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
                               <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
                                 <div class="modal-content">
-                                  <img src="{{ item[8] }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                                  <img src="{{ item[9] }}" alt="" class="article-content align-self-center" style="height: 100%;">
                                 </div>
                               </div>
                             </div>
                           {% endif %}
-                          <p class="article-content m-3">{{ item[2] | truncate(100) }}</p>
+                          <p class="article-content m-3"style="white-space: pre-wrap;
+                            overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                       </div> 
                     </article>
                     <div class="row ml-1">
@@ -209,12 +214,11 @@
                       </div>
 
                       <div class="col ml-4 align-self-center">
-                        <a class="article-save" href="#">View Comments</a>
+                        <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
                       </div>
                     </div>
               </div>
             {% endfor %}
-
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 
