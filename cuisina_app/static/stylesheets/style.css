@@ -1,3 +1,4 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 :root {
   --alpha: 33%;
   --primary-color: #581b98;
@@ -11,7 +12,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: #e5e5e5;
+  background: #e5e5e5 !important;
+  overflow-x: hidden; 
 }
 
 .navbar {
@@ -55,7 +57,7 @@ body {
 
 /* BODY SECT */
 .body-sect {
-  background-color: #e5e5e5 !important;
+  background-color: #e5e5e5 !important; 
 }
 /*
  SIDEBAR
@@ -63,7 +65,7 @@ body {
 
 .body-sect .sidebar {
   position: fixed;
-  border-left: 1em solid var(--primary-color);
+  border-left: 1.65em solid var(--primary-color); /* left 1.65em */
   padding: 0 0 1em 0.5em;
   width: fit-content;
   height: fit-content;
@@ -88,6 +90,13 @@ body {
   background-color: #c5c5c5 !important;
   text-decoration: none;
 }
+
+.body-sect .sidebar .sidebar-info-sect .active {
+  background-color: #c5c5c5 !important;
+  color:var(--primary-shade) !important;
+  text-decoration: none;
+}
+
 .body-sect .sidebar .sidebar-info-sect .sidebar-top {
   display: flex;
   flex-direction: column;
@@ -110,8 +119,12 @@ body {
 
 /*POST SECT*/
 .body-sect .post-sect {
-  margin: 2.5em 5em 5em 25em;
+  margin-left: 25em;
+  padding: 0 5em 0 5em;
 }
+
+/*Profile SECT*/
+
 .body-sect .post-sect .profile-sect {
   padding-top: 0.1em;
   border-radius: 10px;
@@ -218,6 +231,156 @@ body {
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
 
+
+.body-sect .profile-sect  .file-upload {
+  width: 15em;
+  display: grid;
+  margin: 0;
+}
+
+.body-sect .profile-sect  .file-upload-btn {
+  border: None;
+  font-size:1em;
+  text-decoration: underline;
+  width: fit-content;
+  justify-self:center;
+  margin: 0;
+  color: var(--primary-color);
+  background: None;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: light;
+}
+
+.body-sect .profile-sect  .file-upload-btn:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.body-sect .profile-sect  .file-upload-btn:active {
+  transition: all 0.2s ease;
+  border: None;
+}
+
+.body-sect .profile-sect  .file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+
+
+.body-sect .profile-sect  .file-upload-input {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  justify-self:center; 
+  outline: none;
+}
+
+.body-sect .profile-sect  .image-upload-wrap {
+  justify-self:center;
+
+}
+
+
+
+.body-sect .profile-sect .account-head .file-upload-image {
+  height: 10em !important;
+  width: 10em !important;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+
+
+  /*
+
+CREATE POST SECT
+
+*/
+
+.body-sect .create-post {
+  padding-top: 0.1em;
+  border-radius: 10px;
+  box-shadow: 1px 1px #888888a9;
+}
+.body-sect .create-post .account-user {
+  font-weight: 600;
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+
+.body-sect .create-post .btn {
+  font-size: 1.5em;
+  color: var(--primary-color);
+  background-color: rgb(224, 224, 224);
+}
+.body-sect .create-post .btn:hover {
+  background-color: rgb(180, 180, 180);
+}
+.body-sect .create-post .modal-dialog {
+  color: var(--primary-color);
+  background-color: #e5e5e5;
+}
+.body-sect .create-post .modal-dialog label {
+  font-size: 1.5em;
+}
+.body-sect .create-post input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+.body-sect .create-post textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
+.body-sect .create-post .modal-dialog .content {
+  height: 12em;
+  font-size: 1em;
+}
+.body-sect .create-post .modal-dialog .upload {
+    font-size: 1em;
+}
+.body-sect .create-post .modal-dialog .btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+.body-sect .create-post .modal-dialog .btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.body-sect .dropdown .btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+.body-sect .dropdown .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+
+
+.body-sect .create-post .modal .container {
+  padding-top: 50px;
+}
+/*
+
+
+POSTS SECT
+
+*/
+
 .body-sect .post {
   border-radius: 10px;
   box-shadow: 1px 1px #888888a9;
@@ -289,104 +452,200 @@ body {
   color:var(--primary-color);
 }
 
-.star-rate{
-  list-style: none;
-  display: flex;
-  margin:none;
+
+.star-rate { 
+  border: none;
+  float: left;
 }
 
-.star-rate input {
-  display: none;
+.star-rate > input { display: none; } 
+.star-rate > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
 }
 
-.star-rate label {
-  font-size: 1.5em;
-  color: #e5e5e5;
-  padding: 5px;
-  float: right;
-  transition: all 0.2s ease;
+.star-rate > .half:before { 
+  content: "\f089";
+  position: absolute;
 }
 
-input:not(:checked) ~ label:hover,
-input:not(:checked) ~ label:hover ~ label {
-  color: var(--primary-hover) !important;
-}
-
-input:checked ~ label {
-  color: var(--primary-color) !important;
-}
-
-input#rate-5:checked ~ label {
-  color: var(--primary-color) !important;
+.star-rate > label { 
+  color: #ddd; 
+ float: right; 
 }
 
 
 
+.star-rate > input:checked ~ label, 
+.star-rate:not(:checked) > label:hover,
+.star-rate:not(:checked) > label:hover ~ label { color: var(--primary-color);  }
 
-.body-sect .profile-sect  .file-upload {
-  width: 15em;
-  display: grid;
-  margin: 0;
+.star-rate > input:checked + label:hover, 
+.star-rate > input:checked ~ label:hover,
+.star-rate > label:hover ~ input:checked ~ label,
+.star-rate > input:checked ~ label:hover ~ label { color: var(--primary-hover);  } 
+
+
+
+
+
+
+
+.body-sect .create-post .modal-dialog .file-upload {
+  background-color: #ffffff;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.body-sect .profile-sect  .file-upload-btn {
+.body-sect .create-post .modal-dialog .file-upload-btn {
   border: None;
-  font-size:1em;
-  text-decoration: underline;
-  width: fit-content;
-  justify-self:center;
+  width: 100%;
   margin: 0;
-  color: var(--primary-color);
-  background: None;
+  color: #fff;
+  background: var(--primary-color);
   border: none;
   padding: 10px;
   border-radius: 4px;
   transition: all 0.2s ease;
   outline: none;
   text-transform: uppercase;
-  font-weight: light;
+  font-weight: 700;
 }
 
-.body-sect .profile-sect  .file-upload-btn:hover {
-  background: var(--primary-color);
+.body-sect .create-post .modal-dialog .file-upload-btn:hover {
+  background: var(--primary-hover);
   color: #ffffff;
-  text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
-.body-sect .profile-sect  .file-upload-btn:active {
+.body-sect .create-post .modal-dialog .file-upload-btn:active {
   transition: all 0.2s ease;
   border: None;
 }
 
-.body-sect .profile-sect  .file-upload-content {
+.body-sect .create-post .modal-dialog .file-upload-content {
   display: none;
   text-align: center;
 }
 
-
-
-.body-sect .profile-sect  .file-upload-input {
+.body-sect .create-post .modal-dialog .file-upload-input {
   position: absolute;
-  z-index: 1;
   margin: 0;
   padding: 0;
-  opacity: 0;
-  justify-self:center; 
+  width: 100%;
+  height: 100%;
   outline: none;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.body-sect .profile-sect  .image-upload-wrap {
-  justify-self:center;
-
+.body-sect .create-post .modal-dialog .image-upload-wrap {
+  margin-top: 20px;
+  border: 2px dashed var(--primary-color);
+  position: relative;
+}
+.body-sect .create-post .modal-dialog select:focus {
+border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
 }
 
 
+.body-sect .create-post .modal-dialog .image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
 
-.body-sect .profile-sect .account-head .file-upload-image {
-  height: 10em !important;
-  width: 10em !important;
+.body-sect .create-post .modal-dialog .drag-text {
+  text-align: center;
+}
+
+.body-sect .create-post .modal-dialog .drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  padding: 60px 0;
+}
+
+.body-sect .create-post .modal-dialog .file-upload-image {
+  max-height: 40%;
+  max-width: 60%;
+  margin: auto;
+  padding: 20px;
+}
+
+.body-sect .create-post .modal-dialog .remove-image {
+  width: 200px;
   margin: 0;
-  padding: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.body-sect .create-post .modal-dialog .remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.body-sect .create-post .modal-dialog .remove-image:active {
+  border: 0;
+  transition: all 0.2s ease;
+}
+
+
+/*
+
+COMMENTS SECT
+
+*/
+
+
+.body-sect .post-sect .comments {
+  border:none;
+}
+ .body-sect .post-sect .comments .card-inner{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+
+.body-sect .post-sect .comments h1 {
+  color: var(--primary-color);
+}
+
+.body-sect .post-sect .comments .comment-field {
+  background-color: #e5e5e5;
+  font-size: 1em;
+  height: 2em;
+  transition: height 0.5s;
+}
+.body-sect .post-sect .comments .comment-field:focus {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+  height: 5em;
+}
+
+.body-sect .post-sect .comments .btn {
+  float: right;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+.body-sect .post-sect .comments .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
 }

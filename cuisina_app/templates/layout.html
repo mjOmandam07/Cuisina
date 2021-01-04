@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{% if title %}
-		<title>Cuisina | {{title}}</title>
-	{% else %}
-		<title>Cuisina</title>
-	{% endif %}
+  {% if title %}
+    <title>Cuisina | {{title}}</title>
+  {% else %}
+    <title>Cuisina</title>
+  {% endif %}
 
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='stylesheets/style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='stylesheets/style.css')}}">
 
-	<link
+  <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
@@ -18,10 +18,10 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body>
-	 <header class="mb-5">
+   <header class="mb-5">
         <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 fixed-top">
             <form class="form-inline col-6 ml-5">
-                <img src="{{url_for('static', filename='images/icons/search.png')}}" alt="default" class="mr-3">
+                <img src="{{url_for('static', filename='images/icons/search.png')}}" class="mr-3">
                 <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search" aria-label="Search">
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,25 +31,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav pl-5">
                 <li class="nav-item">
-                	{% if active == 'home' %}
-                		<a class="nav-link active p-4" href="#">FOOD FEED</a>
-                	{% else %}
-                  		<a class="nav-link  p-4" href="#">FOOD FEED</a>
+                  {% if active == 'home' %}
+                    <a class="nav-link active p-4" href="/filter">FOOD FEED</a>
+                  {% else %}
+                      <a class="nav-link  p-4" href="/filter">FOOD FEED</a>
                     {% endif %}
                 </li>
                 <li class="nav-item">
-                	{% if active == 'hot' %}
-                		<a class="nav-link active p-4" href="#">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
-                	{% else %}
-                  		<a class="nav-link p-4" href="#">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
-                  	{% endif %}
+                  {% if active == 'hot' %}
+                    <a class="nav-link active p-4" href="#">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
+                  {% else %}
+                      <a class="nav-link p-4" href="#">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
-                	{% if active == 'order' %}
-                  		<a class="nav-link active p-4" href="#">ORDERS FEED</a>
-                  	{% else %}
-                  		<a class="nav-link p-4" href="#">ORDERS FEED</a>
-                  	{% endif %}
+                  {% if active == 'order' %}
+                      <a class="nav-link active p-4" href="#">ORDERS FEED</a>
+                    {% else %}
+                      <a class="nav-link p-4" href="#">ORDERS FEED</a>
+                    {% endif %}
 
                 </li>
               </ul>
@@ -62,12 +62,26 @@
             <div class="sidebar-info-sect">
               <div class="sidebar-top">
                 <a class="sidebar-info " href="{{ url_for('profile', user_id=user[0][0]) }}">
-                  	<img class = "rounded-circle article-img mr-2" src="{{user[0][4]}}" style=" height: 50px;width: 50px;">
-                  	{{user[0][1]}}
+                    <img class = "rounded-circle article-img mr-2" src="{{ user[0][4] }}" style=" height: 50px;width: 50px;">
+                    {{user[0][1]}}
                 </a>
-                <a class="sidebar-info" href="#">Master Chef's</a>
-                <a class="sidebar-info" href="#">Saved Recipes</a>
-                <a class="sidebar-info" href="#">Friend's List</a>
+                {% if active == 'master' %}
+                  <a class="sidebar-info active" href="#">Master Chef's</a>
+                {% else %}
+                  <a class="sidebar-info" href="#">Master Chef's</a>
+                {% endif %}
+
+                {% if active == 'saved' %}
+                  <a class="sidebar-info active" href="{{ url_for('saved_filter', user_id = user[0][0]) }}">Saved Recipes</a>
+                {% else %}
+                  <a class="sidebar-info" href="{{ url_for('saved_filter', user_id = user[0][0]) }}">Saved Recipes</a>
+                {% endif %}
+
+                {% if active == 'friends' %}
+                  <a class="sidebar-info active" href="#">Friend's List</a>
+                {% else %}
+                  <a class="sidebar-info" href="#">Friend's List</a>
+                {% endif %}
               </div>
               <div class="article article-metadata">
                     <div class="suggested-chef bg-light">
@@ -98,7 +112,7 @@
         </div>
      </div>
 
-	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"></script>

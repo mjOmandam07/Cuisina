@@ -1,0 +1,172 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="post bg-light m-3 p-4">
+                 <article class="media content-section">
+                    <div class="media-body">
+                      <div class="article-metadata">
+                        <img class = "rounded-circle article-img" src="{{ recipe[0][11] }}"style=" height: 60px;width: 60px;">
+                          {% if recipe[0][7] == user[0][0] %}
+                            <a class="ml-2 article-author" href="{{ url_for('profile', user_id=recipe[0][7]) }}">{{ recipe[0][10] }}</a>
+                          {% else %}
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=recipe[0][7]) }}">{{ recipe[0][10] }}</a>
+                          {% endif %}
+                          <small class="text-muted">{{recipe[0][3]}}</small>
+                           <small class="ml-1 font-weight-bold">{{recipe[0][4]}}</small>
+
+                           {% if recipe[0][8] == user[0][0] %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0], user_id=user[0][0] ) }}" class="btn saved mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% else %}
+                              <a href="{{ url_for('saveRecipe', recipe_id=recipe[0][0], user_id=user[0][0]) }}" class="btn mt-3 ml-auto" type="button"><i class='far fa-bookmark'></i></a>
+                            {% endif %}
+                            {% if user[0][0] == recipe[0][7] %}
+                              <a href="{{ url_for('deletePost', recipe_id=recipe[0][0])}}" class="btn mt-3 ml-auto mr-2">Delete Post</a>
+                            {% endif %}                       
+                      </div>
+                        <h2><p class="article-title display-4" style="color:var(--primary-color);">{{recipe[0][1]}}</p></h2>
+                         {% if recipe[0][9] != None %}
+                          <div class="col mb-3 d-flex justify-content-center">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ recipe[0][0] | string() }}">
+                              <img src="{{ recipe[0][9] }}" alt="" class="article-content align-self-center post-img">
+                            </button>
+                          </div>
+                          <div class="modal fade bd-example-modal-lg" id="recipe{{ recipe[0][0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
+                              <div class="modal-content">
+                                <img src="{{ recipe[0][9] }}" alt="" class="article-content align-self-center" style="height: 100%;">
+                              </div>
+                            </div>
+                          </div>
+                        {% endif %}
+                        <p class="article-content m-3" style="white-space: pre-wrap;
+                            overflow-wrap: break-word;">{{recipe[0][2]}}</p>
+                    </div> 
+                  </article>
+                  <div class="row ml-1">
+                    {% if rate[0] %}
+                      <div class="star-widget m-0 col-12" id="starfield">
+                          <small class="ml-2 mr-auto mr-5 pr-3">Your current Rating of this Recipe</small>
+                          {% if rate[0][0] == 5 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                          {% elif rate[0][0] == 4 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rate[0][0] == 3 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rate[0][0] == 2 %}
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% elif rate[0][0] == 1 %}
+                           <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% else %}
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                          {% endif %}  
+                      </div>
+                          <form method="POST" class="m-0 rate-form row col-12" id="rate-form">
+                            {{ form.csrf_token }}
+                            {{ form_rate.hidden_tag() }}
+                            <fieldset class="star-rate p-0">
+                             {% for subfield in form_rate.rate %}
+                              <tr>
+                                  <td>{{ subfield }}</td>
+                                  <td>{{ subfield.label }}</td>
+                              </tr>
+                          {% endfor %}
+                          </fieldset>
+                          <div class="ml-2 align-self-center mb-4">{{form_rate.submit(class="btn btn-sm")}}</div>
+                      </form>  
+                    {% else %}
+                       <form method="POST" class="m-0 rate-form row col-12 mb-2" id="rate-form">
+                          {{ form.csrf_token }}
+                          {{ form_rate.hidden_tag() }}
+                          <fieldset class="star-rate p-0">
+                             {% for subfield in form_rate.rate %}
+                              <tr>
+                                  <td>{{ subfield }}</td>
+                                  <td>{{ subfield.label }}</td>
+                              </tr>
+                          {% endfor %}
+                          </fieldset>
+                         
+                          <div class="ml-2 align-self-center">{{form_rate.submit(class="btn btn-sm")}}</div>
+                      </form>  
+                    {% endif %}
+                      
+                  </div>
+
+                  <div class="card p-2 comments">
+                      <h1>Comments</h1>
+                      <div class="card-body">
+                        {% if comments %}
+                          {% for item in comments %}
+                            <div class="card card-inner">
+                                <div class="card-body bg-light">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="{{item[6]}}" class="img rounded-circle img-fluid" style="height: 6em; width: 6em;" />
+                                            <p class="text-secondary text-center">{{ item[2].strftime("%b %d %Y, %I:%M %p") }}</p>
+                                        </div>
+                                        <div class="col-md-10">
+                                            {% if item[3] == user[0][0] %}
+                                              <p><a href="{{url_for('profile', user_id=item[3])}}"><strong>{{ item[5] }}</strong></a></p>
+                                            {% else %}
+                                             <p><a href="{{url_for('viewProfile', user_id=item[3])}}"><strong>{{ item[5] }}</strong></a></p>
+                                            {% endif %}
+                                           
+                                            <p>{{ item[1] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                          <div class="card card-inner">
+                                <div class="card-body">
+                                    <div class="row">
+                                       <p class="display-4" style="color:var(--primary-color);">No Comments</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                          <form method="POST">
+                            {{ form.csrf_token }}
+                                {{ form.hidden_tag() }}
+                              <div class="form-group add-comment m-2 mt-4">
+                                    {% if form.comment.errors %}
+                                        {{ form.comment(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.comment.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.comment(class="form-control form-control-lg comment-field") }}
+                                    {% endif %}
+                                     {{ form.submit(class="btn m-2 mr-auto") }}   
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+  </div>                     
+{% endblock content %}
