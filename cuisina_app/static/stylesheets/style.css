@@ -13,6 +13,7 @@ body {
   padding: 0;
   margin: 0;
   background: #e5e5e5 !important;
+  overflow-x: hidden; 
 }
 
 .navbar {
@@ -55,8 +56,8 @@ body {
 }
 
 /* BODY SECT */
-body-sect {
-  background-color: #e5e5e5 !important;
+.body-sect {
+  background-color: #e5e5e5 !important; 
 }
 /*
  SIDEBAR
@@ -64,7 +65,7 @@ body-sect {
 
 .body-sect .sidebar {
   position: fixed;
-  border-left: 1em solid var(--primary-color);
+  border-left: 1.65em solid var(--primary-color); /* left 1.65em */
   padding: 0 0 1em 0.5em;
   width: fit-content;
   height: fit-content;
@@ -121,6 +122,187 @@ body-sect {
   margin-left: 25em;
   padding: 0 5em 0 5em;
 }
+
+/*Profile SECT*/
+
+.body-sect .post-sect .profile-sect {
+  padding-top: 0.1em;
+  border-radius: 10px;
+  box-shadow: 1px 1px #888888a9;
+}
+.body-sect .post-sect .profile-sect .account-head .account-username {
+  font-weight: 600;
+  font-size: 4em;
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-username:hover {
+  text-decoration: none;
+}
+.body-sect .profile-sect .account-head {
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-head .profile-img {
+  height: 10em;
+  width: 10em;
+}
+.body-sect .profile-sect .account-head .medal {
+  text-align: center;
+}
+
+.body-sect .profile-sect .account-head .medal .btn img {
+  height: 7em;
+  width: 7em;
+  margin: 0;
+}
+.body-sect .profile-sect .account-head .medal .btn img:hover {
+  opacity: 0.7 !important;
+  filter: alpha(opacity=70);
+}
+
+.body-sect .profile-sect .account-head .account-detail {
+  padding-top: 1em;
+  text-align: center;
+  justify-content: center;
+}
+.body-sect .profile-sect .account-head .account-detail a {
+  font-size: 2em;
+}
+
+
+.body-sect .profile-sect .account-head .account-detail .btn {
+  font-size: 1em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-head .account-detail .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+
+.body-sect .profile-sect .account-info .form-group {
+  padding: 1em 0 1em 0;
+}
+
+.body-sect .profile-sect .account-info .form-group .form-control-label {
+ font-size: 1em;
+}
+.body-sect .profile-sect .account-info .form-group input {
+  border-radius: 5px;
+  height: 2em;
+  width: 80%;
+}
+
+.body-sect .profile-sect .account-info .age-gender .form-group select {
+  width: 70%;
+}
+.body-sect .profile-sect .account-info .age-gender .form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+.body-sect .profile-sect .account-info .age-gender .btn {
+  margin: 1em;
+  font-size: 0.8em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-info .age-gender .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+.body-sect .profile-sect .account-info .form-group label {
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+.body-sect .profile-sect .account-info .form-group .pic-button .btn {
+  margin: 1em;
+  font-size: 0.8em;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.body-sect .profile-sect .account-info .form-gourp .pic-button .btn:hover {
+  background-color: var(--primary-hover);
+  color: var(--secondary-color);
+}
+
+.body-sect .profile-sect input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem #571b9857;
+}
+
+
+.body-sect .profile-sect  .file-upload {
+  width: 15em;
+  display: grid;
+  margin: 0;
+}
+
+.body-sect .profile-sect  .file-upload-btn {
+  border: None;
+  font-size:1em;
+  text-decoration: underline;
+  width: fit-content;
+  justify-self:center;
+  margin: 0;
+  color: var(--primary-color);
+  background: None;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: light;
+}
+
+.body-sect .profile-sect  .file-upload-btn:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.body-sect .profile-sect  .file-upload-btn:active {
+  transition: all 0.2s ease;
+  border: None;
+}
+
+.body-sect .profile-sect  .file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+
+
+.body-sect .profile-sect  .file-upload-input {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  justify-self:center; 
+  outline: none;
+}
+
+.body-sect .profile-sect  .image-upload-wrap {
+  justify-self:center;
+
+}
+
+
+
+.body-sect .profile-sect .account-head .file-upload-image {
+  height: 10em !important;
+  width: 10em !important;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
 
 
   /*
