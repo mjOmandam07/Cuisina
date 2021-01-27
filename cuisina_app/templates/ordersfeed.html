@@ -5,44 +5,44 @@
             </button>
 
 
-            <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+            <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
+                    <h5 class="modal-title" id="exampleModalCenteredLabel">Post Filter</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
                   <div class="modal-body p-4">
                     {% if fltr == 'All' %}
-                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='All') }}">All</a>
+                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('ordersFeed', fltr ='All') }}">All</a>
                     {% else %}
-                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='All') }}">View All</a>
+                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('ordersFeed', fltr ='All') }}">View All</a>
                     {% endif %}
 
                     {% if fltr == 'Western' %}
-                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Western') }}">Western</a>
+                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('ordersFeed', fltr ='Western') }}">Western</a>
                     {% else %}
-                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Western') }}">Western</a>
+                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('ordersFeed', fltr ='Western') }}">Western</a>
                     {% endif %}
 
                     {% if fltr == 'Asian' %}
-                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('ordersFeed', fltr ='Asian') }}">Asian</a>
                     {% else %}
-                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('ordersFeed', fltr ='Asian') }}">Asian</a>
                     {% endif %}
 
                     {% if fltr == 'European' %}
-                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='European') }}">European</a>
+                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('ordersFeed', fltr ='European') }}">European</a>
                     {% else %}
-                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='European') }}">European</a>
+                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('ordersFeed', fltr ='European') }}">European</a>
                     {% endif %}
 
                     {% if fltr == 'Filipino' %}
-                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
+                      <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('ordersFeed', fltr ='Filipino') }}">Filipino</a>
                     {% else %}
-                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
+                      <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('ordersFeed', fltr ='Filipino') }}">Filipino</a>
                     {% endif %}
                    
                     
@@ -53,11 +53,10 @@
                 </div>
               </div>
             </div>
-
-            <button title="Create Post" class="btn create-btn rounded-circle p-0" type="button"data-toggle="modal" data-target="#ModalScrollable">
+            <button class="btn create-btn rounded-circle p-0" type="button"data-toggle="modal" data-target="#ModalScrollable">
                   <i class="fa fa-pencil-square-o ml-1 mb-2"></i>
             </button>   
-            <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+            <div class="modal" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -143,16 +142,6 @@
                       </div>
                     </div>
             </div>
-
-            
-            {% if recipe %}
-
-            {% else %}
-            <div class="post bg-light p-0 mt-2 mb-4">
-              <h1 class="p-3" style="font-weight: lighter; color: var(--primary-color);">No recipes Posted</h1>
-            </div>
-            {% endif %}
-           
             {% for item in recipe %}
              
               <div class="post bg-light p-0 mt-2 mb-4">
@@ -163,18 +152,14 @@
                             {% if item[7] == user[0][0] %}
                             <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
                             {% else %}
-                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7], fltr='recipes')  }}">{{ item[10] }}</a>
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7])  }}">{{ item[10] }}</a>
                             {% endif %}
                             <small class="ml-2 font-weight-bold">{{item[4]}}</small>
-                            {% if item[8] == user[0][0] %}
-                              <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
-                            {% else %}
-                              <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
-                            {% endif %} 
+                            
                         </div>
                           {% if item[9] != None %}
                             <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
-                              <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                              <a href="{{ url_for('viewOrder', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
                                 <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
                               </a>
                             </div>
@@ -229,7 +214,7 @@
                       </div>
 
                       <div class="col ml-4 mb-2 align-self-center">
-                        <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
+                        <a class="article-save" href="{{ url_for('viewOrder', recipe_id=item[0]) }}">View Comments</a>
                       </div>
                     </div>
               </div>

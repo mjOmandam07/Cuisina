@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="post bg-light p-0 mt-2 mb-4">
+                 <article class="media content-section">
+                      <div class="media-body">
+                        <div class="article-metadata m-3">
+                          <img class = "rounded-circle article-img" src="{{ recipe[0][11] }}" style=" height:40px; width: 40px;">
+                            {% if recipe[0][7] == user[0][0] %}
+                            <a class="ml-2 article-author" href="{{ url_for('profile', user_id=recipe[0][7], fltr='recipes') }}">{{ recipe[0][10] }}</a>
+                            {% else %}
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=recipe[0][7]) }}">{{ recipe[0][10] }}</a>
+                            {% endif %}
+                            <small class="ml-2 font-weight-bold">{{recipe[0][4]}}</small>
+                            {% if user[0][0] == recipe[0][7] %}
+                              <a href="{{ url_for('deleteOrder', recipe_id=recipe[0][0])}}" class="btn del-btn ml-auto mr-2">Delete Order</a>
+                            {% endif %}      
+                        </div>
+                          {% if recipe[0][9] != None %}
+                            <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
+                              <a href="{{ url_for('viewpost', recipe_id=recipe[0][0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                                <img src="{{ recipe[0][9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
+                              </a>
+                            </div>
+                            
+                          {% endif %}
+                          <small class="text-muted m-0 ml-3">{{ recipe[0][3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                          <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=recipe[0][0]) }}">{{ recipe[0][1] }}</a>
+                          <p class="article-content ml-3"style="white-space: pre-wrap;
+                            overflow-wrap: break-word;">{{ recipe[0][2] | truncate(100) }}</p>
+                      </div> 
+                    </article>
+                  <div class="card p-2 bg-light comments">
+                      <div class="card-body">
+                        {% if comments %}
+                          {% for item in comments %}
+                            <div class="card card-inner">
+                                <div class="card-body bg-light">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <p><img src="{{item[7]}}" class="img rounded-circle img-fluid" style="height: 4em; width: 4em;" />
+
+                                            </p>
+                                        </div>
+                                        <div class="col-md-10" style="background-color:#e5e5e5; border-radius:5px;">
+                                            {% if item[3] == user[0][0] %}
+                                              <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('profile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[6] }}</strong></a></p>
+                                            {% else %}
+                                             <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('viewProfile', user_id=item[3])}}"><strong>{{ item[5] }}</strong></a></p>
+                                            {% endif %}
+                                           
+                                            <p>{{ item[1] }}</p>
+                                        </div>
+                                        <p class="text-secondary" style="margin-left: 7em;">{{ item[2].strftime("%b %d %Y, %I:%M %p") }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                          <div class="card card-inner">
+                          </div>
+                        {% endif %}
+                          <form method="POST">
+                            {{ form.csrf_token }}
+                                {{ form.hidden_tag() }}
+                              <div class="form-group add-comment m-2 mt-4">
+                                    {% if form.comment.errors %}
+                                        {{ form.comment(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.comment.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.comment(class="form-control form-control-lg comment-field") }}
+                                    {% endif %}
+                                     {{ form.submit(class="btn m-2 mr-auto") }}   
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+  </div>                     
+{% endblock content %}
