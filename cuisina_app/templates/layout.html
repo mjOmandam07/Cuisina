@@ -21,9 +21,10 @@
 <body>
    <header class="mb-5">
         <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 fixed-top">
-            <form class="form-inline col-5 ml-5">
+            <form class="form-inline col-5 ml-5" method="POST">
                 <img src="{{url_for('static', filename='images/icons/search.png')}}" class="mr-3">
-                <input class="form-control mr-sm-2 col-10" type="search" placeholder="Search Recipes" aria-label="Search">
+                <input class="form-control mr-sm-2 col-8" type="search" placeholder="Search Recipes" aria-label="Search" name=search>
+                <input class="btn del-btn my-2 my-sm-0" value="Search" type="submit"/> 
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>

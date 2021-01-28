@@ -314,6 +314,20 @@ class chef(object):
 			return 2
 
 
+	def searchUser(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT u.user_id, u.username, p.first_name, p.last_name,i.filename FROM 
+		            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+		                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.username = '{}';""".format(self.username)
+
+			
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+		return display
+
+
+
 
 ############################ POST-RECIPES #####################
 
@@ -648,11 +662,13 @@ class chef(object):
 		cursor.execute(sql)
 		mysql.connection.commit()
 
-		sql2 = """SELECT recipe_id FROM recipe WHERE recipe_id = (SELECT max(recipe_id) FROM recipe)"""
+		sql2 = """SELECT recipe_id FROM order_recipe WHERE recipe_id = (SELECT max(recipe_id) FROM order_recipe)"""
 
 		cursor.execute(sql2)
 		display = cursor.fetchall()
 
+
+		print(display[0][0])
 		return display[0][0]
 
 
@@ -858,6 +874,37 @@ class chef(object):
 				mysql.connection.commit()
 				rates.clear()
 
+
+
+	def searchRecipe(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) WHERE r.title = '{}'
+					 	 	 ORDER BY r.time_date DESC""".format(self.title)
+
+			
+		cursor.execute(sql)
+		recipes = cursor.fetchall()
+
+		for item in recipes:
+			sql2 = """SELECT u.*,i.filename FROM 
+				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+				                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			posts.append(item + (display[0][4],))
+
+		return posts
+
+
+
+
+############################## FRIEND SECT ###########################	
 
 	def addFriend(self):
 		cursor = mysql.connection.cursor()

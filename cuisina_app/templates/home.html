@@ -179,12 +179,18 @@
                                 <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
                               </a>
                             </div>
-                            
-                          {% endif %}
-                          <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
-                          <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
-                          <p class="article-content ml-3"style="white-space: pre-wrap;
+                            <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                            <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                            <p class="article-content ml-3"style="white-space: pre-wrap;
+                              overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                          {% else %}
+
+                           <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                            <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                           <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                          {% endif %}
+                          
                       </div> 
                     </article>
                     <div class="row ml-3">

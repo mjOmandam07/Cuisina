@@ -29,7 +29,15 @@ body {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
-
+.navbar .del-btn{
+  font-size: 1em !important;
+  background-color: #f8f9fa;
+ color: var(--primary-color);
+}
+.navbar .del-btn:hover{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
 .navbar .collapse .navbar-nav .nav-item a {
   color: var(--primary-color);
   font-size: .9em;
@@ -123,6 +131,26 @@ body {
   height: 5em;
   width: 5em;
 }
+
+/*       SEARCH SECT          */
+.body-sect .search-filter a.a-btn{
+  border-radius: 7px;
+  padding: 0.6em;
+  cursor: pointer;
+  padding-left: 2em;
+  padding-right: 2em; 
+}
+
+.body-sect .search-filter .active{
+  background-color: var(--primary-color);
+}
+
+.body-sect .search-filter a.a-btn:hover{
+  background-color: #f0f0f0 !important;
+  color:var(--primary-color) !important;
+  text-decoration: none;
+}
+
 
 
 /*Profile SECT*/
@@ -535,6 +563,8 @@ POSTS SECT
   background-color: #f0f0f0 !important;
   text-decoration: none;
 }
+
+
 
 
 .body-sect .friendList .search{

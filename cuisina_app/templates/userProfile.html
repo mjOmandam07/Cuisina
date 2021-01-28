@@ -14,7 +14,7 @@
                           <a href="{{ url_for('removeFriend', current_user=user[0][0], other_user=other_user[0][0]) }}"  type="button" style="font-size: .8em !important;"class="btn m-0 mt-3">Remove Friend</a>
                         {% elif other_request %}
 
-                          <a href="{{ url_for('acceptFriend', current_user=user[0][0], other_user=other_user[0][0]) }}"  type="button" style="font-size: .8em !important;"class="btn m-0 mt-3 ">Accept Friend Request</a>
+                          <a href="{{ url_for('acceptFriend', current_user=user[0][0], other_user=other_user[0][0]) }}"  type="button" style="font-size: .8em !important;"class="btn m-0 mt-3 ">Accept Request</a>
                           <a href="{{ url_for('removeFriend', current_user=user[0][0], other_user=other_user[0][0]) }}"  type="button" style="font-size: .8em !important;"class="btn m-0 mt-3">Delete Request</a>
 
                         {% else %}
@@ -81,7 +81,7 @@
                     <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
                       <h6 class="m-1">Executive Chef</h6>
                       <img class = "rounded-circle article-img" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
-                          style="height:8em; width: 10em;">
+                          style="height:8em; width: 11em;">
                     </div>  
               </div>
             </div>
@@ -196,12 +196,16 @@
                                         <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
                                       </a>
                                     </div>
-                                    
+                                    <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                                    <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                    <p class="article-content ml-3"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                  {% else %}
+                                     <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                      <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                     <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
                                   {% endif %}
-                                  <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
-                                  <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
-                                  <p class="article-content ml-3"style="white-space: pre-wrap;
-                                    overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                               </div> 
                             </article>
                             <div class="row ml-3">
@@ -283,7 +287,6 @@
                           <input class="btn btn-sm del-btn" value="Search" type="submit"/>
                         </form>
                         <div class="col  col-5 pt-3">
-                           <a class="a-btn">Friend Requests</a>
                             <a href="{{ url_for('viewProfile', user_id=other_user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
                         </div>
                        
@@ -302,6 +305,10 @@
                                     <div class="col-2 mr-auto m-0 p-0 pt-3">
                                       <a class="ml-2 username" href="{{ url_for('profile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                                     </div>
+                                    <div class=" ml-auto">
+                                      <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                                          style="height:5em; width: 7em;">
+                                    </div>
                                   </div>
                                 </div>
                               {% else %}
@@ -312,6 +319,10 @@
                                     </div>
                                     <div class="col-2 mr-auto m-0 p-0 pt-3">
                                       <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                                    </div>
+                                    <div class=" ml-auto">
+                                      <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                                          style="height:5em; width: 7em;">
                                     </div>
                                   </div>
                                 </div>

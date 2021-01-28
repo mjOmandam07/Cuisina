@@ -150,6 +150,13 @@ def profile(user_id, fltr):
           flash('Success! Profile Saved', 'success')
 
         return redirect(url_for('profile', user_id=user_id, fltr = fltr))
+      elif request.method == 'POST':
+        if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+        elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('profile', user_id=user_id, fltr=fltr))
       elif request.method == "GET":
         if len(profile) != 0:
           form.fname.data = profile[0][1]
@@ -192,11 +199,11 @@ def save_profile_picture(form_picture):
     return picture_fn
 
 
-@app.route('/viewProfile/<int:user_id>/<string:fltr>')
+@app.route('/viewProfile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
 def viewProfile(user_id, fltr):
   if 'user' in session:
     user_request = False
-    request = False
+    isRequest = False
     other_request = False
     isFrnd = False
 
@@ -225,7 +232,7 @@ def viewProfile(user_id, fltr):
       if isfren[0][4] == 1:
         isFrnd = True
       elif isfren[0][4] != 1 and isfren[0][2] != session['user'][0][0]:
-        request = True
+        isRequest = True
       elif isfren[0][2] == session['user'][0][0]:
         other_request = True
 
@@ -241,8 +248,17 @@ def viewProfile(user_id, fltr):
     elif fltr == 'orders':
       recipe = db.userOrder()
     suggested_chef = suggest.suggestChef()
+
+    if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewProfile', user_id=user_id, fltr=fltr))
+
     return render_template('userProfile.html', isFrnd = isFrnd, other_request=other_request,
-                                              user_request=user_request, request=request,
+                                              user_request=user_request, request=isRequest,
                                               fltr=fltr, user = user, active='profile',
                                               other_user=other_user, recipe = recipe,
                                               profile = profile, suggested_chef = suggested_chef,
@@ -294,6 +310,13 @@ def home(fltr):
         picture = url_for('static', filename='posted-recipe_images/' + picture_file)
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadRecipePicture()
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('filter')) 
       return redirect(url_for('viewpost', recipe_id= latest))
     return render_template('home.html', active='home', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
   else:
@@ -334,6 +357,13 @@ def viewpost(recipe_id):
       rate = models.chef(recipe_id=recipe_id, user_id=user[0][0], rating=form_rate.rate.data, isRated=currentRating)
       rate.addRate()
       return redirect(url_for('viewpost', recipe_id=recipe_id))
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewpost', recipe_id=recipe_id))
     return render_template('view-post.html',  active='home',user_request=user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form, form_rate=form_rate, rate = currentRating)
   else:
     return redirect(url_for('login'))
@@ -343,6 +373,8 @@ def viewpost(recipe_id):
 @app.route('/orderfilter')
 def orderfilter():
   return redirect(url_for('ordersFeed', fltr='All'))
+
+
 
 @app.route('/orders/<string:fltr>', methods=['GET', 'POST'])
 def ordersFeed(fltr):
@@ -373,9 +405,18 @@ def ordersFeed(fltr):
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadOrderPic()
       return redirect(url_for('viewOrder', recipe_id= latest))
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('orderfilter'))
     return render_template('ordersfeed.html', user_request=user_request, active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr)
   else:
     return redirect(url_for('login'))
+
+
 
 @app.route('/viewOrder/<int:recipe_id>', methods=['GET', 'POST'])
 def viewOrder(recipe_id):
@@ -407,11 +448,17 @@ def viewOrder(recipe_id):
 
       create_comment.addOrderComment()
       return redirect(url_for('viewOrder', recipe_id=recipe_id))
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewOrder', recipe_id=recipe_id))
     
     return render_template('view-order.html',  user_request=user_request, active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form)
   else:
     return redirect(url_for('login'))
-
 
 
 def save_picture(form_picture):
@@ -433,14 +480,24 @@ def save_picture(form_picture):
 def saved_filter(user_id):
   return redirect(url_for('savedRecipe', user_id=user_id, fltr='All'))
 
+
+
 @app.route('/savedRecipe/<int:user_id>/<string:fltr>')
 def savedRecipe(user_id, fltr):
   db = models.chef(user_id=user_id, filter=fltr)
   recipe = db.viewSavedRecipes()
   user = session['user']
   suggest = models.chef(user_id = session['user'][0][0])
-  suggested_chef = suggest.suggestChef() 
+  suggested_chef = suggest.suggestChef()
+  if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('saved_filter', user_id=user_id))
   return render_template('saved_recipe.html', recipe = recipe, user=user,suggested_chef=suggested_chef, active='saved')
+
 
 
 @app.route('/saved/<recipe_id>/<user_id>')
@@ -451,6 +508,8 @@ def saveRecipe(recipe_id, user_id):
   save.saveRecipe()
   return redirect(url_for('viewpost', recipe_id=recipe_id))
 
+
+
 @app.route('/delete/<recipe_id>')
 def deletePost(recipe_id):
   db = models.chef(recipe_id = recipe_id)
@@ -459,12 +518,14 @@ def deletePost(recipe_id):
   return redirect(url_for('home', fltr='All'))
 
 
+
 @app.route('/deleteOrder/<recipe_id>')
 def deleteOrder(recipe_id):
   db = models.chef(recipe_id = recipe_id)
   db.deleteOrder()
   flash('Order Deleted Successfully!', 'success')
   return redirect(url_for('ordersFeed', fltr='All'))
+
 
 
 @app.route('/acceptFriend/<current_user>/<other_user>')
@@ -476,6 +537,7 @@ def acceptFriend(current_user, other_user):
     return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
 
 
+
 @app.route('/addFriend/<current_user>/<other_user>')
 def addFriend(current_user, other_user):
     db = models.chef(user_id = current_user, other_user=other_user)
@@ -485,6 +547,8 @@ def addFriend(current_user, other_user):
     return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
 
 
+
+
 @app.route('/removeFriend/<current_user>/<other_user>')
 def removeFriend(current_user, other_user):
     db = models.chef(user_id = current_user, other_user=other_user)
@@ -492,3 +556,27 @@ def removeFriend(current_user, other_user):
 
     return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
 
+
+
+
+@app.route('/search/<search_content>/<fltr>')
+def search(search_content, fltr):
+  if 'user' in session:
+    user = session['user']
+    db = models.chef(title=search_content)
+
+    suggest = models.chef(user_id = session['user'][0][0], username=search_content)
+    suggested_chef = suggest.suggestChef()
+
+    recipe = db.searchRecipe()
+    search_user = suggest.searchUser()
+    if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('search', search_content=search_content))
+  else:
+    return redirect(url_for('login'))
+  return render_template('search.html',search_content=search_content, user=user, recipe=recipe,search_user=search_user, suggested_chef =suggested_chef, fltr=fltr)
