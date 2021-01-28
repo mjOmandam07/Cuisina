@@ -142,6 +142,17 @@
                       </div>
                     </div>
             </div>
+
+            {% if recipe %}
+
+            {% else %}
+              <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+                <h1 class="display-4" >Satisfy the Cravings of thy Mouth</h1>
+                <p style="font-size: 1em; color: var(--primary-color);"><strong>Welcome to Cuisina!</strong> Post the mouth watering food that your mouth longeth, Start by clicking the Create Post button <i class="fa fa-pencil-square-o ml-1 mb-2"></i> On the bottom left corner of your screen</p>
+              </div>
+            {% endif %}
+
+
             {% for item in recipe %}
              
               <div class="post bg-light p-0 mt-2 mb-4">
