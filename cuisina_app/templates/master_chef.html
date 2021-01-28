@@ -1,24 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
+        {% if rank %}
+            {% for item in rank%}
+              <div class="post bg-light p-2 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+                   <div class="row m-2">
+                      <div class="">
+                          <p><img src="{{item[4]}}" class="img rounded-circle img-fluid" style="height: 6em; width: 6em;" />
+                          </p>
+                      </div>
 
-							<div class="post bg-light p-2 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
-						       <div class="row m-2">
-		                            <div class="">
-		                                <p><img src="{{item[4]}}" class="img rounded-circle img-fluid" style="height: 6em; width: 6em;" />
-
-		                                </p>
-		                            </div>
-		                            <div class="col-md-5" style=" border-radius:5px;">
-		                                  <p class="m-0 mb-0" style="font-size: 2em;"><a href="#"><strong>{{ item[1] }}</strong></a></p>
-		                                 <p class="m-0 mb-0" style="font-size: 2em;"><a href="#"><strong>{{ item[1] }}</strong></a></p>
-		                                <p class="m-0 mb-2" style="font-size: 1em; font-weight: lighter;"><strong>{{ item[2] }} {{ item[3] }}</strong></p>
-		                            </div>
-		                            <div class=" ml-auto">
-				                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
-				                          style="height:5em; width: 6em;">
-				                    </div>
-		                        </div>
-						    </div>
+                      <div class="col-md-5 " style=" border-radius:5px;">
+                          {% if item[0] == user[0][0] %}
+                            <p class="m-0 mb-0" style="font-size: 2em;"><a href="{{url_for('profile', user_id=item[0], fltr='recipes')}}"><strong>{{ item[1] }}</strong></a></p>
+                          {% else %}
+                           <p class="m-0 mb-0" style="font-size: 2em;"><a href="{{url_for('viewProfile', user_id=item[0], fltr='recipes')}}"><strong>{{ item[1] }}</strong></a></p>
+                          {% endif %}
+                          <p class="m-0 mb-2" style="font-size: 1em; font-weight: lighter;"><strong>{{ item[2] }} {{ item[3] }}</strong></p>
+                      </div>
+                      <div class=" ml-auto" style="text-align: center;">
+                        
+                        <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename=item[7]) }}"
+                            style="height:5em; width: 7em;">
+                        <p>{{ item[6] }}</p>
+                      </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+              <h1 class="display-4" >Chef does not Exist</h1>
+              <p style="font-size: 1em; color: var(--primary-color);"></p>
+            </div>
+        {% endif %}
 
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

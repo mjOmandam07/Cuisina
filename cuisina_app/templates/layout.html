@@ -217,9 +217,15 @@
               {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                   {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="width:38em; margin-left: 12em;">
-                      {{ message }}
-                    </div>
+                    {% if active == 'profile' %}
+                      <div class="alert alert-{{ category }}" style="width:68.5em; margin-left: 10em;">
+                        {{ message }}
+                      </div>
+                    {% else %}
+                      <div class="alert alert-{{ category }}" style="width:38em; margin-left: 12em;">
+                        {{ message }}
+                      </div>
+                    {% endif %}
                   {% endfor %}
                 {% endif %}
               {% endwith %}

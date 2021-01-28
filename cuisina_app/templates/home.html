@@ -161,7 +161,7 @@
             {% endif %}
            
             {% for item in recipe %}
-             
+              
               <div class="post bg-light p-0 mt-2 mb-4">
                   <article class="media content-section">
                       <div class="media-body">
@@ -191,7 +191,7 @@
                               overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                           {% else %}
 
-                           <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                           <a class="article-title ml-3 font-weight-bold" style="font-size: 2em;" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
                             <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                            <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>

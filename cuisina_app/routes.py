@@ -101,13 +101,16 @@ def profile(user_id, fltr):
       recipe = list
 
       rank = db.checkRank()
+
+      rank_name = str
+      rank_image = str
       if rank <= 50:
           rank_name = 'Kitchen Porter'
           rank_image = 'rank_images/kitchen_porter.png'
-      if rank > 50 and rank < 100:
+      if rank > 50 and rank <= 100:
           rank_name = 'Chef de Partie'
           rank_image = 'rank_images/chef_de_partie.png'
-      if rank > 100 and rank < 200:
+      if rank > 100 and rank <= 200:
           rank_name = 'Sous Chef'
           rank_image = 'rank_images/sous_chef.png'
       if rank > 200 and rank < 500:
@@ -246,13 +249,17 @@ def viewProfile(user_id, fltr):
     allFriends = db.showAllFriends()
 
     rank = db.checkRank()
+
+    rank_name = str
+    rank_image = str
+
     if rank <= 50:
         rank_name = 'Kitchen Porter'
         rank_image = 'rank_images/kitchen_porter.png'
-    if rank > 50 and rank < 100:
+    if rank > 50 and rank <= 100:
         rank_name = 'Chef de Partie'
         rank_image = 'rank_images/chef_de_partie.png'
-    if rank > 100 and rank < 200:
+    if rank > 100 and rank <= 200:
         rank_name = 'Sous Chef'
         rank_image = 'rank_images/sous_chef.png'
     if rank > 200 and rank < 500:
@@ -344,14 +351,15 @@ def home(fltr):
         picture = url_for('static', filename='posted-recipe_images/' + picture_file)
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadRecipePicture()
+      return redirect(url_for('viewpost', recipe_id= latest))
     elif request.method == 'POST':
       if request.form["search"]:
             search_content = request.form["search"]
             return redirect(url_for('search', search_content=search_content, fltr='posts'))
       elif not request.form["search"]:
             flash('Please Search recipe or chef', 'danger')
-            return redirect(url_for('filter')) 
-      return redirect(url_for('viewpost', recipe_id= latest))
+            return redirect(url_for('filter'))
+      
     return render_template('home.html', active='home', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
   else:
     return redirect(url_for('login'))
@@ -674,22 +682,8 @@ def masterChef(user_id):
         other_user = db.currentUser()
         profile = db.checkProfile()
         rank = db.masterChef()
-        if rank <= 50:
-            rank_name = 'Kitchen Porter'
-            rank_image = 'rank_images/kitchen_porter.png'
-        if rank > 50 and rank <= 100:
-            rank_name = 'Chef de Partie'
-            rank_image = 'rank_images/chef_de_partie.png'
-        if rank > 100 and rank <= 200:
-            rank_name = 'Sous Chef'
-            rank_image = 'rank_images/sous_chef.png'
-        if rank > 200 and rank < 500:
-            rank_name = 'Chef de Cuisine'
-            rank_image = 'rank_images/chef_de_cuisine.png'
-        if rank >= 500:
-            rank_name = 'Executive Chef'
-            rank_image = 'rank_images/executive_chef.png'
+        
+
         suggested_chef = suggest.suggestChef()
-        return render_template('master_chef.html', user=user, active='profile', other_user=other_user,
-                              profile=profile, suggested_chef=suggested_chef, rank_name=rank_name,
-                               rank_images=rank_image)
+        return render_template('master_chef.html', user=user, active='master', other_user=other_user,
+                              profile=profile, suggested_chef=suggested_chef, rank=rank)

@@ -315,16 +315,100 @@ class chef(object):
 
 
 	def searchUser(self):
+		rank = []
+		rank.clear()
 		cursor = mysql.connection.cursor()
-		sql = """SELECT u.user_id, u.username, p.first_name, p.last_name,i.filename FROM 
-		            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
-		                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.username = '{}';""".format(self.username)
-
-			
+		sql = """SELECT u.user_id, u.username, p.first_name, p.last_name,i.filename, pts.total_point FROM 
+		            (((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+		                 LEFT JOIN images AS i ON i.profile_id = p.profile_id)
+								LEFT JOIN points as pts ON u.user_id = pts.user_id) WHERE u.username = '{}'""".format(self.username)
 		cursor.execute(sql)
 		display = cursor.fetchall()
 
-		return display
+
+		for i in display:
+			if i[5] <= 50:
+				rank_name = 'Kitchen Porter'
+				rank_image = 'rank_images/kitchen_porter.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 50 and i[5] <= 100:
+				rank_name = 'Chef de Partie'
+				rank_image = 'rank_images/chef_de_partie.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 100 and i[5] <= 200:
+				rank_name = 'Sous Chef'
+				rank_image = 'rank_images/sous_chef.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 200 and i[5] < 500:
+				rank_name = 'Chef de Cuisine'
+				rank_image = 'rank_images/chef_de_cuisine.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] >= 500:
+				rank_name = 'Executive Chef'
+				rank_image = 'rank_images/executive_chef.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+		
+		return(rank)
+
 
 
 
@@ -1117,23 +1201,23 @@ class chef(object):
 		if display:
 			for item in display:
 				if item[1] != self.user_id:
-					print("\n",item[1],"requester_id")
+
 					sql2 = """SELECT u.user_id, u.username, i.filename FROM 
 									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
 			                 					LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
 					cursor.execute(sql2)
 					display2 = cursor.fetchall()
-					print(display2[0], "\n")
+
 					friends.append(display2[0])
 
 				if item[2] != self.user_id:
-					print(item[2],"addressee")
+
 					sql3 = """SELECT u.user_id, u.username, i.filename FROM 
 									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
 												LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[2])
 					cursor.execute(sql3)
 					display3 = cursor.fetchall()
-					print(display3[0],"\n")
+
 					friends.append(display3[0])
 
 		return friends
@@ -1142,8 +1226,8 @@ class chef(object):
 
 
 	def showAllFriends(self):
-		friends = []
-		friends.clear()
+		rank = []
+		rank.clear()
 		cursor = mysql.connection.cursor()
 		user = self.user_id
 
@@ -1155,33 +1239,193 @@ class chef(object):
 		if display:
 			for item in display:
 				if item[1] != self.user_id:
-					print("\n",item[1],"requester_id")
-					sql2 = """SELECT u.user_id, u.username, i.filename FROM 
-									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
-			                 					LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
+
+					sql2 = """SELECT u.user_id, u.username, i.filename, pts.total_point FROM 
+								(((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 			LEFT JOIN images AS i ON i.profile_id = p.profile_id)
+			                 					LEFT JOIN points as pts ON u.user_id = pts.user_id) WHERE u.user_id = {}""".format(item[1])
+					
 					cursor.execute(sql2)
 					display2 = cursor.fetchall()
 
-					friends.append(display2[0])
+					for i in display2:
+						if i[3] <= 50:
+							rank_name = 'Kitchen Porter'
+							rank_image = 'rank_images/kitchen_porter.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 50 and i[3] <= 100:
+							rank_name = 'Chef de Partie'
+							rank_image = 'rank_images/chef_de_partie.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 100 and i[3] <= 200:
+							rank_name = 'Sous Chef'
+							rank_image = 'rank_images/sous_chef.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 200 and i[3] < 500:
+							rank_name = 'Chef de Cuisine'
+							rank_image = 'rank_images/chef_de_cuisine.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] >= 500:
+							rank_name = 'Executive Chef'
+							rank_image = 'rank_images/executive_chef.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
 
 				if item[2] != self.user_id:
-					print(item[2],"addressee")
-					sql3 = """SELECT u.user_id, u.username, i.filename FROM 
-									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
-												LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[2])
+
+					sql3 = """SELECT u.user_id, u.username, i.filename, pts.total_point FROM 
+								(((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 			LEFT JOIN images AS i ON i.profile_id = p.profile_id)
+			                 					LEFT JOIN points as pts ON u.user_id = pts.user_id) WHERE u.user_id = {}""".format(item[2])
+					
 					cursor.execute(sql3)
 					display3 = cursor.fetchall()
 
-					friends.append(display3[0])
+					for i in display3:
+						if i[3] <= 50:
+							rank_name = 'Kitchen Porter'
+							rank_image = 'rank_images/kitchen_porter.png'
 
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 50 and i[3] <= 100:
+							rank_name = 'Chef de Partie'
+							rank_image = 'rank_images/chef_de_partie.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 100 and i[3] <= 200:
+							rank_name = 'Sous Chef'
+							rank_image = 'rank_images/sous_chef.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] > 200 and i[3] < 500:
+							rank_name = 'Chef de Cuisine'
+							rank_image = 'rank_images/chef_de_cuisine.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
+
+
+						elif i[3] >= 500:
+							rank_name = 'Executive Chef'
+							rank_image = 'rank_images/executive_chef.png'
+
+							lst = list(i)
+
+							ranks = rank_name, rank_image
+
+							lst.append(rank_name)
+							lst.append(rank_image)
+
+							tpl = tuple(lst)
+
+							rank.append(tpl)
 					
-		return friends
+
+		return rank
 
 
 
 	def friendReq(self):
-		friendReq = []
-		friendReq.clear()
+		rank = []
+		rank.clear()
 		cursor = mysql.connection.cursor()
 		user = self.user_id
 
@@ -1192,14 +1436,94 @@ class chef(object):
 		
 		if display:
 			for item in display:
-				sql2 = """SELECT u.user_id, u.username, i.filename FROM 
-								((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
-			                 				LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
+				sql2 = """SELECT u.user_id, u.username, i.filename, pts.total_point FROM 
+								(((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 			LEFT JOIN images AS i ON i.profile_id = p.profile_id)
+			                 					LEFT JOIN points as pts ON u.user_id = pts.user_id) WHERE u.user_id = {}""".format(item[1])
+					
 				cursor.execute(sql2)
 				display2 = cursor.fetchall()
-				friendReq.append(display2[0])
 
-		return friendReq
+				for i in display2:
+					if i[3] <= 50:
+						rank_name = 'Kitchen Porter'
+						rank_image = 'rank_images/kitchen_porter.png'
+
+						lst = list(i)
+
+						ranks = rank_name, rank_image
+
+						lst.append(rank_name)
+						lst.append(rank_image)
+
+						tpl = tuple(lst)
+
+						rank.append(tpl)
+
+
+					elif i[3] > 50 and i[3] <= 100:
+						rank_name = 'Chef de Partie'
+						rank_image = 'rank_images/chef_de_partie.png'
+
+						lst = list(i)
+
+						ranks = rank_name, rank_image
+
+						lst.append(rank_name)
+						lst.append(rank_image)
+
+						tpl = tuple(lst)
+
+						rank.append(tpl)
+
+
+					elif i[3] > 100 and i[3] <= 200:
+						rank_name = 'Sous Chef'
+						rank_image = 'rank_images/sous_chef.png'
+
+						lst = list(i)
+
+						ranks = rank_name, rank_image
+
+						lst.append(rank_name)
+						lst.append(rank_image)
+
+						tpl = tuple(lst)
+
+						rank.append(tpl)
+
+
+					elif i[3] > 200 and i[3] < 500:
+						rank_name = 'Chef de Cuisine'
+						rank_image = 'rank_images/chef_de_cuisine.png'
+
+						lst = list(i)
+
+						ranks = rank_name, rank_image
+
+						lst.append(rank_name)
+						lst.append(rank_image)
+
+						tpl = tuple(lst)
+
+						rank.append(tpl)
+
+
+					elif i[3] >= 500:
+						rank_name = 'Executive Chef'
+						rank_image = 'rank_images/executive_chef.png'
+
+						lst = list(i)
+
+						ranks = rank_name, rank_image
+
+						lst.append(rank_name)
+						lst.append(rank_image)
+
+						tpl = tuple(lst)
+
+						rank.append(tpl)
+		return rank
 
 
 	def checkRank(self):
@@ -1209,18 +1533,107 @@ class chef(object):
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
+		print(display[0][0], "checkRank")
 		return display[0][0]
+
+
+
 
 
 	def masterChef(self):
-
+		rank = []
+		rank.clear()
 		cursor = mysql.connection.cursor()
-		sql = "SELECT * FROM points WHERE user_id = {}".format(self.user_id)
-
+		sql = """SELECT u.user_id, u.username, p.first_name, p.last_name,i.filename, pts.total_point FROM 
+		            (((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+		                 LEFT JOIN images AS i ON i.profile_id = p.profile_id)
+								LEFT JOIN points as pts ON u.user_id = pts.user_id) WHERE pts.total_point > 200"""
 		cursor.execute(sql)
 		display = cursor.fetchall()
-		return display[0][0]
 
+
+		for i in display:
+			if i[5] <= 50:
+				rank_name = 'Kitchen Porter'
+				rank_image = 'rank_images/kitchen_porter.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 50 and i[5] <= 100:
+				rank_name = 'Chef de Partie'
+				rank_image = 'rank_images/chef_de_partie.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 100 and i[5] <= 200:
+				rank_name = 'Sous Chef'
+				rank_image = 'rank_images/sous_chef.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] > 200 and i[5] < 500:
+				rank_name = 'Chef de Cuisine'
+				rank_image = 'rank_images/chef_de_cuisine.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+
+			elif i[5] >= 500:
+				rank_name = 'Executive Chef'
+				rank_image = 'rank_images/executive_chef.png'
+
+				lst = list(i)
+
+				ranks = rank_name, rank_image
+
+				lst.append(rank_name)
+				lst.append(rank_image)
+
+				tpl = tuple(lst)
+
+				rank.append(tpl)
+
+		
+		return(rank)
 
 
 

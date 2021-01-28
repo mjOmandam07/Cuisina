@@ -160,9 +160,19 @@
                         </div>
                     </div>
                     <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
-                      <h6 class="m-1">{{ rank_name }}</h6>
-                      <img class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
-                          style="height:8em; width: 11em;">
+                      <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
+                          style="height:8em; width: 11em;" data-toggle="modal" data-target=".bd-example-modal-lg">
+                      <h6 class="m-1 ml-3">{{ rank_name }}</h6>
+
+                      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                           aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            ...
+                          </div>
+                        </div>
+                      </div>
+
                     </div>  
               </div>
         </div>
@@ -353,11 +363,8 @@
                 <h1 class="col-3">Friends</h1>
                 
                 <div class="col-8 row  ml-auto">
-                  <form method="POST" class="col ml-auto  form-inline p-0">
-                    <input class="form-control search" type="search" placeholder="Search Chef Username" aria-label="Search" name="search">
-                    <input class="btn btn-sm del-btn" value="Search" type="submit"/>
-                  </form>
-                  <div class="col  col-5 pt-3">
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='Allfriend') }}" class="a-btn">View Friends</a>
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
                   </div>
@@ -376,9 +383,10 @@
                               <div class="col-2 mr-auto m-0 p-0 pt-3">
                                 <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                               </div>
-                              <div class=" ml-auto">
-                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
                                     style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
                               </div>
                             </div>
                           </div>      
@@ -421,9 +429,10 @@
                               <div class="col-2 mr-auto m-0 p-0 pt-3">
                                 <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                               </div>
-                              <div class=" ml-auto">
-                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
                                     style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
                               </div>
                             </div>
                           </div>      

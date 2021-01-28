@@ -79,9 +79,10 @@
                      
                     
                     <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
-                      <h6 class="m-1">{{ rank_name }}</h6>
+                      
                       <img class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
                           style="height:8em; width: 11em;">
+                      <h6 class="m-1 ml-3">{{ rank_name }}</h6>
                     </div>  
               </div>
             </div>
@@ -317,9 +318,10 @@
                                     <div class="col-2 mr-auto m-0 p-0 pt-3">
                                       <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                                     </div>
-                                    <div class=" ml-auto">
-                                      <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+                                    <div class=" ml-auto" style="text-align: center;">
+                                      <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
                                           style="height:5em; width: 7em;">
+                                      <p>{{ item[4] }}</p>
                                     </div>
                                   </div>
                                 </div>
