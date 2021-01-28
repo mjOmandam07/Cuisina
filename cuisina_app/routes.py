@@ -81,20 +81,42 @@ def signUp():
 @app.route('/profile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
 def profile(user_id, fltr):
   if 'user' in session:
+    user_request = False
     if session['user'][0][0] == user_id:
       clear = False
       db = models.chef(user_id = user_id)
+
       suggested_chef = db.suggestChef()
+
       user = db.currentUser()
+
       profile = db.checkProfile()
+
       form = ProfileForm()
+
+      friendsList = db.showFriends()
+
+      allFriends = db.showAllFriends()
+
+      recipe = list 
+
       if fltr == 'recipes':
         recipe = db.userRecipes()
       elif fltr == 'orders':
         recipe = db.userOrder()
-      session['user'] = user 
+      session['user'] = user
+      suggest = models.chef(user_id = session['user'][0][0])
+
+      friend = suggest.checkFriendReq()
+
+      reqs = suggest.friendReq()
+
+      if friend:
+        if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+          user_request = True
+        else:
+          user_request = False 
       if not profile:
-        print("\n\n not profile", profile, "\n\n")
         db.addProfile()
         return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
       else:
@@ -128,6 +150,13 @@ def profile(user_id, fltr):
           flash('Success! Profile Saved', 'success')
 
         return redirect(url_for('profile', user_id=user_id, fltr = fltr))
+      elif request.method == 'POST':
+        if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+        elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('profile', user_id=user_id, fltr=fltr))
       elif request.method == "GET":
         if len(profile) != 0:
           form.fname.data = profile[0][1]
@@ -140,8 +169,14 @@ def profile(user_id, fltr):
           form.age.data = None
         form.username.data = user[0][1]
         form.email.data = user[0][2]
-        print("\n\n", profile, "\n\n")
-      return render_template('profile.html', form=form, fltr=fltr, user=user, recipe=recipe, suggested_chef = suggested_chef, active='profile', profile = profile)
+
+      return render_template('profile.html',
+                               user_request=user_request, form=form,
+                               fltr=fltr, user=user, 
+                               recipe=recipe, suggested_chef = suggested_chef, 
+                               active='profile', profile = profile,
+                               friendsList = friendsList, allFriends=allFriends,
+                               reqs=reqs)
     else:
       flash('Please Logout and Login to your desired account', 'info')
       return redirect(url_for('login'))
@@ -164,20 +199,70 @@ def save_profile_picture(form_picture):
     return picture_fn
 
 
-@app.route('/viewProfile/<int:user_id>/<string:fltr>')
+@app.route('/viewProfile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
 def viewProfile(user_id, fltr):
   if 'user' in session:
+    user_request = False
+    isRequest = False
+    other_request = False
+    isFrnd = False
+
     db = models.chef(user_id = user_id)
     suggest = models.chef(user_id = session['user'][0][0])
+
     user = session['user']
     other_user = db.currentUser()
     profile = db.checkProfile()
+
+    recipe = list
+
+    friend = suggest.checkFriend()
+    viewedFriend = db.checkViewdReq()
+    friendReq = suggest.checkFriendReq()
+
+    friendCheck = models.chef(user_id=user_id, other_user=session['user'][0][0])
+
+    isfren = friendCheck.isFriend()
+
+    friendsList = db.showFriends()
+
+    allFriends = db.showAllFriends()
+
+    if isfren:
+      if isfren[0][4] == 1:
+        isFrnd = True
+      elif isfren[0][4] != 1 and isfren[0][2] != session['user'][0][0]:
+        isRequest = True
+      elif isfren[0][2] == session['user'][0][0]:
+        other_request = True
+
+
+    
+    if friendReq:
+        if friendReq[0][2] == session['user'][0][0] and friendReq[0][3] == 0:
+          user_request = True
+        else:
+          user_request = False
     if fltr == 'recipes':
       recipe = db.userRecipes()
     elif fltr == 'orders':
       recipe = db.userOrder()
     suggested_chef = suggest.suggestChef()
-    return render_template('userProfile.html',fltr=fltr, user = user, active='profile', other_user=other_user, recipe = recipe, profile = profile, suggested_chef = suggested_chef)
+
+    if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewProfile', user_id=user_id, fltr=fltr))
+
+    return render_template('userProfile.html', isFrnd = isFrnd, other_request=other_request,
+                                              user_request=user_request, request=isRequest,
+                                              fltr=fltr, user = user, active='profile',
+                                              other_user=other_user, recipe = recipe,
+                                              profile = profile, suggested_chef = suggested_chef,
+                                              friendsList = friendsList, allFriends = allFriends)
 
   else:
     return redirect(url_for('login'))
@@ -199,12 +284,19 @@ def filter():
 @app.route('/home/<string:fltr>', methods=['GET', 'POST'])
 def home(fltr):
   if 'user' in session:
+    user_request = False
     db = models.chef(filter=fltr)
     db.getAvgRate()
     recipe = db.viewRecipes()
     form = CreatePost()
     user = session['user'] 
     suggest = models.chef(user_id = session['user'][0][0])
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
     profile = suggest.currentUser()
     suggested_chef = suggest.suggestChef()
     if form.validate_on_submit() and request.method == 'POST':
@@ -218,8 +310,15 @@ def home(fltr):
         picture = url_for('static', filename='posted-recipe_images/' + picture_file)
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadRecipePicture()
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('filter')) 
       return redirect(url_for('viewpost', recipe_id= latest))
-    return render_template('home.html', active='home', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
+    return render_template('home.html', active='home', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
   else:
     return redirect(url_for('login'))
 
@@ -228,10 +327,17 @@ def home(fltr):
 @app.route('/viewpost/<int:recipe_id>', methods=['GET', 'POST'])
 def viewpost(recipe_id):
   if 'user' in session:
+    user_request = False
     db = models.chef(recipe_id=recipe_id)
     recipe = db.viewSelectRecipe()
     user = session['user']
-
+    suggest = models.chef(user_id = session['user'][0][0])
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
     suggest = models.chef(user_id = session['user'][0][0]) ###
     suggested_chef = suggest.suggestChef() 
 
@@ -251,7 +357,14 @@ def viewpost(recipe_id):
       rate = models.chef(recipe_id=recipe_id, user_id=user[0][0], rating=form_rate.rate.data, isRated=currentRating)
       rate.addRate()
       return redirect(url_for('viewpost', recipe_id=recipe_id))
-    return render_template('view-post.html',  active='home', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form, form_rate=form_rate, rate = currentRating)
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewpost', recipe_id=recipe_id))
+    return render_template('view-post.html',  active='home',user_request=user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form, form_rate=form_rate, rate = currentRating)
   else:
     return redirect(url_for('login'))
 
@@ -261,9 +374,12 @@ def viewpost(recipe_id):
 def orderfilter():
   return redirect(url_for('ordersFeed', fltr='All'))
 
+
+
 @app.route('/orders/<string:fltr>', methods=['GET', 'POST'])
 def ordersFeed(fltr):
   if 'user' in session:
+    user_request = False
     db = models.chef(filter=fltr)
     db.getAvgRate()
     recipe = db.viewOrder()
@@ -271,6 +387,12 @@ def ordersFeed(fltr):
     user = session['user'] 
     suggest = models.chef(user_id = session['user'][0][0])
     suggested_chef = suggest.suggestChef()
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
     if form.validate_on_submit() and request.method == 'POST':
       create = models.chef(title = form.title.data,
                  description = form.content.data,
@@ -283,19 +405,36 @@ def ordersFeed(fltr):
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadOrderPic()
       return redirect(url_for('viewOrder', recipe_id= latest))
-    return render_template('ordersfeed.html', active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr)
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('orderfilter'))
+    return render_template('ordersfeed.html', user_request=user_request, active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr)
   else:
     return redirect(url_for('login'))
+
+
 
 @app.route('/viewOrder/<int:recipe_id>', methods=['GET', 'POST'])
 def viewOrder(recipe_id):
   if 'user' in session:
+    user_request = False
     db = models.chef(recipe_id=recipe_id)
     recipe = db.viewSelectOrders()
     user = session['user']
 
     suggest = models.chef(user_id = session['user'][0][0]) ###
     suggested_chef = suggest.suggestChef() 
+
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
 
     comments = db.viewOrderComment()
 
@@ -309,11 +448,66 @@ def viewOrder(recipe_id):
 
       create_comment.addOrderComment()
       return redirect(url_for('viewOrder', recipe_id=recipe_id))
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('viewOrder', recipe_id=recipe_id))
     
-    return render_template('view-order.html',  active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form)
+    return render_template('view-order.html',  user_request=user_request, active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form)
   else:
     return redirect(url_for('login'))
 
+
+
+
+@app.route('/hotfilter')
+def hotfilter():
+  return redirect(url_for('hot', fltr='All'))
+
+
+@app.route('/hot/<string:fltr>', methods=['GET', 'POST'])
+def hot(fltr):
+  if 'user' in session:
+    user_request = False
+    db = models.chef(filter=fltr)
+    db.getAvgRate()
+    recipe = db.viewHotRecipes()
+    form = CreatePost()
+    user = session['user'] 
+    suggest = models.chef(user_id = session['user'][0][0])
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
+    profile = suggest.currentUser()
+    suggested_chef = suggest.suggestChef()
+    if form.validate_on_submit() and request.method == 'POST':
+      create = models.chef(title = form.title.data,
+                 description = form.content.data,
+                  cuisine = form.cuisine.data,
+                  user_id=user[0][0])
+      latest = create.addRecipes()
+      if form.upload_picture.data:
+        picture_file = save_picture(form.upload_picture.data)
+        picture = url_for('static', filename='posted-recipe_images/' + picture_file)
+        upload_picture = models.chef(filename = picture)
+        upload_picture.uploadRecipePicture()
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('filter')) 
+      return redirect(url_for('viewpost', recipe_id= latest))
+    return render_template('home.html', active='hot', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
+  else:
+    return redirect(url_for('login'))
 
 
 def save_picture(form_picture):
@@ -335,14 +529,24 @@ def save_picture(form_picture):
 def saved_filter(user_id):
   return redirect(url_for('savedRecipe', user_id=user_id, fltr='All'))
 
+
+
 @app.route('/savedRecipe/<int:user_id>/<string:fltr>')
 def savedRecipe(user_id, fltr):
   db = models.chef(user_id=user_id, filter=fltr)
   recipe = db.viewSavedRecipes()
   user = session['user']
   suggest = models.chef(user_id = session['user'][0][0])
-  suggested_chef = suggest.suggestChef() 
+  suggested_chef = suggest.suggestChef()
+  if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('saved_filter', user_id=user_id))
   return render_template('saved_recipe.html', recipe = recipe, user=user,suggested_chef=suggested_chef, active='saved')
+
 
 
 @app.route('/saved/<recipe_id>/<user_id>')
@@ -353,12 +557,15 @@ def saveRecipe(recipe_id, user_id):
   save.saveRecipe()
   return redirect(url_for('viewpost', recipe_id=recipe_id))
 
+
+
 @app.route('/delete/<recipe_id>')
 def deletePost(recipe_id):
   db = models.chef(recipe_id = recipe_id)
   db.deleteRecipe()
   flash('Posted Recipe Deleted Successfully!', 'success')
   return redirect(url_for('home', fltr='All'))
+
 
 
 @app.route('/deleteOrder/<recipe_id>')
@@ -369,3 +576,56 @@ def deleteOrder(recipe_id):
   return redirect(url_for('ordersFeed', fltr='All'))
 
 
+
+@app.route('/acceptFriend/<current_user>/<other_user>')
+def acceptFriend(current_user, other_user):
+    db = models.chef(user_id = current_user)
+    db.acceptFriend()
+
+
+    return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
+
+
+
+@app.route('/addFriend/<current_user>/<other_user>')
+def addFriend(current_user, other_user):
+    db = models.chef(user_id = current_user, other_user=other_user)
+    db.addFriend()
+
+
+    return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
+
+
+
+
+@app.route('/removeFriend/<current_user>/<other_user>')
+def removeFriend(current_user, other_user):
+    db = models.chef(user_id = current_user, other_user=other_user)
+    db.removeFriend()
+
+    return redirect(url_for('viewProfile', user_id = other_user, fltr='recipes'))
+
+
+
+
+@app.route('/search/<search_content>/<fltr>', methods=['GET', 'POST'])
+def search(search_content, fltr):
+  if 'user' in session:
+    user = session['user']
+    db = models.chef(title=search_content)
+
+    suggest = models.chef(user_id = session['user'][0][0], username=search_content)
+    suggested_chef = suggest.suggestChef()
+
+    recipe = db.searchRecipe()
+    search_user = suggest.searchUser()
+    if request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr=fltr))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('search', search_content=search_content, fltr=fltr))
+  else:
+    return redirect(url_for('login'))
+  return render_template('search.html',search_content=search_content, user=user, recipe=recipe,search_user=search_user, suggested_chef =suggested_chef, fltr=fltr)

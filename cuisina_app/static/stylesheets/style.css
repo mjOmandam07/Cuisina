@@ -29,7 +29,15 @@ body {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem #571b9857;
 }
-
+.navbar .del-btn{
+  font-size: 1em !important;
+  background-color: #f8f9fa;
+ color: var(--primary-color);
+}
+.navbar .del-btn:hover{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
 .navbar .collapse .navbar-nav .nav-item a {
   color: var(--primary-color);
   font-size: .9em;
@@ -124,8 +132,44 @@ body {
   width: 5em;
 }
 
+/*       SEARCH SECT          */
+.body-sect .search-filter a.a-btn{
+  border-radius: 7px;
+  padding: 0.6em;
+  cursor: pointer;
+  padding-left: 2em;
+  padding-right: 2em; 
+}
+
+.body-sect .search-filter .active{
+  background-color: var(--primary-color);
+}
+
+.body-sect .search-filter a.a-btn:hover{
+  background-color: #f0f0f0 !important;
+  color:var(--primary-color) !important;
+  text-decoration: none;
+}
+
+
 
 /*Profile SECT*/
+
+.body-sect .profile-sidebar{
+  height:fit-content;
+  border-radius: 5px;
+  box-shadow: 1px 1px #888888a9;
+}
+.body-sect .profile-sidebar .friend {
+  text-align: center;
+  border-radius: 7px;
+  font-size: 1em;
+}
+
+.body-sect .fix {
+  position: fixed;
+  top:4em;
+}
 
 .body-sect .post-sect .profile-sect {
   padding:1em;
@@ -140,7 +184,16 @@ body {
 .body-sect .post-sect .profile-sect .prof-details .names{
   width: fit-content
 }
-
+.body-sect .post-sect .profile-sect .prof-details .btn {
+  color: var(--secondary-color);
+  background-color:var(--primary-color);
+  font-size: .8em;
+  border:1px solid var(--primary-color);
+}
+.body-sect .post-sect .profile-sect .prof-details .btn:hover{
+  background-color:var(--primary-hover);
+}
+  
 .body-sect .post-sect .profile-sect .prof-details .edit-btn {
   color: var(--primary-color);
   background-color:#f8f9fa;
@@ -490,7 +543,66 @@ POSTS SECT
 .star-rate > label:hover ~ input:checked ~ label,
 .star-rate > input:checked ~ label:hover ~ label { color: var(--primary-hover);  } 
 
+/* FRIENDS SECT */
 
+
+
+.body-sect .friendList .btn{
+  font-size: 1em !important;
+  height: 2em !important;
+  border: 1px solid var(--primary-color);
+}
+
+.body-sect .friendList a.a-btn{
+  border-radius: 7px;
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+.body-sect .friendList a.a-btn:hover{
+  background-color: #f0f0f0 !important;
+  text-decoration: none;
+}
+
+
+
+
+.body-sect .friendList .search{
+  margin-right: .5em;
+  width: 18em;
+  border-radius: 20px;
+  height: 2em;
+  background-color:#f0f2f5;
+}
+
+.body-sect .friendList .friend{
+ border-radius: 5px;
+ border:2px solid #f0f2f5;
+}
+
+.body-sect .friendList .friend a.username{
+ font-size: 2em;
+ font-weight: 600;
+}
+
+
+.body-sect  a.prof-btn{
+  background-color: var(--primary-color);
+  position: fixed;
+  left: 2em;
+  bottom: 2em;
+  text-align: center !important;
+  color:white;
+  box-shadow: 0 0 0 0.2rem #571b9857;
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.body-sect a.prof-btn:hover{
+  background-color: var(--secondary-color);
+  color:var(--primary-color);
+}
 
 
 
@@ -553,7 +665,7 @@ POSTS SECT
   color:white;
   font-weight: lighter;
   box-shadow: 0 0 0 0.2rem #571b9857;
-  font-size:1.5em !important;"
+  font-size:1.5em !important;
 }
 
 

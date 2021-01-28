@@ -27,11 +27,17 @@
                               </a>
                             </div>
                             
-                          {% endif %}
-                          <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
-                          <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
-                          <p class="article-content ml-3"style="white-space: pre-wrap;
+                           <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                            <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                            <p class="article-content ml-3"style="white-space: pre-wrap;
+                              overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                          {% else %}
+
+                           <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                            <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                           <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                          {% endif %}
                       </div> 
                     </article>
                     <div class="row ml-3">
@@ -84,7 +90,10 @@
             {% endfor %}
 
       {% else %}
-        <div class="mt-5 article-title display-4" style="color:var(--primary-color);"> No Saved Recipe</div>
+        <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+          <h1 class="display-4" >Keep others Recipes</h1>
+          <p style="font-size: 1em; color: var(--primary-color);"><strong>Welcome to Cuisina!</strong> Save other chef recipes to add on your cookbook and never lose them again, Open a post and click the bookmark icon <i class="far fa-bookmark ml-1 mb-2"></i> on the top right corner of the posted recipe</p>
+        </div>
       {% endif %}
 
 {% endblock content %}

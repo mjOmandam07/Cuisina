@@ -1,0 +1,155 @@
+{% extends "layout.html" %}
+{% block content %}
+		<div class="post search-filter bg-light mt-2 p-3" style="position:fixed;font-size: 1em;">
+		     <div class="">
+		     		{% if fltr == 'posts' %}
+                     	<a href="{{ url_for('search', search_content = search_content, fltr='posts') }}" class="a-btn active mr-3">Posts</a>
+                    {% else %}
+                    	<a href="{{ url_for('search', search_content = search_content, fltr='posts') }}" class="a-btn mr-3">Posts</a>
+                   	{% endif %}
+                    {% if fltr == 'people' %}
+                     	<a href="{{ url_for('search', search_content = search_content, fltr='people') }}" class="a-btn active">Chef's</a>
+                    {% else %}
+                    	<a href="{{ url_for('search', search_content = search_content, fltr='people') }}" class="a-btn">Chef's</a>
+                    {% endif %}
+             </div>
+		</div>
+		<div style="margin-top: 5em">
+			{% if fltr =='posts' %}
+					{% if recipe %}
+				    {% else %}
+				      <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+				        <h1 class="display-4" >No Post Found</h1>
+				        <p style="font-size: 1em; color: var(--primary-color);"></p>
+				      </div>
+				    {% endif %}
+
+					{% for item in recipe %}
+				      <div class="post bg-light p-0 mt-2 mb-4">
+				          <article class="media content-section">
+				              <div class="media-body">
+				                <div class="article-metadata m-3">
+				                  <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height:40px; width: 40px;">
+				                    {% if item[7] == user[0][0] %}
+				                    <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
+				                    {% else %}
+				                    <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7], fltr='recipes')  }}">{{ item[10] }}</a>
+				                    {% endif %}
+				                    <small class="ml-2 font-weight-bold">{{item[4]}}</small>
+				                    {% if item[8] == user[0][0] %}
+				                      <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+				                    {% else %}
+				                      <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+				                    {% endif %} 
+				                </div>
+				                  {% if item[9] != None %}
+					                 <div class="row col">
+					                  	<div class="col">
+					                  		<a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+						                  	<p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+						                    overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+						                     <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+					                  	</div>
+					                  	<div class="col-5 m-0 d-flex p-0 justify-content-center ml-auto" style="width: 30%;">
+					                      <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-2 p-0" style="height: fit-content;">
+					                        <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img" style="height: 30%;
+					                        width: 100%;">
+					                      </a>
+					                    </div>
+					                  </div>
+					              {% else %}
+					              	<a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+				                  	<p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+				                    overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+				                 	 <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+				                  {% endif %}
+				                  
+				                  	
+				                  
+				              </div> 
+				            </article>
+				            <div class="row ml-3">
+				              <div class="star-widget">
+				                {% if item[6] == 5 %}
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                {% elif item[6] == 4 %}
+				                 <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star"></span>
+				                {% elif item[6] == 3 %}
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                {% elif item[6] == 2 %}
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                {% elif item[6] == 1 %}
+				                 <span class="fa fa-star checked"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                {% else %}
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                  <span class="fa fa-star"></span>
+				                {% endif %} 
+				                <small class="ml-2">Average Rating</small>
+				              </div>
+
+				              <div class="col ml-4 mb-2 align-self-center">
+				                <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
+				              </div>
+				            </div>
+				      </div>
+				    {% endfor %}
+			{% else %}
+					{% if search_user %}
+						{% for item in search_user%}
+							<div class="post bg-light p-2 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+						       <div class="row m-2">
+		                            <div class="">
+		                                <p><img src="{{item[4]}}" class="img rounded-circle img-fluid" style="height: 6em; width: 6em;" />
+
+		                                </p>
+		                            </div>
+		                            <div class="col-md-5" style=" border-radius:5px;">
+		                                {% if item[0] == user[0][0] %}
+		                                  <p class="m-0 mb-0" style="font-size: 2em;"><a href="{{url_for('profile', user_id=item[0], fltr='recipes')}}"><strong>{{ item[1] }}</strong></a></p>
+		                                {% else %}
+		                                 <p class="m-0 mb-0" style="font-size: 2em;"><a href="{{url_for('viewProfile', user_id=item[0], fltr='recipes')}}"><strong>{{ item[1] }}</strong></a></p>
+		                                {% endif %}
+		                                <p class="m-0 mb-2" style="font-size: 1em; font-weight: lighter;"><strong>{{ item[2] }} {{ item[3] }}</strong></p>
+		                            </div>
+		                            <div class=" ml-auto">
+				                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+				                          style="height:5em; width: 6em;">
+				                    </div>
+		                        </div>
+						    </div>
+						{% endfor %}
+					{% else %}
+						<div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+				        	<h1 class="display-4" >Chef does not Exist</h1>
+				        	<p style="font-size: 1em; color: var(--primary-color);"></p>
+				      	</div>
+				     {% endif %}
+
+			{% endif %}
+		</div>
+		
+
+{% endblock %}
