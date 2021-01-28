@@ -15,12 +15,14 @@ class chef(object):
 
 					image_id=None,
 
-					filename = None): 
+					filename = None,
+					other_user = None): 
 
 
 		self.filter = filter
 
 		self.user_id = user_id
+		self.other_user = other_user
 		self.username = username
 		self.password = password
 		self.email_address = email_address
@@ -312,6 +314,20 @@ class chef(object):
 			return 2
 
 
+	def searchUser(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT u.user_id, u.username, p.first_name, p.last_name,i.filename FROM 
+		            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+		                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.username = '{}';""".format(self.username)
+
+			
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+		return display
+
+
+
 
 ############################ POST-RECIPES #####################
 
@@ -426,7 +442,115 @@ class chef(object):
 
 			return posts
 
-				
+	def viewHotRecipes(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """"""
+
+		if self.filter == 'All':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) WHERE r.avg_rating > 4
+					 	 	 ORDER BY r.time_date DESC"""
+
+			
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Western':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Western' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Asian':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Asian' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'European':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'European' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts
+			
+		elif self.filter == 'Filipino':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Filipino' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts			
 
 
 	def viewOrder(self):
@@ -646,11 +770,13 @@ class chef(object):
 		cursor.execute(sql)
 		mysql.connection.commit()
 
-		sql2 = """SELECT recipe_id FROM recipe WHERE recipe_id = (SELECT max(recipe_id) FROM recipe)"""
+		sql2 = """SELECT recipe_id FROM order_recipe WHERE recipe_id = (SELECT max(recipe_id) FROM order_recipe)"""
 
 		cursor.execute(sql2)
 		display = cursor.fetchall()
 
+
+		print(display[0][0])
 		return display[0][0]
 
 
@@ -855,6 +981,252 @@ class chef(object):
 				cursor.execute(sql3)
 				mysql.connection.commit()
 				rates.clear()
+
+
+
+	def searchRecipe(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) WHERE r.title = '{}'
+					 	 	 ORDER BY r.time_date DESC""".format(self.title)
+
+			
+		cursor.execute(sql)
+		recipes = cursor.fetchall()
+
+		for item in recipes:
+			sql2 = """SELECT u.*,i.filename FROM 
+				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+				                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			posts.append(item + (display[0][4],))
+
+		return posts
+
+
+
+
+############################## FRIEND SECT ###########################	
+
+	def addFriend(self):
+		cursor = mysql.connection.cursor()
+		sql = """INSERT INTO friends(requester_id, addressee_id) VALUES ('{}', '{}')""".format(self.user_id, self.other_user)
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+	
+
+
+	def checkFriend(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT * FROM friends WHERE requester_id = '{}'""".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+		return display
+
+
+	def checkViewdReq(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT * FROM friends WHERE requester_id = '{}'""".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+		return display
+
+	def checkFriendReq(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT * FROM friends WHERE addressee_id = '{}'""".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+		
+		return display
+
+
+	def isFriend(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT * FROM friends WHERE requester_id = '{}' and addressee_id = '{}'""".format(self.user_id, self.other_user)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		if display:
+			return display
+
+		sql2 = """SELECT * FROM friends WHERE requester_id = '{}' and addressee_id = '{}'""".format(self.other_user, self.user_id)
+		cursor.execute(sql2)
+		display2 = cursor.fetchall()
+
+		if display2:
+			return display2
+
+
+	def acceptFriend(self):
+		cursor = mysql.connection.cursor()
+		sql = """UPDATE friends SET status = 1, isFriend = True WHERE addressee_id = '{}'""".format(self.user_id)
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+
+
+	
+
+	def removeFriend(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT * FROM friends WHERE requester_id = '{}' and addressee_id = '{}'""".format(self.user_id, self.other_user)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		if display:
+			inSql = """DELETE FROM friends WHERE id = '{}'""".format(display[0][0])
+			cursor.execute(inSql)
+			mysql.connection.commit()
+
+
+
+
+		sql2 = """SELECT * FROM friends WHERE requester_id = '{}' and addressee_id = '{}'""".format(self.other_user, self.user_id)
+		cursor.execute(sql2)
+		display2 = cursor.fetchall()
+		if display2:
+			inSql2 = """DELETE FROM friends WHERE id = '{}'""".format(display2[0][0])
+			cursor.execute(inSql2)
+			mysql.connection.commit()
+
+
+	def showFriends(self):
+		friends = []
+		friends.clear()
+		cursor = mysql.connection.cursor()
+		user = self.user_id
+
+		sql = """SELECT * FROM friends WHERE (requester_id = '{}' OR addressee_id = '{}') AND isFriend = 1 LIMIT 6""".format(self.user_id, user)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		
+		if display:
+			for item in display:
+				if item[1] != self.user_id:
+					print("\n",item[1],"requester_id")
+					sql2 = """SELECT u.user_id, u.username, i.filename FROM 
+									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 					LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
+					cursor.execute(sql2)
+					display2 = cursor.fetchall()
+					print(display2[0], "\n")
+					friends.append(display2[0])
+
+				if item[2] != self.user_id:
+					print(item[2],"addressee")
+					sql3 = """SELECT u.user_id, u.username, i.filename FROM 
+									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+												LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[2])
+					cursor.execute(sql3)
+					display3 = cursor.fetchall()
+					print(display3[0],"\n")
+					friends.append(display3[0])
+
+		return friends
+
+				
+
+
+	def showAllFriends(self):
+		friends = []
+		friends.clear()
+		cursor = mysql.connection.cursor()
+		user = self.user_id
+
+		sql = """SELECT * FROM friends WHERE (requester_id = '{}' OR addressee_id = '{}') AND isFriend = 1""".format(self.user_id, user)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		
+		if display:
+			for item in display:
+				if item[1] != self.user_id:
+					print("\n",item[1],"requester_id")
+					sql2 = """SELECT u.user_id, u.username, i.filename FROM 
+									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 					LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
+					cursor.execute(sql2)
+					display2 = cursor.fetchall()
+
+					friends.append(display2[0])
+
+				if item[2] != self.user_id:
+					print(item[2],"addressee")
+					sql3 = """SELECT u.user_id, u.username, i.filename FROM 
+									((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+												LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[2])
+					cursor.execute(sql3)
+					display3 = cursor.fetchall()
+
+					friends.append(display3[0])
+
+					
+		return friends
+
+
+
+	def friendReq(self):
+		friendReq = []
+		friendReq.clear()
+		cursor = mysql.connection.cursor()
+		user = self.user_id
+
+		sql = """SELECT * FROM friends WHERE addressee_id = '{}' AND isFriend = 0""".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		
+		if display:
+			for item in display:
+				sql2 = """SELECT u.user_id, u.username, i.filename FROM 
+								((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+			                 				LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
+				cursor.execute(sql2)
+				display2 = cursor.fetchall()
+				friendReq.append(display2[0])
+
+		return friendReq
+
+
+	def checkRank(self):
+
+		cursor = mysql.connection.cursor()
+		sql = "SELECT * FROM points WHERE user_id = '{}'".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		return display[0][0]
+
+
+	def masterChef(self):
+
+		cursor = mysql.connection.cursor()
+		sql = "SELECT * FROM points WHERE user_id = {}".format(self.user_id)
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		return display[0][0]
+
+
+
+
+
+
+
 
 
 		

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+
+							<div class="post bg-light p-2 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);">
+						       <div class="row m-2">
+		                            <div class="">
+		                                <p><img src="{{item[4]}}" class="img rounded-circle img-fluid" style="height: 6em; width: 6em;" />
+
+		                                </p>
+		                            </div>
+		                            <div class="col-md-5" style=" border-radius:5px;">
+		                                  <p class="m-0 mb-0" style="font-size: 2em;"><a href="#"><strong>{{ item[1] }}</strong></a></p>
+		                                 <p class="m-0 mb-0" style="font-size: 2em;"><a href="#"><strong>{{ item[1] }}</strong></a></p>
+		                                <p class="m-0 mb-2" style="font-size: 1em; font-weight: lighter;"><strong>{{ item[2] }} {{ item[3] }}</strong></p>
+		                            </div>
+		                            <div class=" ml-auto">
+				                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename='rank_images/executive_chef.png') }}"
+				                          style="height:5em; width: 6em;">
+				                    </div>
+		                        </div>
+						    </div>
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
+
+    </script>
+
+{% endblock %}
