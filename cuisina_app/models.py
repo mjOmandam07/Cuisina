@@ -141,8 +141,9 @@ class chef(object):
 
 		    cursor.execute(sql)
 		    display = cursor.fetchall()
-
+		    
 		    max_prof_id = display[0][0]
+
 
 		sql2 = """SELECT u.*,i.filename FROM 
 		        ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
@@ -172,6 +173,36 @@ class chef(object):
 		cursor = mysql.connection.cursor()
 		sql = """SELECT r.*,i.filename, u.username FROM
 					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+						WHERE r.user_id = {} ORDER BY r.time_date""".format(self.user_id)
+
+
+		cursor.execute(sql)
+		recipes = cursor.fetchall()
+
+		for item in recipes:
+			sql2 = """SELECT u.*,i.filename FROM 
+				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+				                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			posts.append(item + (display[0][4],))
+
+		return posts
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+		return display
+
+
+	def userOrder(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
 					 	 JOIN user AS u ON u.user_id = r.user_id)
 						WHERE r.user_id = {} ORDER BY r.time_date""".format(self.user_id)
 
@@ -240,7 +271,7 @@ class chef(object):
 
 	def updateProfile(self):
 		cursor = mysql.connection.cursor()
-		sql = """UPDATE profile SET first_name = '{}', last_name = '{}', age = '{}', gender = '{}' 
+		sql = """UPDATE profile SET first_name = '{}', last_name = '{}', birthday = '{}', gender = '{}' 
 		            WHERE user_id = {}""".format(self.first_name, self.last_name, self.age, self.gender, self.user_id)
 
 		cursor.execute(sql)
@@ -398,7 +429,115 @@ class chef(object):
 				
 
 
+	def viewOrder(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """"""
 
+		if self.filter == 'All':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	 ORDER BY r.time_date DESC"""
+
+			
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Western':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Western' ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Asian':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Asian' ORDER BY r.time_date DESC"""
+
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'European':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'European' ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts
+			
+		elif self.filter == 'Filipino':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Filipino' ORDER BY r.time_date DESC"""
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts
 
 
 
@@ -408,6 +547,27 @@ class chef(object):
 		posts.clear()
 		cursor = mysql.connection.cursor()
 		sql = """SELECT r.*,i.filename, u.username FROM ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 JOIN user AS u ON u.user_id = r.user_id) WHERE r.recipe_id = '{}'""".format(self.recipe_id)
+		cursor.execute(sql)
+		recipes = cursor.fetchall()
+
+		for item in recipes:
+			sql2 = """SELECT u.*,i.filename FROM 
+				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+				                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			posts.append(item + (display[0][4],))
+
+		return posts
+
+	def viewSelectOrders(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """SELECT r.*,i.filename, u.username FROM ((images AS i RIGHT JOIN order_recipe as r ON i.order_id = r.recipe_id )
 					 JOIN user AS u ON u.user_id = r.user_id) WHERE r.recipe_id = '{}'""".format(self.recipe_id)
 		cursor.execute(sql)
 		recipes = cursor.fetchall()
@@ -439,6 +599,19 @@ class chef(object):
 		cursor.execute(sql2)
 		mysql.connection.commit()
 
+	def uploadOrderPic(self):
+		cursor = mysql.connection.cursor()
+		sql = """SELECT recipe_id FROM order_recipe WHERE recipe_id = (SELECT max(recipe_id) FROM order_recipe)"""
+
+		cursor.execute(sql)
+		display = cursor.fetchall()
+
+
+		sql2 = """INSERT INTO images (filename, order_id) VALUES ('%s', %d)""" % (self.filename, display[0][0])
+
+		cursor.execute(sql2)
+		mysql.connection.commit()
+
 
 
 
@@ -461,10 +634,48 @@ class chef(object):
 
 		return display[0][0]
 
+	def addOrder(self):
+		cursor = mysql.connection.cursor()
+		sql = """INSERT INTO order_recipe (title, description, time_date, cuisine, user_id)
+					 VALUES ('%s', '%s', '%s','%s',%d)""" % (self.title,
+					 													self.description, 
+					 													 self.time_date,
+					 													 self.cuisine, 
+					 													 self.user_id)
+	
+		cursor.execute(sql)
+		mysql.connection.commit()
+
+		sql2 = """SELECT recipe_id FROM recipe WHERE recipe_id = (SELECT max(recipe_id) FROM recipe)"""
+
+		cursor.execute(sql2)
+		display = cursor.fetchall()
+
+		return display[0][0]
+
+
 	def deleteRecipe(self):
 		cursor = mysql.connection.cursor()
 
 		sql = """DELETE FROM recipe WHERE recipe_id = {}""".format(self.recipe_id)
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+
+
+	def deleteOrder(self):
+		cursor = mysql.connection.cursor()
+
+		sql = """DELETE FROM order_recipe WHERE recipe_id = {}""".format(self.recipe_id)
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+
+
+	def deleteOrder(self):
+		cursor = mysql.connection.cursor()
+
+		sql = """DELETE FROM order_recipe WHERE recipe_id = {}""".format(self.recipe_id)
 
 		cursor.execute(sql)
 		mysql.connection.commit()
@@ -547,6 +758,43 @@ class chef(object):
 
 		cursor.execute(sql)
 		mysql.connection.commit()
+
+
+
+	def viewOrderComment(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """ SELECT c.*, u.username FROM can_comment as c JOIN user as u ON c.user_id = u.user_id WHERE order_id = '{}' """.format(self.recipe_id)
+
+		cursor.execute(sql)
+		recipes = cursor.fetchall()
+
+		for item in recipes:
+			sql2 = """SELECT u.*,i.filename FROM 
+				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+				                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[3])
+
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			posts.append(item + (display[0][4],))
+
+		return posts
+
+
+
+
+	def addOrderComment(self):
+		cursor = mysql.connection.cursor()
+
+		sql = """ INSERT INTO can_comment(content, time_date, user_id, order_id)
+					VALUES('{}', '{}', {}, {}) """.format(self.content, self.time_date, self.user_id, self.recipe_id)
+
+
+		cursor.execute(sql)
+		mysql.connection.commit()
+
 
 
 

@@ -33,11 +33,21 @@ def login():
         else:
             user = db.login()
             session['user'] = user
-            return redirect(url_for('profile', user_id=user[0][0]))
+            db = models.chef(user_id = session['user'][0][0])
+            profile = db.checkProfile()
+            user = db.currentUser()
+            session['user'] = user
+            if not profile:
+              return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
+            elif not profile[0][1]:
+              return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
+            else:
+              return redirect(url_for('home', fltr='All'))
+             
     
     if 'user' in session:
         user = session['user']
-        return redirect(url_for('profile', user_id=user[0][0]))
+        return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
 
 
     return render_template('login.html', form=form)
@@ -63,13 +73,13 @@ def signUp():
                             password=form.password.data)
             user = login.login()
             session['user'] = user
-            return redirect(url_for('profile', user_id=user[0][0]))
-            flash('Welcome to Cuisina Chef!', 'success')
+            return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
     return render_template('signUp.html', form=form)
 
 
-@app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
-def profile(user_id):
+
+@app.route('/profile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
+def profile(user_id, fltr):
   if 'user' in session:
     if session['user'][0][0] == user_id:
       clear = False
@@ -78,10 +88,15 @@ def profile(user_id):
       user = db.currentUser()
       profile = db.checkProfile()
       form = ProfileForm()
-      recipe = db.userRecipes()
+      if fltr == 'recipes':
+        recipe = db.userRecipes()
+      elif fltr == 'orders':
+        recipe = db.userOrder()
       session['user'] = user 
       if not profile:
+        print("\n\n not profile", profile, "\n\n")
         db.addProfile()
+        return redirect(url_for('profile', user_id=user[0][0], fltr='recipes'))
       else:
         pass
       if form.validate_on_submit() and request.method == 'POST':
@@ -112,7 +127,7 @@ def profile(user_id):
             upload_picture.uploadProfilePic()
           flash('Success! Profile Saved', 'success')
 
-        return redirect(url_for('profile', user_id=user_id))
+        return redirect(url_for('profile', user_id=user_id, fltr = fltr))
       elif request.method == "GET":
         if len(profile) != 0:
           form.fname.data = profile[0][1]
@@ -125,7 +140,8 @@ def profile(user_id):
           form.age.data = None
         form.username.data = user[0][1]
         form.email.data = user[0][2]
-      return render_template('profile.html', form=form, user=user, recipe=recipe, suggested_chef = suggested_chef)
+        print("\n\n", profile, "\n\n")
+      return render_template('profile.html', form=form, fltr=fltr, user=user, recipe=recipe, suggested_chef = suggested_chef, active='profile', profile = profile)
     else:
       flash('Please Logout and Login to your desired account', 'info')
       return redirect(url_for('login'))
@@ -148,17 +164,20 @@ def save_profile_picture(form_picture):
     return picture_fn
 
 
-@app.route('/viewProfile/<int:user_id>')
-def viewProfile(user_id):
+@app.route('/viewProfile/<int:user_id>/<string:fltr>')
+def viewProfile(user_id, fltr):
   if 'user' in session:
     db = models.chef(user_id = user_id)
     suggest = models.chef(user_id = session['user'][0][0])
     user = session['user']
     other_user = db.currentUser()
     profile = db.checkProfile()
-    recipe = db.userRecipes()
+    if fltr == 'recipes':
+      recipe = db.userRecipes()
+    elif fltr == 'orders':
+      recipe = db.userOrder()
     suggested_chef = suggest.suggestChef()
-    return render_template('userProfile.html', user = user, other_user=other_user, recipe = recipe, profile = profile, suggested_chef = suggested_chef)
+    return render_template('userProfile.html',fltr=fltr, user = user, active='profile', other_user=other_user, recipe = recipe, profile = profile, suggested_chef = suggested_chef)
 
   else:
     return redirect(url_for('login'))
@@ -186,6 +205,7 @@ def home(fltr):
     form = CreatePost()
     user = session['user'] 
     suggest = models.chef(user_id = session['user'][0][0])
+    profile = suggest.currentUser()
     suggested_chef = suggest.suggestChef()
     if form.validate_on_submit() and request.method == 'POST':
       create = models.chef(title = form.title.data,
@@ -199,7 +219,7 @@ def home(fltr):
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadRecipePicture()
       return redirect(url_for('viewpost', recipe_id= latest))
-    return render_template('home.html', active='home', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form)
+    return render_template('home.html', active='home', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
   else:
     return redirect(url_for('login'))
 
@@ -232,6 +252,65 @@ def viewpost(recipe_id):
       rate.addRate()
       return redirect(url_for('viewpost', recipe_id=recipe_id))
     return render_template('view-post.html',  active='home', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form, form_rate=form_rate, rate = currentRating)
+  else:
+    return redirect(url_for('login'))
+
+
+
+@app.route('/orderfilter')
+def orderfilter():
+  return redirect(url_for('ordersFeed', fltr='All'))
+
+@app.route('/orders/<string:fltr>', methods=['GET', 'POST'])
+def ordersFeed(fltr):
+  if 'user' in session:
+    db = models.chef(filter=fltr)
+    db.getAvgRate()
+    recipe = db.viewOrder()
+    form = CreatePost()
+    user = session['user'] 
+    suggest = models.chef(user_id = session['user'][0][0])
+    suggested_chef = suggest.suggestChef()
+    if form.validate_on_submit() and request.method == 'POST':
+      create = models.chef(title = form.title.data,
+                 description = form.content.data,
+                  cuisine = form.cuisine.data,
+                  user_id=user[0][0])
+      latest = create.addOrder()
+      if form.upload_picture.data:
+        picture_file = save_picture(form.upload_picture.data)
+        picture = url_for('static', filename='posted-recipe_images/' + picture_file)
+        upload_picture = models.chef(filename = picture)
+        upload_picture.uploadOrderPic()
+      return redirect(url_for('viewOrder', recipe_id= latest))
+    return render_template('ordersfeed.html', active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr)
+  else:
+    return redirect(url_for('login'))
+
+@app.route('/viewOrder/<int:recipe_id>', methods=['GET', 'POST'])
+def viewOrder(recipe_id):
+  if 'user' in session:
+    db = models.chef(recipe_id=recipe_id)
+    recipe = db.viewSelectOrders()
+    user = session['user']
+
+    suggest = models.chef(user_id = session['user'][0][0]) ###
+    suggested_chef = suggest.suggestChef() 
+
+    comments = db.viewOrderComment()
+
+    form = addCommment()
+
+    currentRate = models.chef(recipe_id=recipe_id, user_id=user[0][0])
+    currentRating = currentRate.yourCurrentRate() 
+    
+    if form.validate_on_submit():
+      create_comment = models.chef(content = form.comment.data, user_id=user[0][0], recipe_id=recipe_id)
+
+      create_comment.addOrderComment()
+      return redirect(url_for('viewOrder', recipe_id=recipe_id))
+    
+    return render_template('view-order.html',  active='order', user=user, suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form)
   else:
     return redirect(url_for('login'))
 
@@ -280,4 +359,13 @@ def deletePost(recipe_id):
   db.deleteRecipe()
   flash('Posted Recipe Deleted Successfully!', 'success')
   return redirect(url_for('home', fltr='All'))
+
+
+@app.route('/deleteOrder/<recipe_id>')
+def deleteOrder(recipe_id):
+  db = models.chef(recipe_id = recipe_id)
+  db.deleteOrder()
+  flash('Order Deleted Successfully!', 'success')
+  return redirect(url_for('ordersFeed', fltr='All'))
+
 

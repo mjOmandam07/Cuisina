@@ -2,44 +2,39 @@
 {% block content %}
   {% if recipe %}
     {% for item in recipe %}
-              <div class="post bg-light m-3 p-4">
+             
+              <div class="post bg-light p-0 mt-2 mb-4">
                   <article class="media content-section">
                       <div class="media-body">
-                        <div class="article-metadata">
-                          <img class = "rounded-circle article-img" src="{{ item[11] }}"style=" height: 60px;width: 60px;">
+                        <div class="article-metadata m-3">
+                          <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height:40px; width: 40px;">
                             {% if item[7] == user[0][0] %}
-                            <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7]) }}">{{ item[10] }}</a>
+                            <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes')}}">{{ item[10] }}</a>
                             {% else %}
-                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7]) }}">{{ item[10] }}</a>
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
                             {% endif %}
-                            <small class="text-muted">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
-                            <small class="ml-1 font-weight-bold">{{item[4]}}</small>
-                            {% if recipe[0][8] == user[0][0] %}
-                              <p  class="disabled-btn saved mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
+                            <small class="ml-2 font-weight-bold">{{item[4]}}</small>
+                            {% if item[8] == user[0][0] %}
+                              <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
                             {% else %}
-                              <p  class="disabled-btn mt-3 ml-auto p-2"><i class='far fa-bookmark'></i></p>
-                            {% endif %}   
+                              <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                            {% endif %} 
                         </div>
-                          <h2><a class="article-title display-4" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a></h2>
                           {% if item[9] != None %}
-                            <div class="col mb-3 d-flex justify-content-center">
-                              <button type="button" class="btn" data-toggle="modal" data-target="#recipe{{ item[0] | string()}}">
-                                <img src="{{ item[9] }}" alt="" class="article-content align-self-center post-img">
-                              </button>
+                            <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
+                              <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                                <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
+                              </a>
                             </div>
-                            <div class="modal fade bd-example-modal-lg" id="recipe{{ item[0] | string() }}" tabindex="-1" role="dialog"aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-lg" style="height:fit-content; width: fit-content;">
-                                <div class="modal-content">
-                                  <img src="{{ item[8] }}" alt="" class="article-content align-self-center" style="height: 100%;">
-                                </div>
-                              </div>
-                            </div>
+                            
                           {% endif %}
-                          <p class="article-content m-3"style="white-space: pre-wrap;
+                          <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                          <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                          <p class="article-content ml-3"style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                       </div> 
                     </article>
-                    <div class="row ml-1">
+                    <div class="row ml-3">
                       <div class="star-widget">
                         {% if item[6] == 5 %}
                           <span class="fa fa-star checked"></span>
@@ -81,14 +76,19 @@
                         <small class="ml-2">Average Rating</small>
                       </div>
 
-                      <div class="col ml-4 align-self-center">
+                      <div class="col ml-4 mb-2 align-self-center">
                         <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
                       </div>
                     </div>
               </div>
             {% endfor %}
+
       {% else %}
         <div class="mt-5 article-title display-4" style="color:var(--primary-color);"> No Saved Recipe</div>
       {% endif %}
 
 {% endblock content %}
+
+
+
+
