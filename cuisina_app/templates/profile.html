@@ -401,11 +401,8 @@
                 <h1 class="col-3">Friends</h1>
                 
                 <div class="col-8 row  ml-auto">
-                  <form method="POST" class="col ml-auto  form-inline p-0">
-                    <input class="form-control search" type="search" placeholder="Search Chef Username" aria-label="Search" name="search">
-                    <input class="btn btn-sm del-btn" value="Search" type="submit"/>
-                  </form>
-                  <div class="col  col-5 pt-3">
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}" class="a-btn">Friend Requests</a>
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
                   </div>

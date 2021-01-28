@@ -461,6 +461,55 @@ def viewOrder(recipe_id):
     return redirect(url_for('login'))
 
 
+
+
+@app.route('/hotfilter')
+def hotfilter():
+  return redirect(url_for('hot', fltr='All'))
+
+
+@app.route('/hot/<string:fltr>', methods=['GET', 'POST'])
+def hot(fltr):
+  if 'user' in session:
+    user_request = False
+    db = models.chef(filter=fltr)
+    db.getAvgRate()
+    recipe = db.viewHotRecipes()
+    form = CreatePost()
+    user = session['user'] 
+    suggest = models.chef(user_id = session['user'][0][0])
+    friend = suggest.checkFriendReq()
+    if friend:
+      if friend[0][2] == session['user'][0][0] and friend[0][3] == 0:
+        user_request = True
+      else:
+        user_request = False 
+    profile = suggest.currentUser()
+    suggested_chef = suggest.suggestChef()
+    if form.validate_on_submit() and request.method == 'POST':
+      create = models.chef(title = form.title.data,
+                 description = form.content.data,
+                  cuisine = form.cuisine.data,
+                  user_id=user[0][0])
+      latest = create.addRecipes()
+      if form.upload_picture.data:
+        picture_file = save_picture(form.upload_picture.data)
+        picture = url_for('static', filename='posted-recipe_images/' + picture_file)
+        upload_picture = models.chef(filename = picture)
+        upload_picture.uploadRecipePicture()
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('filter')) 
+      return redirect(url_for('viewpost', recipe_id= latest))
+    return render_template('home.html', active='hot', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
+  else:
+    return redirect(url_for('login'))
+
+
 def save_picture(form_picture):
   random_hex = secrets.token_hex(8)
   _, f_ext = os.path.splitext(form_picture.filename)
@@ -559,7 +608,7 @@ def removeFriend(current_user, other_user):
 
 
 
-@app.route('/search/<search_content>/<fltr>')
+@app.route('/search/<search_content>/<fltr>', methods=['GET', 'POST'])
 def search(search_content, fltr):
   if 'user' in session:
     user = session['user']
@@ -573,10 +622,10 @@ def search(search_content, fltr):
     if request.method == 'POST':
       if request.form["search"]:
             search_content = request.form["search"]
-            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+            return redirect(url_for('search', search_content=search_content, fltr=fltr))
       elif not request.form["search"]:
             flash('Please Search recipe or chef', 'danger')
-            return redirect(url_for('search', search_content=search_content))
+            return redirect(url_for('search', search_content=search_content, fltr=fltr))
   else:
     return redirect(url_for('login'))
   return render_template('search.html',search_content=search_content, user=user, recipe=recipe,search_user=search_user, suggested_chef =suggested_chef, fltr=fltr)

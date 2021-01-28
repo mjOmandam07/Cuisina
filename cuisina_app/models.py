@@ -442,7 +442,115 @@ class chef(object):
 
 			return posts
 
-				
+	def viewHotRecipes(self):
+		posts = []
+		posts.clear()
+		cursor = mysql.connection.cursor()
+		sql = """"""
+
+		if self.filter == 'All':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id) WHERE r.avg_rating > 4
+					 	 	 ORDER BY r.time_date DESC"""
+
+			
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Western':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Western' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'Asian':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Asian' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+
+				posts.append(item + (display[0][4],))
+
+			return posts
+
+		elif self.filter == 'European':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'European' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts
+			
+		elif self.filter == 'Filipino':
+			sql = """SELECT r.*,i.filename, u.username FROM
+					 ((images AS i RIGHT JOIN recipe as r ON i.recipe_id = r.recipe_id )
+					 	 JOIN user AS u ON u.user_id = r.user_id)
+					 	 	WHERE cuisine = 'Filipino' AND r.avg_rating > 4 ORDER BY r.time_date DESC"""
+			cursor.execute(sql)
+			recipes = cursor.fetchall()
+
+			for item in recipes:
+				sql2 = """SELECT u.*,i.filename FROM 
+					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
+					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[7])
+
+				cursor.execute(sql2)
+				display = cursor.fetchall()
+				posts.append(item + (display[0][4],))
+
+			return posts			
 
 
 	def viewOrder(self):
@@ -1053,7 +1161,7 @@ class chef(object):
 			                 					LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[1])
 					cursor.execute(sql2)
 					display2 = cursor.fetchall()
-					print(display2[0], "\n")
+
 					friends.append(display2[0])
 
 				if item[2] != self.user_id:
@@ -1063,9 +1171,10 @@ class chef(object):
 												LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(item[2])
 					cursor.execute(sql3)
 					display3 = cursor.fetchall()
-					print(display3[0],"\n")
+
 					friends.append(display3[0])
 
+					
 		return friends
 
 
@@ -1091,6 +1200,9 @@ class chef(object):
 				friendReq.append(display2[0])
 
 		return friendReq
+
+
+
 
 
 
