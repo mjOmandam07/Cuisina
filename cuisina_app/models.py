@@ -59,7 +59,18 @@ class chef(object):
 					VALUES ('%s', '%s', '%s')""" % (self.username, self.email_address, self.password)
 
 		cursor.execute(sql)
-		mysql.connection.commit() 
+		mysql.connection.commit()
+
+		sql2 = """SELECT user_id FROM user WHERE user_id = (SELECT max(user_id) FROM user)"""
+
+		cursor.execute(sql2)
+		display = cursor.fetchall()
+
+		sql3 = """ INSERT INTO points(total_point, user_id) VALUES (0, %d) """ % (display[0][0])
+
+		cursor.execute(sql3)
+		mysql.connection.commit()
+
 
 
 	def validateUsername(self):
@@ -1013,12 +1024,14 @@ class chef(object):
 
 		sql=""""""
 
+
 		if self.isRated:
 			sql = """UPDATE can_rate SET rating = '{}'
 					WHERE  user_id = '{}' AND recipe_id = '{}'""".format(self.rating, self.user_id, self.recipe_id)
 		else:
-			sql = """INSERT INTO can_rate(rating, user_id, recipe_id)
-					VALUES('%s', %d, %d)""" % (self.rating, self.user_id, self.recipe_id)
+			first_rate = int(self.rating)
+			sql = """INSERT INTO can_rate(rating, user_id, recipe_id, first_rate)
+					VALUES('%s', %d, %d, %d)""" % (self.rating, self.user_id, self.recipe_id, first_rate)
 
 		cursor.execute(sql)
 		mysql.connection.commit()

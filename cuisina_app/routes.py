@@ -196,7 +196,8 @@ def profile(user_id, fltr):
                                recipe=recipe, suggested_chef = suggested_chef, 
                                active='profile', profile = profile,
                                friendsList = friendsList, allFriends=allFriends,
-                               reqs=reqs, rank_name=rank_name, rank_images=rank_image)
+                               reqs=reqs, rank_name=rank_name, rank_images=rank_image,
+                               rank_points = rank )
     else:
       flash('Please Logout and Login to your desired account', 'info')
       return redirect(url_for('login'))
@@ -303,7 +304,8 @@ def viewProfile(user_id, fltr):
                                               fltr=fltr, user = user, active='profile',
                                               other_user=other_user, recipe = recipe,
                                               profile = profile, suggested_chef = suggested_chef,
-                                              friendsList = friendsList, allFriends = allFriends, rank_name=rank_name, rank_images=rank_image)
+                                              friendsList = friendsList, allFriends = allFriends,
+                                              rank_name=rank_name, rank_images=rank_image)
 
   else:
     return redirect(url_for('login'))

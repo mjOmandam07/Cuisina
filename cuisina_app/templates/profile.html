@@ -160,18 +160,110 @@
                         </div>
                     </div>
                     <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
-                      <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
-                          style="height:8em; width: 11em;" data-toggle="modal" data-target=".bd-example-modal-lg">
-                      <h6 class="m-1 ml-3">{{ rank_name }}</h6>
+                        <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
+                            style="height:8em; width: 11em;" data-toggle="modal" data-target="#exampleModalScrollable">
+                        <h6 class="m-1 ml-3">{{ rank_name }}</h6>
 
-                      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-                           aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            ...
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <div class="row m-2 ">
+                                    <div class="col-md-5" style=" border-radius:5px;">
+                                      <p class="mt-4"><strong>Post Recipes</strong> and get <strong>rated</strong> to level up your Kitchen Rank!</p>       
+                                    </div>
+                                    <div class="" style="text-align: center;">
+                                      
+                                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename=rank_images) }}"
+                                          style="height:5em; width: 7em;">
+                                      <p class="ml-2"><strong>{{ rank_name }}</strong></p>
+                                    </div>
+                                    <div class="mt-3" style="text-align: center;">
+                                       <p class="m-0 mb-0" style="font-size: 1em;"><strong>Your Current Points</strong></p>
+                                      <p class="m-0 mb-0" style="font-size: 2em;"><strong>{{ rank_points }}</strong></p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/executive_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Executive Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">500 total star rates</p>
+                                  </div>
+                                </div>
+
+                               <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_cuisine.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Chef de Cuisine</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">200 total star rates</p>
+                                  </div>
+                                </div>
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/sous_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Sous Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">100 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_partie.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong> Chef de Partie</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">50 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/kitchen_porter.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Kitchen Porter</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">0 total star rates</p>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+
+    
 
                     </div>  
               </div>
