@@ -1026,16 +1026,31 @@ class chef(object):
 
 
 		if self.isRated:
-			sql = """UPDATE can_rate SET rating = '{}'
-					WHERE  user_id = '{}' AND recipe_id = '{}'""".format(self.rating, self.user_id, self.recipe_id)
+			sql = """UPDATE can_rate SET rating = '{}', has_rate ='{}'
+					WHERE  user_id = '{}' AND recipe_id = '{}'""".format(self.rating, 0, self.user_id, self.recipe_id)
+			cursor.execute(sql)
+			mysql.connection.commit()
 		else:
 			first_rate = int(self.rating)
-			sql = """INSERT INTO can_rate(rating, user_id, recipe_id, first_rate)
-					VALUES('%s', %d, %d, %d)""" % (self.rating, self.user_id, self.recipe_id, first_rate)
+			sql = """INSERT INTO can_rate(rating, user_id, recipe_id, first_rate, has_rate)
+					VALUES('%s', %d, %d, %d, %d)""" % (self.rating, self.user_id, self.recipe_id, first_rate, 1)
 
-		cursor.execute(sql)
-		mysql.connection.commit()
+			cursor.execute(sql)
+			mysql.connection.commit()
 
+
+			sql2 = """SELECT cr.recipe_id, cr.first_rate, r.user_id, r.recipe_id from 
+						(can_rate as cr JOIN recipe as r ON cr.recipe_id = r.recipe_id) WHERE cr.has_rate = 1 AND r.recipe_id = '{}'""".format(self.recipe_id)
+		
+			cursor.execute(sql2)
+			display = cursor.fetchall()
+
+			sql3 = """UPDATE points SET total_point = total_point + '{}' WHERE user_id = '{}';""".format(first_rate, display[0][2])
+
+			cursor.execute(sql3)
+			mysql.connection.commit()
+
+			
 
 	def yourCurrentRate(self):
 		cursor = mysql.connection.cursor()
