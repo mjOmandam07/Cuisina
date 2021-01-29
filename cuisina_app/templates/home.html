@@ -5,6 +5,49 @@
             </button>
 
             {% if active == 'home' %}'
+              <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body p-4">
+                      {% if fltr == 'All' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='All') }}">All</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='All') }}">View All</a>
+                      {% endif %}
+
+                      {% if fltr == 'Western' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Western') }}">Western</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Western') }}">Western</a>
+                      {% endif %}
+
+                      {% if fltr == 'Asian' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                      {% endif %}
+
+                      {% if fltr == 'European' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='European') }}">European</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='European') }}">European</a>
+                      {% endif %}
+
+                      {% if fltr == 'Filipino' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
+                      {% endif %}                   
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% else %}
               <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
