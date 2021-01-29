@@ -1017,8 +1017,9 @@ class chef(object):
 			sql = """UPDATE can_rate SET rating = '{}'
 					WHERE  user_id = '{}' AND recipe_id = '{}'""".format(self.rating, self.user_id, self.recipe_id)
 		else:
-			sql = """INSERT INTO can_rate(rating, user_id, recipe_id)
-					VALUES('%s', %d, %d)""" % (self.rating, self.user_id, self.recipe_id)
+			first_rate = int(self.rating)
+			sql = """INSERT INTO can_rate(rating, user_id, recipe_id, first_rate)
+					VALUES('%s', %d, %d, %d)""" % (self.rating, self.user_id, self.recipe_id, first_rate)
 
 		cursor.execute(sql)
 		mysql.connection.commit()
@@ -1066,6 +1067,12 @@ class chef(object):
 				mysql.connection.commit()
 				rates.clear()
 
+	def ratingToPoint(self):
+		cursor = mysql.connection.cursor()
+
+		sql = """SELECT can_rate.recipe_id, can_rate.first_rate, recipe.user_id, recipe.recipe_id
+						FROM can_rate,  recipe
+							where can_rate.recipe_id = recipe.recipe_id;"""
 
 
 	def searchRecipe(self):
@@ -1533,7 +1540,6 @@ class chef(object):
 
 		cursor.execute(sql)
 		display = cursor.fetchall()
-		print(display[0][0], "checkRank")
 		return display[0][0]
 
 
