@@ -98,6 +98,7 @@ def profile(user_id, fltr):
 
       allFriends = db.showAllFriends()
 
+
       recipe = list
 
       rank = db.checkRank()
@@ -119,6 +120,7 @@ def profile(user_id, fltr):
       if rank >= 500:
           rank_name = 'Executive Chef'
           rank_image = 'rank_images/executive_chef.png'
+
 
       if fltr == 'recipes':
         recipe = db.userRecipes()
@@ -196,8 +198,10 @@ def profile(user_id, fltr):
                                recipe=recipe, suggested_chef = suggested_chef, 
                                active='profile', profile = profile,
                                friendsList = friendsList, allFriends=allFriends,
+
                                reqs=reqs, rank_name=rank_name, rank_images=rank_image,
                                rank_points = rank )
+
     else:
       flash('Please Logout and Login to your desired account', 'info')
       return redirect(url_for('login'))
@@ -249,6 +253,7 @@ def viewProfile(user_id, fltr):
 
     allFriends = db.showAllFriends()
 
+
     rank = db.checkRank()
 
     rank_name = str
@@ -269,6 +274,7 @@ def viewProfile(user_id, fltr):
     if rank >= 500:
         rank_name = 'Executive Chef'
         rank_image = 'rank_images/executive_chef.png'
+
 
     if isfren:
       if isfren[0][4] == 1:
@@ -304,8 +310,10 @@ def viewProfile(user_id, fltr):
                                               fltr=fltr, user = user, active='profile',
                                               other_user=other_user, recipe = recipe,
                                               profile = profile, suggested_chef = suggested_chef,
+
                                               friendsList = friendsList, allFriends = allFriends,
                                               rank_name=rank_name, rank_images=rank_image)
+
 
   else:
     return redirect(url_for('login'))
@@ -353,7 +361,15 @@ def home(fltr):
         picture = url_for('static', filename='posted-recipe_images/' + picture_file)
         upload_picture = models.chef(filename = picture)
         upload_picture.uploadRecipePicture()
+    elif request.method == 'POST':
+      if request.form["search"]:
+            search_content = request.form["search"]
+            return redirect(url_for('search', search_content=search_content, fltr='posts'))
+      elif not request.form["search"]:
+            flash('Please Search recipe or chef', 'danger')
+            return redirect(url_for('filter')) 
       return redirect(url_for('viewpost', recipe_id= latest))
+
     elif request.method == 'POST':
       if request.form["search"]:
             search_content = request.form["search"]
@@ -362,6 +378,7 @@ def home(fltr):
             flash('Please Search recipe or chef', 'danger')
             return redirect(url_for('filter'))
       
+
     return render_template('home.html', active='home', user_request = user_request, user=user, suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
   else:
     return redirect(url_for('login'))
@@ -673,6 +690,7 @@ def search(search_content, fltr):
   else:
     return redirect(url_for('login'))
   return render_template('search.html',search_content=search_content, user=user, recipe=recipe,search_user=search_user, suggested_chef =suggested_chef, fltr=fltr)
+
 
 
 @app.route('/masterChef/<user_id>')

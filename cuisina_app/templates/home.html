@@ -6,7 +6,7 @@
 
             {% if active == 'home' %}'
               <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                <div class="modal-dialog modal-lg modal-dialog-centered" style="height: fit-content !important;">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
@@ -15,6 +15,7 @@
                       </button>
                     </div>
                     <div class="modal-body p-4">
+                        <div class="mb-3">
                       {% if fltr == 'All' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='All') }}">All</a>
                       {% else %}
@@ -27,10 +28,10 @@
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Western') }}">Western</a>
                       {% endif %}
 
-                      {% if fltr == 'Asian' %}
-                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                      {% if fltr == 'Chinese' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Chinese') }}">Chinese</a>
                       {% else %}
-                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Asian') }}">Asian</a>
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Chinese') }}">Chinese</a>
                       {% endif %}
 
                       {% if fltr == 'European' %}
@@ -43,14 +44,65 @@
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Filipino') }}">Filipino</a>
-                      {% endif %}                   
+                        {% endif %}
+                        {% if fltr == 'Italian' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Italian') }}">Italian</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Italian') }}">Italian</a>
+                      {% endif %}
+                        {% if fltr == 'Indian' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Indian') }}">Indian</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Indian') }}">Indian</a>
+                      {% endif %}
+                        {% if fltr == 'French' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='French') }}">French</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='French') }}">French</a>
+                      {% endif %}</div>
+                        <div class="mb-3">
+                        {% if fltr == 'Japanese' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Japanese') }}">Japanese</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Japanese') }}">Japanese</a>
+                      {% endif %}
+                        {% if fltr == 'Mexican' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Mexican') }}">Mexican</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Mexican') }}">Mexican</a>
+                      {% endif %}
+                        {% if fltr == 'Thai' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Thai') }}">Thai</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Thai') }}">Thai</a>
+                      {% endif %}
+                        {% if fltr == 'Turkish' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Turkish') }}">Turkish</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Turkish') }}">Turkish</a>
+                      {% endif %}
+                        {% if fltr == 'Korean' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Korean') }}">Korean</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Korean') }}">Korean</a>
+                      {% endif %}
+                        {% if fltr == 'Spanish' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Spanish') }}">Spanish</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Spanish') }}">Spanish</a>
+                      {% endif %}
+                        {% if fltr == 'Middle Eastern' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='Middle Eastern') }}">Middle Eastern</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('home', fltr ='Middle Eastern') }}">Middle Eastern</a>
+                    {% endif %}</div>
                     </div>
                   </div>
                 </div>
               </div>
             {% else %}
               <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                <div class="modal-dialog modal-lg modal-dialog-centered" style="height: fit-content !important;">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
@@ -59,6 +111,7 @@
                       </button>
                     </div>
                     <div class="modal-body p-4">
+                         <div class="mb-3">
                       {% if fltr == 'All' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='All') }}">All</a>
                       {% else %}
@@ -71,10 +124,10 @@
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Western') }}">Western</a>
                       {% endif %}
 
-                      {% if fltr == 'Asian' %}
-                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Asian') }}">Asian</a>
+                      {% if fltr == 'Chinese' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Chinese') }}">Chinese</a>
                       {% else %}
-                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Asian') }}">Asian</a>
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Chinese') }}">Chinese</a>
                       {% endif %}
 
                       {% if fltr == 'European' %}
@@ -87,7 +140,58 @@
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Filipino') }}">Filipino</a>
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Filipino') }}">Filipino</a>
-                      {% endif %}                   
+                      {% endif %}
+                        {% if fltr == 'Italian' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Italian') }}">Italian</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Italian') }}">Italian</a>
+                      {% endif %}
+                        {% if fltr == 'Indian' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Indian') }}">Indian</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Indian') }}">Indian</a>
+                      {% endif %}
+                        {% if fltr == 'French' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='French') }}">French</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='French') }}">French</a>
+                             {% endif %}</div>
+                         <div class="mb-3">
+                        {% if fltr == 'Japanese' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Japanese') }}">Japanese</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Japanese') }}">Japanese</a>
+                      {% endif %}
+                        {% if fltr == 'Mexican' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Mexican') }}">Mexican</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Mexican') }}">Mexican</a>
+                      {% endif %}
+                        {% if fltr == 'Thai' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Thai') }}">Thai</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Thai') }}">Thai</a>
+                      {% endif %}
+                        {% if fltr == 'Turkish' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Turkish') }}">Turkish</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Turkish') }}">Turkish</a>
+                      {% endif %}
+                        {% if fltr == 'Korean' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Korean') }}">Korean</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Korean') }}">Korean</a>
+                      {% endif %}
+                        {% if fltr == 'Spanish' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Spanish') }}">Spanish</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Spanish') }}">Spanish</a>
+                      {% endif %}
+                        {% if fltr == 'Middle Eastern' %}
+                        <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Middle Eastern') }}">Middle Eastern</a>
+                      {% else %}
+                        <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Middle Eastern') }}">Middle Eastern</a>
+                             {% endif %}</div>
                     </div>
                   </div>
                 </div>

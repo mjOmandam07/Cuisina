@@ -43,6 +43,7 @@
                     <li class="nav-item">
                       {% if active == 'hot' %}
                         <a class="nav-link active p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
+
                       {% else %}
                           <a class="nav-link p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                         {% endif %}
@@ -64,6 +65,7 @@
                       {% if user_request %}  
                         <a class="nav-link active p-4" href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}"><i class='fas fa-bell'></i></a>
                       {% else %}
+
                         <a class="nav-link p-4" href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}"><i class='fas fa-bell'></i></a>
                       {% endif %}
                     </li>
@@ -217,6 +219,7 @@
               {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                   {% for category, message in messages %}
+
                     {% if active == 'profile' %}
                       <div class="alert alert-{{ category }}" style="width:68.5em; margin-left: 10em;">
                         {{ message }}

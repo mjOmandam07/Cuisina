@@ -8,7 +8,7 @@
                             {% if recipe[0][7] == user[0][0] %}
                             <a class="ml-2 article-author" href="{{ url_for('profile', user_id=recipe[0][7], fltr='recipes') }}">{{ recipe[0][10] }}</a>
                             {% else %}
-                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=recipe[0][7]) }}">{{ recipe[0][10] }}</a>
+                            <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=recipe[0][7], fltr='recipes') }}">{{ recipe[0][10] }}</a>
                             {% endif %}
                             <small class="ml-2 font-weight-bold">{{recipe[0][4]}}</small>
                             {% if user[0][0] == recipe[0][7] %}
@@ -45,7 +45,7 @@
                                             {% if item[3] == user[0][0] %}
                                               <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('profile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[6] }}</strong></a></p>
                                             {% else %}
-                                             <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('viewProfile', user_id=item[3])}}"><strong>{{ item[5] }}</strong></a></p>
+                                             <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('viewProfile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[6] }}</strong></a></p>
                                             {% endif %}
                                            
                                             <p>{{ item[1] }}</p>
