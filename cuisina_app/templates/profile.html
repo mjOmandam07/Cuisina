@@ -1,0 +1,1809 @@
+{% extends "layout.html" %}
+{% block content %}
+        <div class="article profile-sect bg-light">
+             <div class="prof-details row p-4">
+                    <img class="prof-img rounded-circle article-img ml-4" src="{{ user[0][4] }}"  />
+
+                    <div class="col-3 mt-3 names" style="margin-left: 2em">
+                      <h1 class="username" style="font-weight:lighter;">{{user[0][1]}}</h1>
+                      {% if profile[0][1] %}
+                        <p class="m-1 font-weight-bold">{{ profile[0][1] }} {{ profile[0][2] }}</p>
+                      {% else %}
+                        <p class="m-1 font-weight-bold">PLEASE FINISH SIGN UP BY CLICKING EDIT PROFILE</p>
+                      {% endif %}
+                        <p class="m-1">{{user[0][2]}}</p>
+                    </div>
+                    
+                    <div class="col-2 m-0 p-0">
+                      <button type="button" class="btn m-0 mt-4 edit-btn" type="button" data-toggle="modal" data-target="#ModalScrollable">
+                        Edit Profile
+                      </button>
+
+                        <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel"ria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenteredLabel">Edit Profile</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body mt-0 pt-0">
+                                        <form method='POST' enctype="multipart/form-data">
+                                          {{ form.csrf_token }}
+                                          {{ form.hidden_tag() }}
+
+                                          <div class="article account-info mt-0 mb-0 pt-0 justify-content-center">
+
+                                              <div class="row m-1 mb-0 mt-0 p-0">
+
+                                                <div class="file-upload col-4 mt-0 mb-3 p-0">
+                                                  <div class="image-upload-wrap rounded-circle article-img mt-0">
+                                                    <img class="file-upload-image rounded-circle profile-img" src="{{ user[0][4] }}"  />                        
+                                                  </div>
+                                                  <div class="file-upload-content">
+                                                    <img class="file-upload-image rounded-circle article-img profile-img" src="#" alt="your image" />
+                                                  </div>
+                                                 
+                                                    {{ form.upload_picture(class="form-control-file file-upload-input m-0 p-0", onchange="readURL(this);") }}
+
+                        
+                                                </div>
+
+                                              </div>
+                                              
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.fname.label(class="form-control-label") }}
+                                                    {% if form.fname.errors %}
+                                                        {{ form.fname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.fname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.fname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+
+                                                  <div class="form-group col m-0 mb-3 p-0">
+                                                    {{ form.lname.label(class="form-control-label") }}
+                                                    {% if form.lname.errors %}
+                                                        {{ form.lname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.lname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.lname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.email.label(class="form-control-label") }}
+                                                    {% if form.email.errors %}
+                                                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.email.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.email(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+                                                  <div class="form-group col-4 m-0 mb-3 p-0" style="margin-right: 1.5em !important;">
+                                                    {{ form.username.label(class="form-control-label") }}
+                                                    {% if form.username.errors %}
+                                                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.username.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.username(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+                                                  
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                <div class="form-group col ml-5 m-0 p-0">
+                                                        {{ form.age.label(class="form-control-label") }}
+                                                        {% if form.age.errors %}
+                                                            {{ form.age(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.age.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            {{ form.age(class="form-control form-control-lg") }}
+                                                        {% endif %}
+                                                </div>
+                                                <div class="form-group col-5 m-0 p-0 pl-5">
+                                                  {{ form.register_gender.label(class="form-control-label") }}
+                                                  {% if form.register_gender.errors %}
+                                                    {{ form.register_gender(class = "form-control is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for errors in form.register_gender.errors %}
+                                                            <span>{{ errors }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                  {% else %}
+                                                    {{ form.register_gender(class="form-control form-control-md") }}
+                                                  {% endif %}
+                                                </div>
+                                              </div>
+                                             
+
+
+                                              <div class="form-group mr-5 ml-auto row col-2">
+                                                {{ form.submit(class="btn", style="font-size:1em; height:fit-content; width:fit-content; ") }}
+                                              </div>
+                                              
+                                          </div>
+
+
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
+
+                        <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
+                            style="height:8em; width: 11em;" data-toggle="modal" data-target="#exampleModalScrollable">
+                        <h6 class="m-1 ml-3">{{ rank_name }}</h6>
+
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <div class="row m-2 ">
+                                    <div class="col-md-5" style=" border-radius:5px;">
+                                      <p class="mt-4"><strong>Post Recipes</strong> and get <strong>rated</strong> to level up your Kitchen Rank!</p>
+                                    </div>
+                                    <div class="" style="text-align: center;">
+
+                                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename=rank_images) }}"
+                                          style="height:5em; width: 7em;">
+                                      <p class="ml-2"><strong>{{ rank_name }}</strong></p>
+                                    </div>
+                                    <div class="mt-3" style="text-align: center;">
+                                       <p class="m-0 mb-0" style="font-size: 1em;"><strong>Your Current Points</strong></p>
+                                      <p class="m-0 mb-0" style="font-size: 2em;"><strong>{{ rank_points }}</strong></p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/executive_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Executive Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">500 total star rates</p>
+                                  </div>
+                                </div>
+
+                               <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_cuisine.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Chef de Cuisine</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">200 total star rates</p>
+                                  </div>
+                                </div>
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/sous_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Sous Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">100 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_partie.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong> Chef de Partie</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">50 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/kitchen_porter.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Kitchen Porter</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">0 total star rates</p>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+                    </div>
+              </div>
+        </div>
+        {% if fltr != 'Allfriend' and fltr != 'friendReq' %}
+            <div class="row">
+              <div class="col-6 order-1 ">
+                  <div class="post bg-light profile-sidebar p-3 mt-2 mb-4" style="color: var(--primary-color); margin-left: 10em; width: 28.5em;">
+                    <div class="row">
+                      <h1 class="col">Friends</h1>
+                      <a href="{{ url_for('profile', user_id = user[0][0], fltr='Allfriend') }}" class="col-4 mt-3">See All Friends</a>
+                    </div>
+
+                    <div class="row p-2">
+                      {% if friendsList %}
+                        {% for item in friendsList %}
+                          <div class="col-4 mb-3 p-0 m-0" style="width: 100%;">
+                            <div class="row p-0 m-0 friend">
+                              <div class="col p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:110px; width: 110px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col m-0 p-0">
+                                <a class="ml-2 font-weight-bold" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+                  </div>
+              </div>
+              <div class="col-6 p-0  m-0 order-2">
+                  {% if profile[0][1] %}
+                    <div class="post col row bg-light p-2 mt-2 mb-2" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+
+                      <h3 class="col mt-1" style="color:var(--primary-color);">Posts</h3>
+
+
+                        <button type="button" class="btn del-btn col-2 h-25 mt-1" data-toggle="modal" data-target="#exampleModalCentered" style="font-size: 1em !important; float: right; border:1px solid var(--primary-color);">
+                          <i class='fas fa-filter m-0 mr-1'></i>
+                          Filter
+                        </button>
+
+
+                        <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                {% if fltr == 'recipes' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Recipes</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr">Recipes</a>
+                                {% endif %}
+
+                                {% if fltr == 'orders' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Order</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr">Order</a>
+                                {% endif %}
+
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for item in recipe %}
+                      <div class="post col bg-light p-0 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                          <article class="media content-section">
+                              <div class="media-body">
+                                <div class="article-metadata m-3">
+                                  <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height:40px; width: 40px;">
+                                    {% if item[7] == user[0][0] %}
+                                    <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
+                                    {% else %}
+                                    <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7]) }}">{{ item[10] }}</a>
+                                    {% endif %}
+                                    <small class="ml-2 font-weight-bold">{{item[4]}}</small>
+                                    {% if item[8] == user[0][0] %}
+                                      <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% else %}
+                                      <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% endif %}
+                                </div>
+                                  {% if item[9] != None %}
+                                    <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
+                                      <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                                        <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
+                                      </a>
+                                    </div>
+                                    <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                                    <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                    <p class="article-content ml-3"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                  {% else %}
+                                     <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                      <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                     <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                                  {% endif %}
+                              </div>
+                            </article>
+                            <div class="row ml-3">
+                              <div class="star-widget">
+                                {% if item[6] == 5 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                {% elif item[6] == 4 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 3 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 2 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 1 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% else %}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% endif %}
+                                <small class="ml-2">Average Rating</small>
+                              </div>
+
+                              <div class="col ml-4 mb-2 align-self-center">
+                                <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
+                              </div>
+                            </div>
+                      </div>
+                    {% endfor %}
+
+
+                    {% if not recipe and profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);  margin-left: .3em; width:39.5em;">
+                        <h1 class="display-4" >Start Posting</h1>
+                        <p style="font-size: 1em; color: var(--primary-color);"><strong>Welcome to Cuisina!</strong> Its time for you to release the kitchen master artist inside of you! Start by clicking the Create Post button <i class="fa fa-pencil-square-o ml-1 mb-2"></i> On the bottom left corner of your screen on the food feed page</p>
+                        <a href='/filter' class="btn">Go to Food Feed and Post Now</a>
+                      </div>
+
+                    {% elif not profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                        <h1 class="display-4" >Finish Sign Up</h1>
+                        <p style="font-size: 1em;"><strong>Welcome to Cuisina!</strong> In order for you to finally show the Gordon Ramsay within you
+                            please kindly Finish Signing Up</p>
+                     </div>
+                    {% endif %}
+              </div>
+            </div>
+        {% elif fltr == 'friendReq' %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-4">Friend Requests</h1>
+
+                <div class="col-8 row  ml-auto">
+
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='Allfriend') }}" class="a-btn">View Friends</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if reqs %}
+                        {% for item in reqs %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-3 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                                <div class="row">
+                                    <a href="{{ url_for('acceptFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color); "class="btn m-0  mr-1 p-0 col">Accept</a>
+                                    <a href="{{ url_for('removeFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color);"class="btn m-0 mr-1 p-0 col">Delete </a>
+                                </div>
+
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">No Friend Requests</div>
+                              <p class="ml-4">Seems that none has discovered that your a Kitchen Beast yet</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% else %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-3">Friends</h1>
+
+                <div class="col-8 row  ml-auto">
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}" class="a-btn">Friend Requests</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if allFriends %}
+                        {% for item in allFriends %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-2 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>      
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% endif %}
+                
+            
+            
+
+            
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/sticky.js') }}"></script>
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
+    
+    </script>
+               
+                
+{% endblock %}
+
+{% extends "layout.html" %}
+{% block content %}
+        <div class="article profile-sect bg-light">
+             <div class="prof-details row p-4">
+                    <img class="prof-img rounded-circle article-img ml-4" src="{{ user[0][4] }}"  />
+
+                    <div class="col-3 mt-3 names" style="margin-left: 2em">
+                      <h1 class="username" style="font-weight:lighter;">{{user[0][1]}}</h1>
+                      {% if profile[0][1] %}
+                        <p class="m-1 font-weight-bold">{{ profile[0][1] }} {{ profile[0][2] }}</p>
+                      {% else %}
+                        <p class="m-1 font-weight-bold">PLEASE FINISH SIGN UP BY CLICKING EDIT PROFILE</p>
+                      {% endif %}
+                        <p class="m-1">{{user[0][2]}}</p>
+                    </div>
+
+                    <div class="col-2 m-0 p-0">
+                      <button type="button" class="btn m-0 mt-4 edit-btn" type="button" data-toggle="modal" data-target="#ModalScrollable">
+                        Edit Profile
+                      </button>
+
+                        <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel"ria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenteredLabel">Edit Profile</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body mt-0 pt-0">
+                                        <form method='POST' enctype="multipart/form-data">
+                                          {{ form.csrf_token }}
+                                          {{ form.hidden_tag() }}
+
+                                          <div class="article account-info mt-0 mb-0 pt-0 justify-content-center">
+
+                                              <div class="row m-1 mb-0 mt-0 p-0">
+
+                                                <div class="file-upload col-4 mt-0 mb-3 p-0">
+                                                  <div class="image-upload-wrap rounded-circle article-img mt-0">
+                                                    <img class="file-upload-image rounded-circle profile-img" src="{{ user[0][4] }}"  />
+                                                  </div>
+                                                  <div class="file-upload-content">
+                                                    <img class="file-upload-image rounded-circle article-img profile-img" src="#" alt="your image" />
+                                                  </div>
+
+                                                    {{ form.upload_picture(class="form-control-file file-upload-input m-0 p-0", onchange="readURL(this);") }}
+
+
+                                                </div>
+
+                                              </div>
+
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.fname.label(class="form-control-label") }}
+                                                    {% if form.fname.errors %}
+                                                        {{ form.fname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.fname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.fname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+
+                                                  <div class="form-group col m-0 mb-3 p-0">
+                                                    {{ form.lname.label(class="form-control-label") }}
+                                                    {% if form.lname.errors %}
+                                                        {{ form.lname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.lname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.lname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.email.label(class="form-control-label") }}
+                                                    {% if form.email.errors %}
+                                                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.email.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.email(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+                                                  <div class="form-group col-4 m-0 mb-3 p-0" style="margin-right: 1.5em !important;">
+                                                    {{ form.username.label(class="form-control-label") }}
+                                                    {% if form.username.errors %}
+                                                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.username.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.username(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                <div class="form-group col ml-5 m-0 p-0">
+                                                        {{ form.age.label(class="form-control-label") }}
+                                                        {% if form.age.errors %}
+                                                            {{ form.age(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.age.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            {{ form.age(class="form-control form-control-lg") }}
+                                                        {% endif %}
+                                                </div>
+                                                <div class="form-group col-5 m-0 p-0 pl-5">
+                                                  {{ form.register_gender.label(class="form-control-label") }}
+                                                  {% if form.register_gender.errors %}
+                                                    {{ form.register_gender(class = "form-control is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for errors in form.register_gender.errors %}
+                                                            <span>{{ errors }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                  {% else %}
+                                                    {{ form.register_gender(class="form-control form-control-md") }}
+                                                  {% endif %}
+                                                </div>
+                                              </div>
+
+
+
+                                              <div class="form-group mr-5 ml-auto row col-2">
+                                                {{ form.submit(class="btn", style="font-size:1em; height:fit-content; width:fit-content; ") }}
+                                              </div>
+
+                                          </div>
+
+
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
+
+                        <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
+                            style="height:8em; width: 11em;" data-toggle="modal" data-target="#exampleModalScrollable">
+                        <h6 class="m-1 ml-3">{{ rank_name }}</h6>
+
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <div class="row m-2 ">
+                                    <div class="col-md-5" style=" border-radius:5px;">
+                                      <p class="mt-4"><strong>Post Recipes</strong> and get <strong>rated</strong> to level up your Kitchen Rank!</p>
+                                    </div>
+                                    <div class="" style="text-align: center;">
+
+                                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename=rank_images) }}"
+                                          style="height:5em; width: 7em;">
+                                      <p class="ml-2"><strong>{{ rank_name }}</strong></p>
+                                    </div>
+                                    <div class="mt-3" style="text-align: center;">
+                                       <p class="m-0 mb-0" style="font-size: 1em;"><strong>Your Current Points</strong></p>
+                                      <p class="m-0 mb-0" style="font-size: 2em;"><strong>{{ rank_points }}</strong></p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/executive_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Executive Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">500 total star rates</p>
+                                  </div>
+                                </div>
+
+                               <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_cuisine.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Chef de Cuisine</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">200 total star rates</p>
+                                  </div>
+                                </div>
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/sous_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Sous Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">100 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_partie.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong> Chef de Partie</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">50 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/kitchen_porter.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Kitchen Porter</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">0 total star rates</p>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+                    </div>
+              </div>
+        </div>
+        {% if fltr != 'Allfriend' and fltr != 'friendReq' %}
+            <div class="row">
+              <div class="col-6 order-1 ">
+                  <div class="post bg-light profile-sidebar p-3 mt-2 mb-4" style="color: var(--primary-color); margin-left: 10em; width: 28.5em;">
+                    <div class="row">
+                      <h1 class="col">Friends</h1>
+                      <a href="{{ url_for('profile', user_id = user[0][0], fltr='Allfriend') }}" class="col-4 mt-3">See All Friends</a>
+                    </div>
+
+                    <div class="row p-2">
+                      {% if friendsList %}
+                        {% for item in friendsList %}
+                          <div class="col-4 mb-3 p-0 m-0" style="width: 100%;">
+                            <div class="row p-0 m-0 friend">
+                              <div class="col p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:110px; width: 110px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col m-0 p-0">
+                                <a class="ml-2 font-weight-bold" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+                  </div>
+              </div>
+              <div class="col-6 p-0  m-0 order-2">
+                  {% if profile[0][1] %}
+                    <div class="post col row bg-light p-2 mt-2 mb-2" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+
+                      <h3 class="col mt-1" style="color:var(--primary-color);">Posts</h3>
+
+
+                        <button type="button" class="btn del-btn col-2 h-25 mt-1" data-toggle="modal" data-target="#exampleModalCentered" style="font-size: 1em !important; float: right; border:1px solid var(--primary-color);">
+                          <i class='fas fa-filter m-0 mr-1'></i>
+                          Filter
+                        </button>
+
+
+                        <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                {% if fltr == 'recipes' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Recipes</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr">Recipes</a>
+                                {% endif %}
+
+                                {% if fltr == 'orders' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Order</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr">Order</a>
+                                {% endif %}
+
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for item in recipe %}
+                      <div class="post col bg-light p-0 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                          <article class="media content-section">
+                              <div class="media-body">
+                                <div class="article-metadata m-3">
+                                  <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height:40px; width: 40px;">
+                                    {% if item[7] == user[0][0] %}
+                                    <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
+                                    {% else %}
+                                    <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7]) }}">{{ item[10] }}</a>
+                                    {% endif %}
+                                    <small class="ml-2 font-weight-bold">{{item[4]}}</small>
+                                    {% if item[8] == user[0][0] %}
+                                      <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% else %}
+                                      <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% endif %}
+                                </div>
+                                  {% if item[9] != None %}
+                                    <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
+                                      <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                                        <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
+                                      </a>
+                                    </div>
+                                    <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                                    <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                    <p class="article-content ml-3"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                  {% else %}
+                                     <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                      <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                     <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                                  {% endif %}
+                              </div>
+                            </article>
+                            <div class="row ml-3">
+                              <div class="star-widget">
+                                {% if item[6] == 5 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                {% elif item[6] == 4 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 3 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 2 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 1 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% else %}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% endif %}
+                                <small class="ml-2">Average Rating</small>
+                              </div>
+
+                              <div class="col ml-4 mb-2 align-self-center">
+                                <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
+                              </div>
+                            </div>
+                      </div>
+                    {% endfor %}
+
+
+                    {% if not recipe and profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);  margin-left: .3em; width:39.5em;">
+                        <h1 class="display-4" >Start Posting</h1>
+                        <p style="font-size: 1em; color: var(--primary-color);"><strong>Welcome to Cuisina!</strong> Its time for you to release the kitchen master artist inside of you! Start by clicking the Create Post button <i class="fa fa-pencil-square-o ml-1 mb-2"></i> On the bottom left corner of your screen on the food feed page</p>
+                        <a href='/filter' class="btn">Go to Food Feed and Post Now</a>
+                      </div>
+
+                    {% elif not profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                        <h1 class="display-4" >Finish Sign Up</h1>
+                        <p style="font-size: 1em;"><strong>Welcome to Cuisina!</strong> In order for you to finally show the Gordon Ramsay within you
+                            please kindly Finish Signing Up</p>
+                     </div>
+                    {% endif %}
+              </div>
+            </div>
+        {% elif fltr == 'friendReq' %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-4">Friend Requests</h1>
+
+                <div class="col-8 row  ml-auto">
+
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='Allfriend') }}" class="a-btn">View Friends</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if reqs %}
+                        {% for item in reqs %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-3 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                                <div class="row">
+                                    <a href="{{ url_for('acceptFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color); "class="btn m-0  mr-1 p-0 col">Accept</a>
+                                    <a href="{{ url_for('removeFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color);"class="btn m-0 mr-1 p-0 col">Delete </a>
+                                </div>
+
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">No Friend Requests</div>
+                              <p class="ml-4">Seems that none has discovered that your a Kitchen Beast yet</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% else %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-3">Friends</h1>
+
+                <div class="col-8 row  ml-auto">
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}" class="a-btn">Friend Requests</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if allFriends %}
+                        {% for item in allFriends %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-2 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% endif %}
+
+
+
+
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/sticky.js') }}"></script>
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
+
+    </script>
+
+
+{% endblock %}
+
+{% extends "layout.html" %}
+{% block content %}
+        <div class="article profile-sect bg-light">
+             <div class="prof-details row p-4">
+                    <img class="prof-img rounded-circle article-img ml-4" src="{{ user[0][4] }}"  />
+
+                    <div class="col-3 mt-3 names" style="margin-left: 2em">
+                      <h1 class="username" style="font-weight:lighter;">{{user[0][1]}}</h1>
+                      {% if profile[0][1] %}
+                        <p class="m-1 font-weight-bold">{{ profile[0][1] }} {{ profile[0][2] }}</p>
+                      {% else %}
+                        <p class="m-1 font-weight-bold">PLEASE FINISH SIGN UP BY CLICKING EDIT PROFILE</p>
+                      {% endif %}
+                        <p class="m-1">{{user[0][2]}}</p>
+                    </div>
+
+                    <div class="col-2 m-0 p-0">
+                      <button type="button" class="btn m-0 mt-4 edit-btn" type="button" data-toggle="modal" data-target="#ModalScrollable">
+                        Edit Profile
+                      </button>
+
+                        <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel"ria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenteredLabel">Edit Profile</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body mt-0 pt-0">
+                                        <form method='POST' enctype="multipart/form-data">
+                                          {{ form.csrf_token }}
+                                          {{ form.hidden_tag() }}
+
+                                          <div class="article account-info mt-0 mb-0 pt-0 justify-content-center">
+
+                                              <div class="row m-1 mb-0 mt-0 p-0">
+
+                                                <div class="file-upload col-4 mt-0 mb-3 p-0">
+                                                  <div class="image-upload-wrap rounded-circle article-img mt-0">
+                                                    <img class="file-upload-image rounded-circle profile-img" src="{{ user[0][4] }}"  />
+                                                  </div>
+                                                  <div class="file-upload-content">
+                                                    <img class="file-upload-image rounded-circle article-img profile-img" src="#" alt="your image" />
+                                                  </div>
+
+                                                    {{ form.upload_picture(class="form-control-file file-upload-input m-0 p-0", onchange="readURL(this);") }}
+
+
+                                                </div>
+
+                                              </div>
+
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.fname.label(class="form-control-label") }}
+                                                    {% if form.fname.errors %}
+                                                        {{ form.fname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.fname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.fname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+
+                                                  <div class="form-group col m-0 mb-3 p-0">
+                                                    {{ form.lname.label(class="form-control-label") }}
+                                                    {% if form.lname.errors %}
+                                                        {{ form.lname(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.lname.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.lname(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                 <div class="form-group col ml-5 m-0 mb-3 p-0">
+                                                    {{ form.email.label(class="form-control-label") }}
+                                                    {% if form.email.errors %}
+                                                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.email.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.email(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+                                                  <div class="form-group col-4 m-0 mb-3 p-0" style="margin-right: 1.5em !important;">
+                                                    {{ form.username.label(class="form-control-label") }}
+                                                    {% if form.username.errors %}
+                                                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.username.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.username(class="form-control form-control-lg") }}
+                                                    {% endif %}
+                                                  </div>
+
+                                              </div>
+
+                                              <div class="row m-1 mb-0 p-0">
+                                                <div class="form-group col ml-5 m-0 p-0">
+                                                        {{ form.age.label(class="form-control-label") }}
+                                                        {% if form.age.errors %}
+                                                            {{ form.age(class="form-control form-control-lg is-invalid") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.age.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            {{ form.age(class="form-control form-control-lg") }}
+                                                        {% endif %}
+                                                </div>
+                                                <div class="form-group col-5 m-0 p-0 pl-5">
+                                                  {{ form.register_gender.label(class="form-control-label") }}
+                                                  {% if form.register_gender.errors %}
+                                                    {{ form.register_gender(class = "form-control is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for errors in form.register_gender.errors %}
+                                                            <span>{{ errors }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                  {% else %}
+                                                    {{ form.register_gender(class="form-control form-control-md") }}
+                                                  {% endif %}
+                                                </div>
+                                              </div>
+
+
+
+                                              <div class="form-group mr-5 ml-auto row col-2">
+                                                {{ form.submit(class="btn", style="font-size:1em; height:fit-content; width:fit-content; ") }}
+                                              </div>
+
+                                          </div>
+
+
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
+
+                        <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
+                            style="height:8em; width: 11em;" data-toggle="modal" data-target="#exampleModalScrollable">
+                        <h6 class="m-1 ml-3">{{ rank_name }}</h6>
+
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <div class="row m-2 ">
+                                    <div class="col-md-5" style=" border-radius:5px;">
+                                      <p class="mt-4"><strong>Post Recipes</strong> and get <strong>rated</strong> to level up your Kitchen Rank!</p>
+                                    </div>
+                                    <div class="" style="text-align: center;">
+
+                                      <img class = "img mt-1 rounded-circle img-fluid" src="{{ url_for('static', filename=rank_images) }}"
+                                          style="height:5em; width: 7em;">
+                                      <p class="ml-2"><strong>{{ rank_name }}</strong></p>
+                                    </div>
+                                    <div class="mt-3" style="text-align: center;">
+                                       <p class="m-0 mb-0" style="font-size: 1em;"><strong>Your Current Points</strong></p>
+                                      <p class="m-0 mb-0" style="font-size: 2em;"><strong>{{ rank_points }}</strong></p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/executive_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Executive Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">500 total star rates</p>
+                                  </div>
+                                </div>
+
+                               <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_cuisine.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Chef de Cuisine</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">200 total star rates</p>
+                                  </div>
+                                </div>
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/sous_chef.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Sous Chef</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">100 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/chef_de_partie.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong> Chef de Partie</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">50 total star rates</p>
+                                  </div>
+                                </div>
+
+
+                                 <div class="row m-2 mb-0 p-0">
+                                  <div class="">
+                                      <p><img src="{{ url_for('static', filename='rank_images/kitchen_porter.png') }}" class="img rounded-circle img-fluid" style="height: 5em; width: 7em;" />
+                                      </p>
+                                  </div>
+                                  <div class="col-md-5 " style=" border-radius:5px;">
+                                      <p class="m-0 mb-0 mt-1" style="font-size: 2em;"><strong>Kitchen Porter</strong></p>
+                                      <p></p>
+                                  </div>
+                                  <div class="ml-auto mt-0 p-3 pt-1 " style="text-align: center;">
+                                    <p style="font-size: 1.3em;">0 total star rates</p>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+                    </div>
+              </div>
+        </div>
+        {% if fltr != 'Allfriend' and fltr != 'friendReq' %}
+            <div class="row">
+              <div class="col-6 order-1 ">
+                  <div class="post bg-light profile-sidebar p-3 mt-2 mb-4" style="color: var(--primary-color); margin-left: 10em; width: 28.5em;">
+                    <div class="row">
+                      <h1 class="col">Friends</h1>
+                      <a href="{{ url_for('profile', user_id = user[0][0], fltr='Allfriend') }}" class="col-4 mt-3">See All Friends</a>
+                    </div>
+
+                    <div class="row p-2">
+                      {% if friendsList %}
+                        {% for item in friendsList %}
+                          <div class="col-4 mb-3 p-0 m-0" style="width: 100%;">
+                            <div class="row p-0 m-0 friend">
+                              <div class="col p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:110px; width: 110px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col m-0 p-0">
+                                <a class="ml-2 font-weight-bold" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+                  </div>
+              </div>
+              <div class="col-6 p-0  m-0 order-2">
+                  {% if profile[0][1] %}
+                    <div class="post col row bg-light p-2 mt-2 mb-2" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+
+                      <h3 class="col mt-1" style="color:var(--primary-color);">Posts</h3>
+
+
+                        <button type="button" class="btn del-btn col-2 h-25 mt-1" data-toggle="modal" data-target="#exampleModalCentered" style="font-size: 1em !important; float: right; border:1px solid var(--primary-color);">
+                          <i class='fas fa-filter m-0 mr-1'></i>
+                          Filter
+                        </button>
+
+
+                        <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" style="height: fit-content !important;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                {% if fltr == 'recipes' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Recipes</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" style="font-size: 1em !important;"class="home-fltr">Recipes</a>
+                                {% endif %}
+
+                                {% if fltr == 'orders' %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr home-fltr-active">Order</a>
+                                {% else %}
+                                  <a href="{{ url_for('profile', user_id=user[0][0], fltr='orders') }}" style="font-size: 1em !important;"class="home-fltr">Order</a>
+                                {% endif %}
+
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for item in recipe %}
+                      <div class="post col bg-light p-0 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                          <article class="media content-section">
+                              <div class="media-body">
+                                <div class="article-metadata m-3">
+                                  <img class = "rounded-circle article-img" src="{{ item[11] }}" style=" height:40px; width: 40px;">
+                                    {% if item[7] == user[0][0] %}
+                                    <a class="ml-2 article-author" href="{{ url_for('profile', user_id=item[7], fltr='recipes') }}">{{ item[10] }}</a>
+                                    {% else %}
+                                    <a class="ml-2 article-author" href="{{ url_for('viewProfile', user_id=item[7]) }}">{{ item[10] }}</a>
+                                    {% endif %}
+                                    <small class="ml-2 font-weight-bold">{{item[4]}}</small>
+                                    {% if item[8] == user[0][0] %}
+                                      <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% else %}
+                                      <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
+                                    {% endif %}
+                                </div>
+                                  {% if item[9] != None %}
+                                    <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
+                                      <a href="{{ url_for('viewpost', recipe_id=item[0]) }}" type="button" class="btn m-0 p-0" style="height: fit-content;">
+                                        <img src="{{ item[9] }}" alt="" class="article-content align-self-center m-0 p-0 post-img">
+                                      </a>
+                                    </div>
+                                    <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
+                                    <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                    <p class="article-content ml-3"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                  {% else %}
+                                     <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+                                      <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+                                      overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
+                                     <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                                  {% endif %}
+                              </div>
+                            </article>
+                            <div class="row ml-3">
+                              <div class="star-widget">
+                                {% if item[6] == 5 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                {% elif item[6] == 4 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 3 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 2 %}
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif item[6] == 1 %}
+                                 <span class="fa fa-star checked"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% else %}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% endif %}
+                                <small class="ml-2">Average Rating</small>
+                              </div>
+
+                              <div class="col ml-4 mb-2 align-self-center">
+                                <a class="article-save" href="{{ url_for('viewpost', recipe_id=item[0]) }}">View Comments</a>
+                              </div>
+                            </div>
+                      </div>
+                    {% endfor %}
+
+
+                    {% if not recipe and profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);  margin-left: .3em; width:39.5em;">
+                        <h1 class="display-4" >Start Posting</h1>
+                        <p style="font-size: 1em; color: var(--primary-color);"><strong>Welcome to Cuisina!</strong> Its time for you to release the kitchen master artist inside of you! Start by clicking the Create Post button <i class="fa fa-pencil-square-o ml-1 mb-2"></i> On the bottom left corner of your screen on the food feed page</p>
+                        <a href='/filter' class="btn">Go to Food Feed and Post Now</a>
+                      </div>
+
+                    {% elif not profile[0][1] %}
+                      <div class="post bg-light p-5 mt-2 mb-4" style="color: var(--primary-color); margin-left: .3em; width:40em;">
+                        <h1 class="display-4" >Finish Sign Up</h1>
+                        <p style="font-size: 1em;"><strong>Welcome to Cuisina!</strong> In order for you to finally show the Gordon Ramsay within you
+                            please kindly Finish Signing Up</p>
+                     </div>
+                    {% endif %}
+              </div>
+            </div>
+        {% elif fltr == 'friendReq' %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-4">Friend Requests</h1>
+
+                <div class="col-8 row  ml-auto">
+
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='Allfriend') }}" class="a-btn">View Friends</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if reqs %}
+                        {% for item in reqs %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-3 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                                <div class="row">
+                                    <a href="{{ url_for('acceptFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color); "class="btn m-0  mr-1 p-0 col">Accept</a>
+                                    <a href="{{ url_for('removeFriend', current_user=user[0][0], other_user=item[0]) }}"  type="button" style="font-size: .8em !important; background-color: var(--primary-color);
+  color: var(--secondary-color);"class="btn m-0 mr-1 p-0 col">Delete </a>
+                                </div>
+
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">No Friend Requests</div>
+                              <p class="ml-4">Seems that none has discovered that your a Kitchen Beast yet</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% else %}
+            <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" title="{{user[0][1]}}" class="rounded-circle prof-btn  mt-1">
+                  <img class = "rounded-circle article-img" src="{{ user[0][4] }}" style=" height:60px; width: 60px;">
+            </a>
+           <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
+              <div class="row head ">
+                <h1 class="col-3">Friends</h1>
+
+                <div class="col-8 row  ml-auto">
+                  <div class="col"></div>
+                  <div class="font-weight-bold col-5 pt-3">
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}" class="a-btn">Friend Requests</a>
+                     <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="">
+                 <div class="row p-2">
+                      {% if allFriends %}
+                        {% for item in allFriends %}
+                          <div class="col-6 mb-3 p-0 m-0 " style="width: 100%;">
+                            <div class="row p-2 m-2  friend">
+                              <div class="col-4 p-0 m-0">
+                                <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
+                              </div>
+                              <div class="col-2 mr-auto m-0 p-0 pt-3">
+                                <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
+                              </div>
+
+                              <div class=" ml-auto" style="text-align: center;">
+                                <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
+                                    style="height:5em; width: 7em;">
+                                <p>{{ item[4] }}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% else %}
+                          <div class="col ml-3 p-0 m-0" style="width: 100%;">
+                              <div class="display-4 ml-2">All alone?</div>
+                              <p class="ml-4">Find other chefs and add them now!</p>
+                          </div>
+                      {% endif %}
+                    </div>
+              </div>
+           </div>
+        {% endif %}
+
+
+
+
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/sticky.js') }}"></script>
+    <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+
+            } else {
+              removeUpload();
+            }
+          }
+
+          function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+          }
+          $('.image-upload-wrap').bind('dragover', function () {
+                  $('.image-upload-wrap').addClass('image-dropping');
+              });
+              $('.image-upload-wrap').bind('dragleave', function () {
+                  $('.image-upload-wrap').removeClass('image-dropping');
+          });
+
+    </script>
+
+
+{% endblock %}
+
