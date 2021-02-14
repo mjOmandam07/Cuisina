@@ -4,7 +4,7 @@
                   <i class='fas fa-filter'></i>
             </button>
 
-            {% if active == 'home' %}'
+            {% if active == 'home' %}
               <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" style="height: fit-content !important;">
                   <div class="modal-content">
@@ -198,11 +198,11 @@
               </div>
             {% endif %}
             {% if active == 'home' %}
-              <button title="Create Post" class="btn create-btn rounded-circle p-0" type="button"data-toggle="modal" data-target="#ModalScrollable">
+              <button title="Create Post" class="btn create-btn rounded-circle p-0" type="button" data-toggle="modal" data-target="#ModalScrollable">
                     <i class="fa fa-pencil-square-o ml-1 mb-2"></i>
               </button>
             {% else %}
-            {% endif %} 
+            {% endif %}
             <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                       <div class="modal-content">
@@ -215,7 +215,7 @@
                         <div class="modal-body">
                             <form method="POST" enctype="multipart/form-data">
                                 {{ form.csrf_token }}
-                          
+
                                 <div class="form-group">
                                     {{ form.title.label(class="form-control-label") }}
                                     {% if form.title.errors %}
@@ -229,7 +229,7 @@
                                         {{ form.title(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <div class="row">
                                       {{ form.content.label(class="form-control-label col-2") }}
@@ -247,7 +247,7 @@
                                           {% endif %}
                                       </div>
                                     </div>
-                                    
+
                                     {% if form.content.errors %}
                                         {{ form.content(class="form-control form-control-lg is-invalid") }}
                                         <div class="invalid-feedback">
@@ -266,7 +266,7 @@
                                       {{ form.upload_picture(class="form-control-file file-upload-input", onchange="readURL(this);", style="display:none;") }}
                                       {% if form.upload_picture.errors %}
                                         {% for error in form.upload_picture.errors %}
-                                              <span class="text-danger">{{ error }}</span></br>
+                                              <span class="text-danger">{{ error }}</span>
                                           {% endfor %}
                                       {% endif %}
                                       <div class="drag-text">
@@ -280,7 +280,7 @@
                                       </div>
                                     </div>
                                   </div>
-    
+
                                 <div class="form-group">
                                     {{ form.submit(class="btn btn-light btn-outline-dark col mt-3") }}
                                 </div>
@@ -290,7 +290,7 @@
                     </div>
             </div>
 
-            
+
             {% if recipe %}
 
             {% else %}
@@ -306,9 +306,9 @@
               </div>
             {% endif %}
             {% endif %}
-           
+
             {% for item in recipe %}
-              
+
               <div class="post bg-light p-0 mt-2 mb-4">
                   <article class="media content-section">
                       <div class="media-body">
@@ -324,7 +324,7 @@
                               <p  class="disabled-btn saved  ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
                             {% else %}
                               <p  class="disabled-btn ml-auto p-2"><i class='far fa-bookmark' style="font-size: 1em"></i></p>
-                            {% endif %} 
+                            {% endif %}
                         </div>
                           {% if item[9] != None %}
                             <div class="col m-0 d-flex p-0 justify-content-center" style="width: 100%;">
@@ -334,12 +334,12 @@
                             </div>
                             <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
                             <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
-                            <p class="article-content ml-3"style="white-space: pre-wrap;
+                            <p class="article-content ml-3" style="white-space: pre-wrap;
                               overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                           {% else %}
 
                            <a class="article-title ml-3 font-weight-bold" style="font-size: 2em;" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
-                            <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
+                            <p class="article-content ml-3 mb-0" style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                            <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
                           {% endif %}

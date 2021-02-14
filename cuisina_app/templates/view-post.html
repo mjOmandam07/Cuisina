@@ -47,6 +47,7 @@
 
                       </div> 
                     </article>
+                {% if recipe[0][7] != user[0][0] %}
                   <div class="row ml-1">
                     {% if rate[0] %}
                       <div class="star-widget m-0 col-12" id="starfield">
@@ -120,6 +121,9 @@
                     {% endif %}
                       
                   </div>
+                {% else %}
+                {% endif %}
+
                   <div class="card p-2 bg-light comments">
                       <div class="card-body">
                         {% if comments %}
@@ -136,7 +140,7 @@
                                             {% if item[3] == user[0][0] %}
                                               <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('profile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[6] }}</strong></a></p>
                                             {% else %}
-                                             <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('viewProfile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[6] }}</strong></a></p>
+                                             <p class="m-0 mb-2" style="font-size: 1em;"><a href="{{url_for('viewProfile', user_id=item[3], fltr='recipes')}}"><strong>{{ item[5] }}</strong></a></p>
                                             {% endif %}
                                            
                                             <p>{{ item[1] }}</p>
