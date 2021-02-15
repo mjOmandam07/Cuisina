@@ -74,6 +74,7 @@ def signUp():
 
 @app.route('/profile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
 def profile(user_id, fltr):
+
     if 'user' in session:
         user_request = False
         if session['user'][0][0] == user_id:
@@ -197,6 +198,7 @@ def profile(user_id, fltr):
         else:
             flash('Please Logout and Login to your desired account', 'info')
             return redirect(url_for('login'))
+
     else:
         return redirect(url_for('login'))
 
@@ -217,11 +219,13 @@ def save_profile_picture(form_picture):
 
 @app.route('/viewProfile/<int:user_id>/<string:fltr>', methods=['GET', 'POST'])
 def viewProfile(user_id, fltr):
+
     if 'user' in session:
         user_request = False
         isRequest = False
         other_request = False
         isFrnd = False
+
 
         db = models.chef(user_id=user_id)
         suggest = models.chef(user_id=session['user'][0][0])
@@ -319,6 +323,7 @@ def filter():
 
 @app.route('/home/<string:fltr>', methods=['GET', 'POST'])
 def home(fltr):
+
     if 'user' in session:
         user_request = False
         db = models.chef(filter=fltr)
@@ -366,6 +371,7 @@ def home(fltr):
         return render_template('home.html', active='home', user_request=user_request, user=user,
                                suggested_chef=suggested_chef, recipe=recipe, form=form, fltr=fltr, profile=profile)
 
+
     else:
 
         return redirect(url_for('login'))
@@ -373,6 +379,7 @@ def home(fltr):
 
 @app.route('/viewpost/<int:recipe_id>', methods=['GET', 'POST'])
 def viewpost(recipe_id):
+
     if 'user' in session:
         user_request = False
         db = models.chef(recipe_id=recipe_id)
@@ -424,8 +431,11 @@ def orderfilter():
     return redirect(url_for('ordersFeed', fltr='All'))
 
 
+
+
 @app.route('/orders/<string:fltr>', methods=['GET', 'POST'])
 def ordersFeed(fltr):
+
     if 'user' in session:
         user_request = False
         db = models.chef(filter=fltr)
@@ -466,16 +476,22 @@ def ordersFeed(fltr):
         return redirect(url_for('login'))
 
 
+
+
+
 @app.route('/viewOrder/<int:recipe_id>', methods=['GET', 'POST'])
 def viewOrder(recipe_id):
+
     if 'user' in session:
         user_request = False
         db = models.chef(recipe_id=recipe_id)
         recipe = db.viewSelectOrders()
         user = session['user']
 
+
         suggest = models.chef(user_id=session['user'][0][0])  ###
         suggested_chef = suggest.suggestChef()
+
 
         friend = suggest.checkFriendReq()
         if friend:
@@ -484,12 +500,15 @@ def viewOrder(recipe_id):
             else:
                 user_request = False
 
+
         comments = db.viewOrderComment()
 
         form = addCommment()
 
+
         currentRate = models.chef(recipe_id=recipe_id, user_id=user[0][0])
         currentRating = currentRate.yourCurrentRate()
+
 
         if form.validate_on_submit():
             create_comment = models.chef(content=form.comment.data, user_id=user[0][0], recipe_id=recipe_id)
@@ -504,10 +523,12 @@ def viewOrder(recipe_id):
                 flash('Please Search recipe or chef', 'danger')
                 return redirect(url_for('viewOrder', recipe_id=recipe_id))
 
+
         return render_template('view-order.html', user_request=user_request, active='order', user=user,
                                suggested_chef=suggested_chef, recipe=recipe, comments=comments, form=form)
     else:
         return redirect(url_for('login'))
+
 
 
 @app.route('/hotfilter')
@@ -577,8 +598,11 @@ def saved_filter(user_id):
     return redirect(url_for('savedRecipe', user_id=user_id, fltr='All'))
 
 
+
+
 @app.route('/savedRecipe/<int:user_id>/<string:fltr>')
 def savedRecipe(user_id, fltr):
+
     db = models.chef(user_id=user_id, filter=fltr)
     recipe = db.viewSavedRecipes()
     user = session['user']
@@ -594,6 +618,8 @@ def savedRecipe(user_id, fltr):
     return render_template('saved_recipe.html', recipe=recipe, user=user, suggested_chef=suggested_chef, active='saved')
 
 
+
+
 @app.route('/saved/<recipe_id>/<user_id>')
 def saveRecipe(recipe_id, user_id):
     db = models.chef(recipe_id=recipe_id)
@@ -603,12 +629,15 @@ def saveRecipe(recipe_id, user_id):
     return redirect(url_for('viewpost', recipe_id=recipe_id))
 
 
+
+
 @app.route('/delete/<recipe_id>')
 def deletePost(recipe_id):
     db = models.chef(recipe_id=recipe_id)
     db.deleteRecipe()
     flash('Posted Recipe Deleted Successfully!', 'success')
     return redirect(url_for('home', fltr='All'))
+
 
 
 @app.route('/deleteOrder/<recipe_id>')
@@ -627,6 +656,7 @@ def acceptFriend(current_user, other_user):
     return redirect(url_for('viewProfile', user_id=other_user, fltr='recipes'))
 
 
+
 @app.route('/addFriend/<current_user>/<other_user>')
 def addFriend(current_user, other_user):
     db = models.chef(user_id=current_user, other_user=other_user)
@@ -635,16 +665,20 @@ def addFriend(current_user, other_user):
     return redirect(url_for('viewProfile', user_id=other_user, fltr='recipes'))
 
 
+
 @app.route('/removeFriend/<current_user>/<other_user>')
 def removeFriend(current_user, other_user):
+
     db = models.chef(user_id=current_user, other_user=other_user)
     db.removeFriend()
 
     return redirect(url_for('viewProfile', user_id=other_user, fltr='recipes'))
 
 
+
 @app.route('/search/<search_content>/<fltr>', methods=['GET', 'POST'])
 def search(search_content, fltr):
+
     if 'user' in session:
         user = session['user']
         db = models.chef(title=search_content)
@@ -680,3 +714,4 @@ def masterChef(user_id):
         suggested_chef = suggest.suggestChef()
         return render_template('master_chef.html', user=user, active='master', other_user=other_user,
                                profile=profile, suggested_chef=suggested_chef, rank=rank)
+

@@ -17,6 +17,7 @@ class chef(object):
                  filename=None,
                  other_user=None):
 
+
         self.filter = filter
 
         self.user_id = user_id
@@ -24,6 +25,7 @@ class chef(object):
         self.username = username
         self.password = password
         self.email_address = email_address
+
 
         self.first_name = first_name
         self.last_name = last_name
@@ -360,6 +362,7 @@ class chef(object):
                 rank_image = 'rank_images/chef_de_cuisine.png'
 
                 lst = list(i)
+
 
                 ranks = rank_name, rank_image
 
@@ -789,6 +792,7 @@ class chef(object):
 					            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
 					                 LEFT JOIN images AS i ON i.profile_id = p.profile_id) WHERE u.user_id = {}""".format(
                     item[7])
+
 
                 cursor.execute(sql2)
                 display = cursor.fetchall()
@@ -1310,6 +1314,7 @@ class chef(object):
         cursor.execute(sql)
         recipes = cursor.fetchall()
 
+
         for item in recipes:
             sql2 = """SELECT u.*,i.filename FROM 
 				            ((user as u LEFT JOIN profile as p ON u.user_id = p.user_id)
@@ -1319,9 +1324,12 @@ class chef(object):
             cursor.execute(sql2)
             display = cursor.fetchall()
 
+
             posts.append(item + (display[0][4],))
 
+
         return posts
+
 
     def addComment(self):
         cursor = mysql.connection.cursor()
@@ -1986,4 +1994,6 @@ class chef(object):
 
                 rank.append(tpl)
 
+
         return (rank)
+

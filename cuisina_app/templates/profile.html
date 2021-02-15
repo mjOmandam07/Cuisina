@@ -161,6 +161,7 @@
                     </div>
                     <div class="align-self-center ml-auto medal col-2 p-0" style="text-align: center;">
 
+
                         <img type = "button" class = "rounded-circle article-img" src="{{ url_for('static', filename=rank_images) }}"
                             style="height:8em; width: 11em;" data-toggle="modal" data-target="#exampleModalScrollable">
                         <h6 class="m-1 ml-3">{{ rank_name }}</h6>
@@ -265,6 +266,7 @@
                         </div>
 
     
+
 
 
                     </div>  
@@ -431,7 +433,6 @@
                       </div>
                     {% endfor %}
 
-
                     {% if not recipe and profile[0][1] %}
                       <div class="post bg-light p-5 mt-2 mb-4" style="font-size: 1em; color: var(--primary-color);  margin-left: .3em; width:39.5em;">
                         <h1 class="display-4" >Start Posting</h1>
@@ -454,12 +455,14 @@
             </a>
            <div class="post friendList  mt-2 bg-light p-3" style="width: 80vw; margin-left: 10em; color: var(--primary-color);">
               <div class="row head ">
+
                 <h1 class="col-4">Friend Requests</h1>
                 
                 <div class="col-8 row  ml-auto">
 
                   <div class="col"></div>
                   <div class="font-weight-bold col-5 pt-3">
+
 
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='Allfriend') }}" class="a-btn">View Friends</a>
                      <a href="{{ url_for('profile', user_id=user[0][0], fltr='recipes') }}" class="a-btn">Profile</a>
@@ -476,6 +479,7 @@
                               <div class="col-4 p-0 m-0">
                                 <a class="ml-3" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}"><img class = "article-img mr-3" src="{{ item[2] }}" style=" height:120px; width: 120px; border-radius: 5px;"></a>
                               </div>
+
                               <div class="col-3 mr-auto m-0 p-0 pt-3">
                                 <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                                 <div class="row">
@@ -491,6 +495,7 @@
                                 <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
                                     style="height:5em; width: 7em;">
                                 <p>{{ item[4] }}</p>
+
 
                               </div>
                             </div>
@@ -535,10 +540,12 @@
                                 <a class="ml-2 username" href="{{ url_for('viewProfile', user_id=item[0], fltr='recipes') }}">{{ item[1] }}</a>
                               </div>
 
+
                               <div class=" ml-auto" style="text-align: center;">
                                 <img class = "img mt-3 rounded-circle img-fluid" src="{{ url_for('static', filename=item[5]) }}"
                                     style="height:5em; width: 7em;">
                                 <p>{{ item[4] }}</p>
+
 
                               </div>
                             </div>

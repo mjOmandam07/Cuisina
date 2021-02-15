@@ -134,11 +134,13 @@
 		                                {% endif %}
 		                                <p class="m-0 mb-2" style="font-size: 1em; font-weight: lighter;"><strong>{{ item[2] }} {{ item[3] }}</strong></p>
 		                            </div>
+
 		                            <div class=" ml-auto" style="text-align: center;">
 		                                <img class = "img mt-0 rounded-circle img-fluid" src="{{ url_for('static', filename=item[7]) }}"
 		                                    style="height:5em; width: 7em;">
 		                                <p>{{ item[6] }}</p>
 		                            </div>
+
 		                        </div>
 						    </div>
 						{% endfor %}

@@ -546,6 +546,24 @@ POSTS SECT
 /* FRIENDS SECT */
 
 
+.body-sect  a.prof-btn{
+  background-color: var(--primary-color);
+  position: fixed;
+  left: 2em;
+  bottom: 2em;
+  text-align: center !important;
+  color:white;
+  box-shadow: 0 0 0 0.2rem #571b9857;
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.body-sect a.prof-btn:hover{
+  background-color: var(--secondary-color);
+  color:var(--primary-color);
+}
+
 
 .body-sect .friendList .btn{
   font-size: 1em !important;

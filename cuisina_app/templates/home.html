@@ -4,9 +4,11 @@
                   <i class='fas fa-filter'></i>
             </button>
 
+
             {% if active == 'home' %}
               <div class="modal fade" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" style="height: fit-content !important;">
+
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalCenteredLabel">Add Filter</h5>
@@ -15,6 +17,7 @@
                       </button>
                     </div>
                     <div class="modal-body p-4">
+
                         <div class="mb-3">
                       {% if fltr == 'All' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('home', fltr ='All') }}">All</a>
@@ -118,16 +121,19 @@
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='All') }}">View All</a>
                       {% endif %}
 
+
                       {% if fltr == 'Western' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Western') }}">Western</a>
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Western') }}">Western</a>
                       {% endif %}
 
+
                       {% if fltr == 'Chinese' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Chinese') }}">Chinese</a>
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Chinese') }}">Chinese</a>
+
                       {% endif %}
 
                       {% if fltr == 'European' %}
@@ -140,6 +146,7 @@
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Filipino') }}">Filipino</a>
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Filipino') }}">Filipino</a>
+
                       {% endif %}
                         {% if fltr == 'Italian' %}
                         <a style="font-size: 1em !important;" class="home-fltr home-fltr-active" href="{{ url_for('hot', fltr ='Italian') }}">Italian</a>
@@ -192,17 +199,20 @@
                       {% else %}
                         <a style="font-size: 1em !important;" class="home-fltr" href="{{ url_for('hot', fltr ='Middle Eastern') }}">Middle Eastern</a>
                              {% endif %}</div>
+
                     </div>
                   </div>
                 </div>
               </div>
             {% endif %}
             {% if active == 'home' %}
+
               <button title="Create Post" class="btn create-btn rounded-circle p-0" type="button" data-toggle="modal" data-target="#ModalScrollable">
                     <i class="fa fa-pencil-square-o ml-1 mb-2"></i>
               </button>
             {% else %}
             {% endif %}
+
             <div class="modal fade" id="ModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                       <div class="modal-content">
@@ -304,6 +314,7 @@
                 <h1 class="display-4" >No Hotness at all</h1>
                 <p style="font-size: 1em; color: var(--primary-color);">It seems that there is no food that can satisfy all taste buds</p>
               </div>
+
             {% endif %}
             {% endif %}
 
@@ -334,12 +345,14 @@
                             </div>
                             <small class="text-muted m-0 ml-3">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
                             <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
+
                             <p class="article-content ml-3" style="white-space: pre-wrap;
                               overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                           {% else %}
 
                            <a class="article-title ml-3 font-weight-bold" style="font-size: 2em;" href="{{ url_for('viewpost', recipe_id=item[0]) }}">{{ item[1] }}</a>
                             <p class="article-content ml-3 mb-0" style="white-space: pre-wrap;
+
                             overflow-wrap: break-word;">{{ item[2] | truncate(100) }}</p>
                            <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ item[3].strftime("%b %d %Y, %I:%M %p")  }}</small>
                           {% endif %}

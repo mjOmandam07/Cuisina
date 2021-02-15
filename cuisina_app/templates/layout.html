@@ -78,6 +78,7 @@
                     <li class="nav-item">
                       {% if active == 'home' %}
                         <a class="nav-link active p-4" href="/filter">FOOD FEED</a>
+
                       {% else %}
                           <a class="nav-link  p-4" href="/filter">FOOD FEED</a>
                         {% endif %}
@@ -86,6 +87,7 @@
                       {% if active == 'hot' %}
                         <a class="nav-link active p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                       {% else %}
+
                           <a class="nav-link p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                         {% endif %}
                     </li>
@@ -220,6 +222,7 @@
                 {% if messages %}
                   {% for category, message in messages %}
 
+
                     {% if active == 'profile' %}
                       <div class="alert alert-{{ category }}" style="width:68.5em; margin-left: 10em;">
                         {{ message }}
@@ -229,6 +232,7 @@
                         {{ message }}
                       </div>
                     {% endif %}
+
                   {% endfor %}
                 {% endif %}
               {% endwith %}
