@@ -43,6 +43,7 @@
                     <li class="nav-item">
                       {% if active == 'hot' %}
                         <a class="nav-link active p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
+
                       {% else %}
                           <a class="nav-link p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                         {% endif %}
@@ -64,6 +65,7 @@
                       {% if user_request %}  
                         <a class="nav-link active p-4" href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}"><i class='fas fa-bell'></i></a>
                       {% else %}
+
                         <a class="nav-link p-4" href="{{ url_for('profile', user_id=user[0][0], fltr='friendReq') }}"><i class='fas fa-bell'></i></a>
                       {% endif %}
                     </li>
@@ -76,6 +78,7 @@
                     <li class="nav-item">
                       {% if active == 'home' %}
                         <a class="nav-link active p-4" href="/filter">FOOD FEED</a>
+
                       {% else %}
                           <a class="nav-link  p-4" href="/filter">FOOD FEED</a>
                         {% endif %}
@@ -84,6 +87,7 @@
                       {% if active == 'hot' %}
                         <a class="nav-link active p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                       {% else %}
+
                           <a class="nav-link p-4" href="/hotfilter">HOT<i class='fas fa-fire m-0 ml-2'></i></a>
                         {% endif %}
                     </li>
@@ -145,9 +149,9 @@
                     {{user[0][1]}}
                 </a>
                 {% if active == 'master' %}
-                  <a class="sidebar-info active" href="#">Master Chef's</a>
+                  <a class="sidebar-info active" href="{{ url_for('masterChef', user_id=user[0][0]) }}">Master Chef's</a>
                 {% else %}
-                  <a class="sidebar-info" href="#">Master Chef's</a>
+                  <a class="sidebar-info" href="{{ url_for('masterChef', user_id=user[0][0]) }}">Master Chef's</a>
                 {% endif %}
 
                 {% if active == 'saved' %}
@@ -176,9 +180,9 @@
                     {{user[0][1]}}
                 </a>
                 {% if active == 'master' %}
-                  <a class="sidebar-info active" href="#">Master Chef's</a>
+                  <a class="sidebar-info active" href="{{ url_for('masterChef', user_id=user[0][0]) }}">Master Chef's</a>
                 {% else %}
-                  <a class="sidebar-info" href="#">Master Chef's</a>
+                  <a class="sidebar-info" href="{{ url_for('masterChef', user_id=user[0][0]) }}">Master Chef's</a>
                 {% endif %}
 
                 {% if active == 'saved' %}
@@ -217,9 +221,18 @@
               {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                   {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="width:38em; margin-left: 12em;">
-                      {{ message }}
-                    </div>
+
+
+                    {% if active == 'profile' %}
+                      <div class="alert alert-{{ category }}" style="width:68.5em; margin-left: 10em;">
+                        {{ message }}
+                      </div>
+                    {% else %}
+                      <div class="alert alert-{{ category }}" style="width:38em; margin-left: 12em;">
+                        {{ message }}
+                      </div>
+                    {% endif %}
+
                   {% endfor %}
                 {% endif %}
               {% endwith %}

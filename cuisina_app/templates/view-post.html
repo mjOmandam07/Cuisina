@@ -33,13 +33,21 @@
                               </div>
                             </div>
                           </div>
-                        {% endif %}
                           <small class="text-muted m-0 ml-3">{{ recipe[0][3].strftime("%b %d %Y, %I:%M %p")  }}</small><br>
                           <a class="article-title ml-3 font-weight-bold" href="{{ url_for('viewpost', recipe_id=recipe[0][0]) }}">{{ recipe[0][1] }}</a>
                           <p class="article-content ml-3"style="white-space: pre-wrap;
+                              overflow-wrap: break-word;">{{ recipe[0][2] | truncate(100) }}</p>
+                          {% else %}
+
+                           <a class="article-title ml-3 font-weight-bold" style="font-size: 2em;" href="{{ url_for('viewpost', recipe_id=recipe[0][0]) }}">{{ recipe[0][1] }}</a>
+                            <p class="article-content ml-3 mb-0"style="white-space: pre-wrap;
                             overflow-wrap: break-word;">{{ recipe[0][2] | truncate(100) }}</p>
+                           <small class="text-muted m-0 ml-3" style="margin-top: 0em !important">{{ recipe[0][3].strftime("%b %d %Y, %I:%M %p")  }}</small>
+                          {% endif %}
+
                       </div> 
                     </article>
+                {% if recipe[0][7] != user[0][0] %}
                   <div class="row ml-1">
                     {% if rate[0] %}
                       <div class="star-widget m-0 col-12" id="starfield">
@@ -113,6 +121,9 @@
                     {% endif %}
                       
                   </div>
+                {% else %}
+                {% endif %}
+
                   <div class="card p-2 bg-light comments">
                       <div class="card-body">
                         {% if comments %}
